@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(rm -f paper.aux paper.log paper.out paper.toc paper.pdf)",
+      "Bash(pdflatex -interaction=nonstopmode paper.tex)",
+      "Bash(awk '{print $5, $9}')",
+      "Bash(python3 -c ':*)",
+      "Bash(mv paper.aux paper.log paper.out outputs/logs/)",
+      "Bash(rm -f test_macros.aux test_macros.log test_macros.pdf run.log)"
+    ]
+  }
+}
