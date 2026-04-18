@@ -33,7 +33,7 @@ across four initial-condition families (plus three angular-shuffle null controls
 
 2. **Concentrated cusps — restricted kinematic advantage**: Local velocity dispersion outperforms the coarse predictor for concentrated cusp profiles at low softening (Hernquist ε ≤ 0.05, Plummer ε = 0.02; gap CIs exclude zero). The effect is modest: VelDisp explains ~18–28% of variance (R² at N = 1024). The advantage erodes with increasing ε and vanishes by ε = 0.10; the transition lies between ε/a ≈ 0.35 and 0.50 for these idealised families.
 
-3. **No positional fine advantage**: No tested positional fine-scale observable outperforms the coarse predictor in any cell, with one exception: cold-clumpy at ε = 0.10, where ClosePairs acts as a proxy for inter-clump connectivity rather than true fine-scale structure.
+3. **Positional fine observables rarely win**: The positional-class gap CI excludes zero in only 10 of 80 direct-isolated cells (Hernquist at low ε and cold-clumpy at ε = 0.10). The dominant fine advantage is kinematic, not positional — additional spatial detail alone is insufficient unless it carries the dynamically relevant information channel (velocity dispersion).
 
 4. **Scope**: All results are specific to the scalar target ΔC_8^early and the stylised families studied here. The paper is an observable-class comparison under a fixed target choice, not a broader characterisation of predictive structure in gravity. The ε/a transition range is a feature of these idealised profiles and should not be extrapolated to cosmological populations.
 
@@ -148,7 +148,7 @@ If you use this code or data, please cite:
 ```
 Bhatia, K. (2026). Observable-Class Predictability in Stylised Three-Dimensional
 Self-Gravitating N-body Families: Coarse Dominance, Kinematic Advantage, and
-Softening Dependence. Zenodo. https://doi.org/10.5281/zenodo.19643717
+Softening Dependence. Submitted to ApJ. Zenodo: https://doi.org/10.5281/zenodo.19643717
 ```
 
 ## License
