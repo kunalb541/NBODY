@@ -1,5 +1,9 @@
 ## Predictive Structure in Three-Dimensional Self-Gravitating N-body Systems
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+**140,000 three-dimensional N-body simulations testing which initial-condition observables — coarse density contrast, fine positional structure, or phase-space kinematics — best predict future gravitational clustering across dark matter halo profiles, galaxy mergers, and globular cluster models.**
+
 Code and analysis pipeline for the paper:
 
 > **Predictive Structure in Three-Dimensional Self-Gravitating N-body Systems:
@@ -137,4 +141,4 @@ of Gravitational Softening. Preprint.
 
 ## License
 
-This code is released for academic use. See the paper for full methodology and results.
+MIT License. See [LICENSE](LICENSE) for details.

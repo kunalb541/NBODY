@@ -1172,19 +1172,11 @@ def fig06_eps_transition(analysis: Dict) -> None:
             vals.append(np.nan if (bf is None or bc is None) else bf - bc)
         ax.plot(PAPER_EPS, vals, marker=mk_cycle[idx], lw=2.2, ms=7,
                 color=IC_COLORS[init], label=IC_LABELS[init], zorder=4)
-    for idx, init in enumerate(IC_ORDER):
-        vals = []
-        for eps in PAPER_EPS:
-            cell = get_cell(analysis, "pm_periodic", init, 1024, eps)
-            bf   = get_best_fine_abs_r(cell); bc = get_best_coarse_abs_r(cell)
-            vals.append(np.nan if (bf is None or bc is None) else bf - bc)
-        ax.plot(PAPER_EPS, vals, marker="", lw=1.2, ls="--",
-                color=IC_COLORS[init], alpha=0.4, zorder=2)
     ax.axhline(0.0, color="0.5", lw=1, ls="--")
     ax.set_xlabel(r"$\epsilon$")
     ax.set_ylabel(r"Winner gap: $|r_{\rm best\ fine}| - |r_{\rm best\ coarse}|$")
-    ax.set_title("Winner gap vs softening ($N=1024$; solid=direct, dashed=PM)")
-    ax.legend(frameon=False, ncol=2, loc="upper left", fontsize=8.5)
+    ax.set_title(r"Winner gap vs softening ($N=1024$, direct-isolated)")
+    ax.legend(frameon=False, ncol=2, loc="upper left", fontsize=9)
     savefig(fig, "fig06_eps_transition.pdf")
 
 
@@ -1820,11 +1812,8 @@ def fig17_radial_and_null(analysis: Dict) -> None:
             _yc = [np.nan if v is None else v for v in conc_vals]
             _yr = [np.nan if v is None else v for v in rshell_vals]
             _yb = [np.nan if v is None else v for v in bf_vals]
-            ax.plot(PAPER_EPS, _yc, marker="o", color=col, ls="-", lw=1.8,
-                    label=IC_LABELS[init] if init == IC_ORDER[0] else None)
+            ax.plot(PAPER_EPS, _yc, marker="o", color=col, ls="-", lw=1.8)
             ax.plot(PAPER_EPS, _yr, marker="s", color=col, ls="--", lw=1.2,
-                    alpha=0.7)
-            ax.plot(PAPER_EPS, _yb, marker="D", color="0.55", ls=":", lw=1.2,
                     alpha=0.7)
         ax.axhline(0.0, color="0.7", lw=1, ls="--")
         ax.set_xlabel(r"$\epsilon$")
@@ -1835,13 +1824,11 @@ def fig17_radial_and_null(analysis: Dict) -> None:
         _h = [plt.Line2D([0], [0], color="0.3", ls="-", marker="o", lw=1.5,
                           label="CoarseConc"),
               plt.Line2D([0], [0], color="0.3", ls="--", marker="s", lw=1.2,
-                          label="RShellVar"),
-              plt.Line2D([0], [0], color="0.3", ls=":", marker="D", lw=1.2,
-                          label="best fine")]
+                          label="RShellVar")]
         for init in IC_ORDER:
             _h.append(plt.Line2D([0], [0], color=IC_COLORS[init], lw=2,
                                   label=IC_LABELS[init]))
-        ax.legend(handles=_h, frameon=False, fontsize=6.5, ncol=2,
+        ax.legend(handles=_h, frameon=False, fontsize=7, ncol=2,
                   loc="upper left")
 
     # ── Right: angular-shuffle null control — winner-gap heatmap ─────────────
