@@ -128,6 +128,19 @@ substructure---carries enough residual memory to predict future clustering.
 For a comprehensive review of N-body force algorithms and the resolution
 tradeoffs that frame this question, see \citet{DehnenRead2011}.
 
+The question of which initial summaries survive into later structure
+has direct astrophysical precedent.  Cosmological $N$-body simulations
+produce dark matter haloes with a nearly universal density profile
+\citep{NFW1997}, yet the route to this profile---whether through
+monolithic collapse or hierarchical merging---imprints different
+phase-space signatures \citep{White1996}.  Merger remnants retain
+kinematic memory of their progenitors: shells, streams, and velocity
+anisotropy persist well after the density profile has relaxed
+\citep{HernquistSpergel1992}.  Our bimodal and concentrated-cusp
+families test, in a controlled setting, the same dichotomy: does the
+large-scale density contrast or the small-scale kinematic substructure
+carry more predictive power for future clustering?
+
 We study four initial condition families spanning these structural types
 (Section~\ref{sec:ics}) with \TotalRuns{} three-dimensional $N$-body
 simulations.  For each we test observables belonging to three
@@ -788,6 +801,9 @@ faster and produce more clustering growth by the early horizon.
 Sub-cluster internal structure is dynamically decoupled at early times,
 explaining why positional fine observables carry no additional predictive
 power.
+This is the controlled analogue of hierarchical halo merging, where the
+large-scale overdensity at the virial-radius scale---not internal
+substructure---governs the merger rate \citep{White1996}.
 
 \subsection{Physical interpretation: concentrated profiles}
 
@@ -809,6 +825,15 @@ This transition connects to the violent-relaxation picture of
 rapid potential fluctuations during initial collapse mix phase space while
 preserving kinematic substructure at the resolved scale, leaving VelDisp
 as a predictive residue of incomplete memory erasure \citep{Chavanis2002}.
+This is consistent with the finding that merger remnants retain kinematic
+signatures (shells, streams, velocity anisotropy) long after spatial
+relaxation \citep{HernquistSpergel1992}: the VelDisp advantage we
+measure is the predictive counterpart of this incomplete phase-space
+mixing.
+For real dark matter haloes with NFW-like cusps ($r_s \sim 10$--$30$\,kpc),
+the critical softening $\heps \sim 0.25\,r_s$ maps onto scales of a few
+kpc---comparable to the convergence radius below which \citet{PowerEtal2003}
+find that halo profiles become resolution-dependent.
 When $\heps$ exceeds the cusp scale radius, the potential is smoothed over
 the region that would otherwise carry kinematic substructure; phase-space
 memory becomes inaccessible to the observable, and only the coarse density
@@ -1029,6 +1054,14 @@ arXiv:astro-ph/9710043.
 
 \bibitem[Yoshida(1990)]{Yoshida1990}
 Yoshida, H.\ 1990, \textit{Physics Letters A}, 150, 262.
+
+\bibitem[Hernquist \& Spergel(1992)]{HernquistSpergel1992}
+Hernquist, L., \& Spergel, D.~N.\ 1992,
+\textit{Astrophysical Journal Letters}, 399, L117.
+
+\bibitem[White(1996)]{White1996}
+White, S.~D.~M.\ 1996, in \textit{Cosmology and Large Scale Structure},
+ed.\ R.~Schaeffer et al., Elsevier, 349.
 
 \bibitem[Navarro et al.(1996)]{NFW1996}
 Navarro, J.~F., Frenk, C.~S., \& White, S.~D.~M.\ 1996,
