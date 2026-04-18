@@ -1658,11 +1658,11 @@ def fig16_convergence(conv_path: str) -> None:
         print("  fig16_convergence: convergence.json empty — skipping")
         return
 
-    target_keys = {(init, eps)
+    target_keys = {(init, eps, 1024)
                    for init in ["hernquist3d", "plummer3d"]
                    for eps in [0.02, 0.10]}
     rows_to_plot = [(k, v) for k, v in conv.items()
-                   if (v.get("init"), v.get("eps")) in target_keys
+                   if (v.get("init"), v.get("eps"), v.get("n")) in target_keys
                    and v.get("curve")]
 
     if not rows_to_plot:
