@@ -111,6 +111,23 @@ yields a small $\lambda_J$ within each clump, but the inter-clump scale
 again favours coarse predictors.  These qualitative expectations motivate
 a systematic empirical test.
 
+The predictive-summary approach taken here connects to a broader literature
+on collisionless relaxation in self-gravitating systems.
+After gravitational collapse, $N$-body systems reach quasi-equilibrium via
+\textit{violent relaxation} \citep{LyndenBell1967}: rapid fluctuations in
+the mean gravitational potential mix orbits in phase space and erase
+microscopic memory on a dynamical timescale, without conserving individual
+particle energies.
+Modern work has shown that this erasure is incomplete---coarse-grained
+phase-space distributions retain information about the initial conditions
+beyond what collisional two-body relaxation alone would predict
+\citep{Chavanis2002}.
+Our framework tests the practical consequence: which scale of initial
+summary---large-scale density contrast or small-scale phase-space
+substructure---carries enough residual memory to predict future clustering.
+For a comprehensive review of N-body force algorithms and the resolution
+tradeoffs that frame this question, see \citet{DehnenRead2011}.
+
 We study four initial condition families spanning these structural types
 (Section~\ref{sec:ics}) with \TotalRuns{} three-dimensional $N$-body
 simulations.  For each we test observables belonging to three
@@ -163,6 +180,14 @@ summation is $O(N^2)$ and prohibitive beyond $N = 2048$).
 Both models share the same $\heps$ grid
 $\{0.02, 0.03, 0.05, 0.07, 0.10\}$, four core IC families, and
 \NReplicates{} independent realisations per cell.
+The softening parameter $\heps$ is treated as a force-resolution control
+variable: smaller values sharpen the interaction potential at the cost of
+larger integration errors for close approaches, while larger values
+suppress cusp dynamics by smoothing the potential over a physical scale
+\citep{DehnenRead2011}.
+The five-point $\heps$ grid spans $\heps/a \in [0.10, 0.50]$ for the
+concentrated families, bracketing the force-convergence regime identified
+by \citet{PowerEtal2003} as necessary for reliable cusp profiles.
 Each replicate uses a distinct random seed for particle placement drawn
 from the IC distribution; all other parameters are held fixed.
 Replicates therefore capture sampling variance in the initial structural
@@ -658,6 +683,10 @@ For concentrated profiles, quantitative differences arise because the
 PM force resolution ($\sim L/32$) is set by the mesh, making PM rows
 nearly $\heps$-invariant.  The direct-isolated results show the
 clearest $\heps$-dependent transition.
+The qualitative agreement between force models on categorical verdicts
+provides useful cross-method robustness evidence; sensitivity of N-body
+results to algorithmic choices (force kernel, time-stepping) is a
+recognised challenge in the literature \citep{FortinEtal2011,DehnenRead2011}.
 
 \subsection{Observable-class dependence}
 \label{sec:results:obs_class}
@@ -767,6 +796,16 @@ cusp radius $a$.  The transition from fine to coarse dominance lies
 between $\heps/a \approx 0.35$ and $0.50$ for Hernquist, and at lower
 $\heps/a$ for Plummer.  The five-point grid resolves the direction but
 not the precise boundary.
+
+This transition connects to the violent-relaxation picture of
+\citet{LyndenBell1967}: when $\heps$ is small enough to resolve the cusp,
+rapid potential fluctuations during initial collapse mix phase space while
+preserving kinematic substructure at the resolved scale, leaving VelDisp
+as a predictive residue of incomplete memory erasure \citep{Chavanis2002}.
+When $\heps$ exceeds the cusp scale radius, the potential is smoothed over
+the region that would otherwise carry kinematic substructure; phase-space
+memory becomes inaccessible to the observable, and only the coarse density
+contrast retains predictive value.
 
 Radial-distance controls and permutation-null shuffles confirm that the
 main predictive signals are not trivially explained by geometry or
@@ -936,6 +975,22 @@ Pre-computed figures and tables are included in \texttt{outputs/}.
 \clearpage
 
 \begin{thebibliography}{99}
+
+\bibitem[Chavanis(2002)]{Chavanis2002}
+Chavanis, P.-H.\ 2002, \textit{Physical Review E}, 65, 056123.
+
+\bibitem[Dehnen \& Read(2011)]{DehnenRead2011}
+Dehnen, W., \& Read, J.~I.\ 2011,
+\textit{European Physical Journal Plus}, 126, 55.
+
+\bibitem[Fortin et al.(2011)]{FortinEtal2011}
+Fortin, P., Coutelier, M., \& Ramet, P.\ 2011,
+\textit{International Journal of High Performance Computing Applications},
+25, 3.
+
+\bibitem[Lynden-Bell(1967)]{LyndenBell1967}
+Lynden-Bell, D.\ 1967,
+\textit{Monthly Notices of the Royal Astronomical Society}, 136, 101.
 
 \bibitem[Binney \& Tremaine(2008)]{BinneyTremaine2008}
 Binney, J., \& Tremaine, S.\ 2008, \textit{Galactic Dynamics}, 2nd ed.,
