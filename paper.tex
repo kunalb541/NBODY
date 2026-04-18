@@ -185,6 +185,12 @@ $\delta t = 0.005$, $G = 1$, unit total mass, and box size $L = 2$
 \citep{Quinn1997,Yoshida1990}.
 Total integration: \NSteps{} steps ($t_{\rm final} = 3.0$ in natural units).
 Snapshots at steps 0, \HEarly{}, \HMid{}, and \NSteps{}.
+The early horizon at step \HEarly{} ($t = 0.5$ in natural units,
+approximately $0.3\,t_{\rm cross}$ for the bimodal configuration) is
+chosen to capture the initial collapse phase before secular relaxation
+dominates: for the bimodal case this coincides with the first pericentric
+passage; for concentrated profiles it spans the initial violent relaxation
+transient \citep{LyndenBell1967}.
 
 \subsection{Battery design}
 
@@ -457,7 +463,7 @@ $\sigrho(8)$--$\dCearly$ scatter at two particle counts.
 \caption{Bimodal mechanism: the inter-cluster density contrast is the
   predictive object.
   \textit{Left}: $x$--$y$ projection of the bimodal IC with projected
-  coarse-grid cells overlaid; cell shade $\propto$ projected particle count
+  coarse-grid cells overlaid; cell shade proportional to projected particle count
   (illustrative; $\sigrho(8)$ is computed from the full 3D field).
   \textit{Right}: $\sigrho(8)$ vs $\dCearly$ at $N = 256$ (circles) and
   $N = 1024$ (squares), $\heps = 0.05$.
@@ -692,9 +698,13 @@ both model classes at $N = 1024$.
   Shaded: 95\% CI.
   Both models agree on the bimodal verdict.
   Concentrated profiles show quantitative differences: direct-isolated
-  exhibits a clear $\heps$-dependent transition while PM-periodic is
-  exactly $\heps$-invariant for all force-independent observables
-(only ClosePairs varies because its threshold $4\heps$ changes by design) (force resolution set by grid, not $\heps$).}
+  exhibits a clear $\heps$-dependent transition while PM-periodic rows
+  are nearly $\heps$-invariant (force resolution is set by the mesh, not
+  by $\heps$; ClosePairs is the only exception because its threshold
+  $4\heps$ changes with $\heps$ by construction).
+  PM-periodic $\heps$ values therefore scan the ClosePairs physical scale
+  rather than the force resolution; differences from direct-isolated
+  trends in other observables reflect this solver difference.}
 \label{fig:model_comparison}
 \end{figure}
 
@@ -815,6 +825,13 @@ collapse, producing a negative correlation with future clustering growth.
 Positional fine observables cannot detect this because the equilibrium
 density profile is smooth above the softening scale; the fine advantage
 is observable-class-specific, requiring phase-space access.
+It should be noted that even in the best-case cells (Hernquist,
+$\heps \le 0.05$), $|r_{\rm VD}| \approx 0.45$--$0.55$, implying
+$R^2 \approx 0.20$--$0.30$: VelDisp is the \emph{best available}
+predictor in these regimes but still explains only 20--30\% of the
+variance in $\dCearly$.
+Much of the cusp evolution remains stochastic or depends on degrees of
+freedom not captured by the scalar initial observables considered here.
 
 Increasing $\heps$ smooths the potential over scales comparable to the
 cusp radius $a$.  The transition from fine to coarse dominance lies
@@ -1005,7 +1022,7 @@ Pre-computed figures and tables are included in \texttt{outputs/}.
   confirming that the coarse advantage is not an artefact of grid geometry.
   \textit{Right}: angular-shuffle null control.  Colour encodes
   winner-gap mean; cell labels show the verdict (CO/FI/TI).
-  Bimodal angshuf ($\dagger$) preserves inter-clump separation, so
+  Bimodal angular-shuffle ($\dagger$) preserves inter-clump separation, so
   \textsc{coarse} there is expected.  For Hernquist and Plummer, the fine
   signal collapses under shuffling at large $\heps$, confirming
   structure-dependence.}
