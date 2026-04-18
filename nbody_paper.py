@@ -556,8 +556,12 @@ def write_macros(analysis: Dict, rows: List[Dict], path: str,
     drift_vals = [safe_float(r.get("energy_rel_drift"))
                   for r in filter_rows(rows, model="direct_isolated")]
     drift_vals = [v for v in drift_vals if v is not None]
-    drift_med = float(np.median(drift_vals)) if drift_vals else 0.0
-    drift_max = float(np.max(drift_vals))    if drift_vals else 0.0
+    drift_arr  = np.array(drift_vals, dtype=float) if drift_vals else np.array([])
+    drift_med = float(np.median(drift_arr)) if len(drift_arr) else 0.0
+    drift_max = float(np.max(drift_arr))    if len(drift_arr) else 0.0
+    # outlier counts for quality-cut sensitivity appendix
+    n_outlier_01 = int(np.sum(drift_arr >= 0.1))   # aggressive cut: drift >= 0.1
+    n_outlier_1  = int(np.sum(drift_arr >= 1.0))   # strict cut: drift >= 1
 
     bim_bc_name = get_best_coarse_name(bim) or "CoarseG8"
     bim_bc_r    = get_best_coarse_abs_r(bim)
@@ -627,8 +631,10 @@ def write_macros(analysis: Dict, rows: List[Dict], path: str,
         "PlummerVelDispCILo":       "---" if pvlo is None else f"{pvlo:+.2f}",
         "PlummerVelDispCIHi":       "---" if pvhi is None else f"{pvhi:+.2f}",
         # diagnostics
-        "EnergyDriftMedian": f"{{${drift_med:.2e}$}}",
-        "EnergyDriftMax":    f"{{${drift_max:.2e}$}}",
+        "EnergyDriftMedian":   f"{{${drift_med:.2e}$}}",
+        "EnergyDriftMax":      f"{{${drift_max:.2e}$}}",
+        "NOutlierDriftTenth":  str(n_outlier_01),   # runs with drift >= 0.1
+        "NOutlierDriftOne":    str(n_outlier_1),    # runs with drift >= 1
         # family stability: cells whose verdict is consistent across all
         # active prediction-target families (excluding underpowered cells)
         "NFamilyStableCells": str(sum(
