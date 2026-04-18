@@ -71,9 +71,7 @@ on the initial-condition family, the observable class, and the
 softening-to-scale-radius ratio $\heps/a$.
 \end{abstract}
 
-\clearpage
 % \tableofcontents  % omitted for submission
-\clearpage
 
 % ---------------------------------------------------------------------------
 \section{Introduction}
@@ -292,9 +290,10 @@ Initial virial ratios cluster near $Q_0 = 1$ for Hernquist and Plummer
 (approximate equilibrium, $Q = 2K/|W| = 1$) and near $0.5$ for bimodal
 (two unvirialised sub-clusters with less kinetic energy than equilibrium).
 There is no obvious drift-outcome trend visible in the diagnostics.
-Figure~\ref{fig:convergence} confirms that the reported verdicts are
-numerically stable: repeating the analysis with varied bootstrap seeds
-and replicate subsets yields consistent verdict assignments.
+Figure~\ref{fig:convergence} confirms that $|r|$(VelDisp) stabilises
+by $\sim 200$ replicates for the kinematic frontier cells, and that
+bootstrap CI widths converge, ensuring that the battery's \NReplicates{}
+replicates are sufficient for the reported verdicts.
 
 \begin{figure}[htbp]
 \centering
@@ -424,10 +423,12 @@ Plummer fine is established only at $\heps = 0.02$.
 \centering
 \includegraphics[width=\textwidth]{outputs/figures/fig03_verdict_map.pdf}
 \caption{Verdict map at $N = 1024$, primary target $\dCearly$.
-  Each cell shows $r_C$ (best coarse) and $r_f$ (best fine).
+  Each cell shows the categorical verdict (CO = \textsc{coarse},
+  FI = \textsc{fine}, TI = tie).
   Blue: \textsc{coarse}.  Green: \textsc{fine}.  Grey: tie.
   \textit{Left}: direct-isolated.  \textit{Right}: PM-periodic.
-  Bimodal is \textsc{coarse} in all cells of both panels.}
+  Bimodal is \textsc{coarse} in all cells of both panels.
+  Continuous effect sizes are shown in Figure~\ref{fig:winner_gap_ci_map}.}
 \label{fig:verdict_map}
 \end{figure}
 
@@ -456,10 +457,9 @@ representative cases: the bimodal coarse-win anchor, the Hernquist
 fine-win case at $\heps = 0.02$, and the Hernquist coarse-win
 case at $\heps = 0.10$.
 
-The bimodal sub-clusters merge by the early horizon.  In Hernquist at
-$\heps = 0.02$ the cusp retains its gradient and the velocity-dispersion
-field is spatially structured; at $\heps = 0.10$ softening washes out
-both.
+The bimodal sub-clusters merge by the early horizon.  The two
+Hernquist rows appear similar in projected density; the predictive
+difference between them is kinematic (Figure~\ref{fig:veldisp_mechanism}).
 
 \begin{figure}[htbp]
 \centering
@@ -623,8 +623,9 @@ both model classes at $N = 1024$.
   Blue: direct-isolated.  Brown: PM-periodic.
   Shaded: 95\% CI.
   Both models agree on the bimodal verdict.
-  Concentrated profiles show quantitative differences but the same
-  qualitative pattern.}
+  Concentrated profiles show quantitative differences: direct-isolated
+  exhibits a clear $\heps$-dependent transition while PM-periodic is
+  nearly $\heps$-invariant (force resolution set by grid, not $\heps$).}
 \label{fig:model_comparison}
 \end{figure}
 
@@ -818,7 +819,8 @@ transition $\heps/a$ is not sharply located.
 
 \textit{Not earned.}  Universal coarse dominance, universal fine
 superiority, or a sharp critical boundary in $\heps/a$.  Family
-stability is low (43 of 280 powered cells), so a stable law across
+stability is low (43 of \NCells{} powered cells spanning all $N$,
+$\heps$, and both models), so a stable law across
 families is not supported.  The study measures correlation, not
 causation, and excludes cosmological processes.
 
@@ -873,20 +875,9 @@ Pre-computed figures and tables are included in \texttt{outputs/}.
 
 \begin{thebibliography}{99}
 
-\bibitem[Aarseth(2003)]{Aarseth2003}
-Aarseth, S.~J.\ 2003, \textit{Gravitational N-body Simulations},
-Cambridge University Press.
-
-\bibitem[Barnes \& Hut(1986)]{BarnesHut1986}
-Barnes, J., \& Hut, P.\ 1986, \textit{Nature}, 324, 446.
-
 \bibitem[Binney \& Tremaine(2008)]{BinneyTremaine2008}
 Binney, J., \& Tremaine, S.\ 2008, \textit{Galactic Dynamics}, 2nd ed.,
 Princeton University Press.
-
-\bibitem[Dehnen \& Read(2011)]{DehnenRead2011}
-Dehnen, W., \& Read, J.~I.\ 2011,
-\textit{European Physical Journal Plus}, 126, 55.
 
 \bibitem[Hernquist(1990)]{Hernquist1990}
 Hernquist, L.\ 1990, \textit{Astrophysical Journal}, 356, 359.
@@ -894,10 +885,6 @@ Hernquist, L.\ 1990, \textit{Astrophysical Journal}, 356, 359.
 \bibitem[Hockney \& Eastwood(1988)]{HockneyEastwood1988}
 Hockney, R.~W., \& Eastwood, J.~W.\ 1988,
 \textit{Computer Simulation Using Particles}, Taylor \& Francis.
-
-\bibitem[Merritt \& Dubinski(1994)]{MerrittDubinski1994}
-Merritt, D., \& Dubinski, J.\ 1994,
-\textit{Astrophysical Journal}, 431, 617.
 
 \bibitem[Plummer(1911)]{Plummer1911}
 Plummer, H.~C.\ 1911,
@@ -909,11 +896,7 @@ Power, C., Navarro, J.~F., Jenkins, A., et al.\ 2003,
 
 \bibitem[Quinn et al.(1997)]{Quinn1997}
 Quinn, T., Katz, N., Stadel, J., \& Lake, G.\ 1997,
-\textit{Astrophysical Journal}, 389, 297.
-
-\bibitem[Springel(2005)]{Springel2005}
-Springel, V.\ 2005,
-\textit{Monthly Notices of the Royal Astronomical Society}, 364, 1105.
+arXiv:astro-ph/9710043.
 
 \bibitem[Yoshida(1990)]{Yoshida1990}
 Yoshida, H.\ 1990, \textit{Physics Letters A}, 150, 262.

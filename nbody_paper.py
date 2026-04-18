@@ -1296,10 +1296,11 @@ def fig09_diagnostics(rows: List[Dict]) -> None:
     drifts = np.array([safe_float(r.get("energy_rel_drift")) for r in direct_rows], dtype=float)
     drifts = drifts[np.isfinite(drifts)]
     if len(drifts) > 0:
-        # Clip to [1e-7, 1e-1] for readability; annotate outliers
-        clipped = drifts[drifts < 0.1]
+        # Use logarithmic bins so the histogram is readable on a log x-axis
+        clipped = drifts[(drifts > 0) & (drifts < 0.1)]
         n_outliers = int(np.sum(drifts >= 0.1))
-        ax1.hist(clipped, bins=30, color="#4c78a8", alpha=0.85)
+        log_bins = np.logspace(-6, -1, 40)
+        ax1.hist(clipped, bins=log_bins, color="#4c78a8", alpha=0.85)
         ax1.set_xscale("log")
         ax1.set_xlim(1e-6, 1e-1)
         ax1.set_title("Relative energy drift")
