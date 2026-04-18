@@ -24,3 +24,4 @@ outputs/logs/
 # Large data files (regenerate with: python nbody_paper.py --no-run)
 outputs/data/paper_battery.csv
 outputs/data/analysis.json
+.claude/
