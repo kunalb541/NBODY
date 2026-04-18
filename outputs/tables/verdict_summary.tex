@@ -1,0 +1,47 @@
+\begin{tabular}{lllrrrrrrlr}
+\toprule
+Model & IC & $\epsilon$ & Best coarse & $|r|_{\rm bc}$ & Best fine & $|r|_{\rm bf}$ & Gap mean & Gap CI & Verdict & $n_{\rm lw}$\\
+\midrule
+direct-isolated & bimodal & 0.02 & CoarseG8 & +0.961 & ClosePairs & +0.222 & -0.720 & [-0.78, -0.65] & COARSE & 500\\
+direct-isolated & bimodal & 0.03 & CoarseG8 & +0.972 & ClosePairs & +0.360 & -0.611 & [-0.69, -0.53] & COARSE & 500\\
+direct-isolated & bimodal & 0.05 & CoarseG8 & +0.984 & ClosePairs & +0.629 & -0.357 & [-0.42, -0.30] & COARSE & 500\\
+direct-isolated & bimodal & 0.07 & CoarseG8 & +0.990 & ClosePairs & +0.815 & -0.174 & [-0.21, -0.14] & COARSE & 500\\
+direct-isolated & bimodal & 0.10 & CoarseG8 & +0.994 & kNN-all & +0.807 & -0.189 & [-0.22, -0.16] & COARSE & 500\\
+direct-isolated & Hernquist & 0.02 & CoarseG16 & +0.264 & VelDisp & +0.430 & +0.172 & [+0.09, +0.28] & FINE & 500\\
+direct-isolated & Hernquist & 0.03 & CoarseG16 & +0.211 & VelDisp & +0.437 & +0.228 & [+0.12, +0.34] & FINE & 500\\
+direct-isolated & Hernquist & 0.05 & CoarseG8 & +0.176 & VelDisp & +0.459 & +0.278 & [+0.17, +0.38] & FINE & 500\\
+direct-isolated & Hernquist & 0.07 & CoarseG8 & +0.381 & VelDisp & +0.434 & +0.054 & [-0.05, +0.16] & TIE & 500\\
+direct-isolated & Hernquist & 0.10 & CoarseG8 & +0.688 & kNN-all & +0.582 & -0.106 & [-0.13, -0.08] & COARSE & 500\\
+direct-isolated & Plummer & 0.02 & CoarseG8 & +0.382 & VelDisp & +0.577 & +0.196 & [+0.09, +0.30] & FINE & 500\\
+direct-isolated & Plummer & 0.03 & CoarseG8 & +0.452 & VelDisp & +0.566 & +0.113 & [+0.01, +0.22] & TIE & 500\\
+direct-isolated & Plummer & 0.05 & CoarseG8 & +0.603 & VelDisp & +0.511 & -0.091 & [-0.18, +0.01] & TIE & 500\\
+direct-isolated & Plummer & 0.07 & CoarseG8 & +0.738 & ClosePairs & +0.517 & -0.220 & [-0.26, -0.18] & COARSE & 500\\
+direct-isolated & Plummer & 0.10 & CoarseG8 & +0.871 & kNN-all & +0.736 & -0.135 & [-0.16, -0.11] & COARSE & 500\\
+direct-isolated & cold-clumpy & 0.02 & CoarseG8 & +0.261 & FoF-groups & +0.267 & -0.005 & [-0.14, +0.13] & TIE & 500\\
+direct-isolated & cold-clumpy & 0.03 & CoarseG8 & +0.257 & FoF-groups & +0.262 & -0.001 & [-0.15, +0.14] & TIE & 500\\
+direct-isolated & cold-clumpy & 0.05 & CoarseG8 & +0.245 & FoF-groups & +0.268 & +0.012 & [-0.15, +0.17] & TIE & 500\\
+direct-isolated & cold-clumpy & 0.07 & CoarseG8 & +0.239 & FoF-groups & +0.243 & -0.003 & [-0.14, +0.14] & TIE & 500\\
+direct-isolated & cold-clumpy & 0.10 & CoarseG8 & +0.239 & ClosePairs & +0.457 & +0.212 & [+0.10, +0.31] & FINE & 500\\
+\midrule
+PM-periodic & bimodal & 0.02 & CoarseG8 & +0.978 & FoF-groups & +0.568 & -0.558 & [-0.62, -0.50] & COARSE & 500\\
+PM-periodic & bimodal & 0.03 & CoarseG8 & +0.978 & FoF-groups & +0.568 & -0.555 & [-0.62, -0.50] & COARSE & 500\\
+PM-periodic & bimodal & 0.05 & CoarseG8 & +0.978 & ClosePairs & +0.612 & -0.435 & [-0.49, -0.38] & COARSE & 500\\
+PM-periodic & bimodal & 0.07 & CoarseG8 & +0.978 & ClosePairs & +0.793 & -0.268 & [-0.30, -0.23] & COARSE & 500\\
+PM-periodic & bimodal & 0.10 & CoarseG8 & +0.978 & kNN-all & +0.784 & -0.295 & [-0.33, -0.26] & COARSE & 500\\
+PM-periodic & Hernquist & 0.02 & CoarseG16 & +0.239 & VelDisp & +0.453 & +0.170 & [+0.07, +0.28] & FINE & 500\\
+PM-periodic & Hernquist & 0.03 & CoarseG16 & +0.239 & VelDisp & +0.453 & +0.181 & [+0.07, +0.29] & FINE & 500\\
+PM-periodic & Hernquist & 0.05 & CoarseG16 & +0.239 & VelDisp & +0.453 & +0.168 & [+0.05, +0.28] & FINE & 500\\
+PM-periodic & Hernquist & 0.07 & CoarseG16 & +0.239 & VelDisp & +0.453 & +0.147 & [+0.03, +0.27] & TIE & 500\\
+PM-periodic & Hernquist & 0.10 & CoarseG16 & +0.239 & VelDisp & +0.453 & +0.145 & [+0.03, +0.27] & TIE & 500\\
+PM-periodic & Plummer & 0.02 & CoarseG8 & +0.451 & VelDisp & +0.563 & -0.016 & [-0.11, +0.09] & TIE & 500\\
+PM-periodic & Plummer & 0.03 & CoarseG8 & +0.451 & VelDisp & +0.563 & +0.029 & [-0.07, +0.13] & TIE & 500\\
+PM-periodic & Plummer & 0.05 & CoarseG8 & +0.451 & VelDisp & +0.563 & +0.020 & [-0.09, +0.13] & TIE & 500\\
+PM-periodic & Plummer & 0.07 & CoarseG8 & +0.451 & VelDisp & +0.563 & +0.055 & [-0.04, +0.15] & TIE & 500\\
+PM-periodic & Plummer & 0.10 & CoarseG8 & +0.451 & VelDisp & +0.563 & +0.025 & [-0.07, +0.13] & TIE & 500\\
+PM-periodic & cold-clumpy & 0.02 & CoarseG8 & +0.248 & ClosePairs & +0.037 & -0.225 & [-0.31, -0.12] & COARSE & 500\\
+PM-periodic & cold-clumpy & 0.03 & CoarseG8 & +0.248 & ClosePairs & +0.038 & -0.222 & [-0.31, -0.12] & COARSE & 500\\
+PM-periodic & cold-clumpy & 0.05 & CoarseG8 & +0.248 & ClosePairs & +0.086 & -0.192 & [-0.31, -0.06] & COARSE & 500\\
+PM-periodic & cold-clumpy & 0.07 & CoarseG8 & +0.248 & ClosePairs & +0.191 & -0.105 & [-0.25, +0.03] & TIE & 500\\
+PM-periodic & cold-clumpy & 0.10 & CoarseG8 & +0.248 & ClosePairs & +0.449 & +0.096 & [-0.04, +0.21] & TIE & 500\\
+\bottomrule
+\end{tabular}

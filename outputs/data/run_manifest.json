@@ -1,0 +1,58 @@
+{
+  "timestamp": "2026-04-18T10:05:06.570988Z",
+  "python_version": "3.11.8 (main, Mar 20 2026, 19:11:57) [Clang 17.0.0 (clang-1700.6.4.2)]",
+  "platform": "macOS-26.4-arm64-arm-64bit",
+  "numpy_version": "2.3.5",
+  "matplotlib_version": "3.10.8",
+  "numba_used": true,
+  "PAPER_N": [
+    256,
+    512,
+    1024,
+    2048,
+    4096,
+    8192,
+    16384
+  ],
+  "PAPER_EPS": [
+    0.02,
+    0.03,
+    0.05,
+    0.07,
+    0.1
+  ],
+  "PAPER_MODELS": [
+    "direct_isolated",
+    "pm_periodic"
+  ],
+  "PAPER_INITS": [
+    "bimodal3d",
+    "hernquist3d",
+    "plummer3d",
+    "cold_clumpy3d"
+  ],
+  "PAPER_INITS_ANGSHUF": [
+    "bimodal3d_angshuf",
+    "hernquist3d_angshuf",
+    "plummer3d_angshuf"
+  ],
+  "PAPER_STEPS": 600,
+  "DIRECT_N_MAX": 2048,
+  "replicates": 500,
+  "n_boot": 1000,
+  "min_ok_hard": 100,
+  "conv_repeats": 10,
+  "SHOWCASE_N": 512,
+  "SHOWCASE_SEED": 2000,
+  "no_run": true,
+  "n_total_runs": 140000,
+  "n_ok_runs": 140000,
+  "battery_csv": "outputs/data/paper_battery.csv",
+  "analysis_json": "outputs/data/analysis.json",
+  "convergence_json": "outputs/data/convergence.json",
+  "completed_at": "2026-04-18T10:13:02.425835Z",
+  "validation_warnings": [
+    "PM force accuracy OK: RMS relative error = 0.149 (N=256, eps=0.05, pm_grid=32)"
+  ],
+  "validation_fatal": []
+}

@@ -1,0 +1,37 @@
+\begin{tabular}{llrrrrrl}
+\toprule
+IC & $N$ & $|r|_{\rm bc}(0.02)$ & $|r|_{\rm bc}(0.05)$ & $|r|_{\rm bc}(0.10)$ & $|r|_{\rm bf,max}$ & Verdict(0.05) & Model\\
+\midrule
+bimodal & 256 & +0.923 & +0.969 & +0.989 & 0.793 & COARSE & direct\\
+bimodal & 512 & +0.956 & +0.982 & +0.992 & 0.821 & COARSE & direct\\
+bimodal & 1024 & +0.961 & +0.984 & +0.994 & 0.807 & COARSE & direct\\
+bimodal & 2048 & +0.967 & +0.986 & +0.995 & 0.879 & COARSE & direct\\
+bimodal & 4096 & +0.981 & +0.981 & +0.981 & 0.834 & COARSE & PM\\
+bimodal & 8192 & +0.985 & +0.985 & +0.985 & 0.814 & COARSE & PM\\
+bimodal & 16384 & +0.979 & +0.979 & +0.979 & 0.861 & COARSE & PM\\
+\midrule
+Hernquist & 256 & +0.310 & +0.142 & +0.648 & 0.519 & FINE & direct\\
+Hernquist & 512 & +0.272 & +0.104 & +0.665 & 0.527 & FINE & direct\\
+Hernquist & 1024 & +0.264 & +0.176 & +0.688 & 0.582 & FINE & direct\\
+Hernquist & 2048 & +0.270 & +0.184 & +0.674 & 0.577 & FINE & direct\\
+Hernquist & 4096 & +0.128 & +0.128 & +0.128 & 0.441 & FINE & PM\\
+Hernquist & 8192 & +0.183 & +0.183 & +0.183 & 0.386 & TIE & PM\\
+Hernquist & 16384 & +0.314 & +0.314 & +0.314 & 0.432 & TIE & PM\\
+\midrule
+Plummer & 256 & +0.321 & +0.571 & +0.854 & 0.690 & TIE & direct\\
+Plummer & 512 & +0.379 & +0.590 & +0.858 & 0.695 & TIE & direct\\
+Plummer & 1024 & +0.382 & +0.603 & +0.871 & 0.736 & TIE & direct\\
+Plummer & 2048 & +0.438 & +0.625 & +0.868 & 0.629 & TIE & direct\\
+Plummer & 4096 & +0.465 & +0.465 & +0.465 & 0.562 & TIE & PM\\
+Plummer & 8192 & +0.527 & +0.527 & +0.527 & 0.513 & TIE & PM\\
+Plummer & 16384 & +0.428 & +0.428 & +0.428 & 0.565 & TIE & PM\\
+\midrule
+cold-clumpy & 256 & +0.316 & +0.277 & +0.327 & 0.420 & TIE & direct\\
+cold-clumpy & 512 & +0.277 & +0.267 & +0.266 & 0.467 & TIE & direct\\
+cold-clumpy & 1024 & +0.261 & +0.245 & +0.239 & 0.457 & TIE & direct\\
+cold-clumpy & 2048 & +0.239 & +0.223 & +0.227 & 0.458 & TIE & direct\\
+cold-clumpy & 4096 & +0.229 & +0.229 & +0.229 & 0.462 & TIE & PM\\
+cold-clumpy & 8192 & +0.218 & +0.218 & +0.218 & 0.447 & TIE & PM\\
+cold-clumpy & 16384 & +0.233 & +0.233 & +0.233 & 0.440 & TIE & PM\\
+\bottomrule
+\end{tabular}
