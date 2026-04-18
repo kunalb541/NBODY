@@ -1884,8 +1884,9 @@ def fig17_radial_and_null(analysis: Dict) -> None:
         for init in IC_ORDER:
             _h.append(plt.Line2D([0], [0], color=IC_COLORS[init], lw=2.5,
                                   label=IC_LABELS[init]))
-        ax.legend(handles=_h, frameon=False, fontsize=9, ncol=1,
-                  loc="upper left", handlelength=2.2)
+        ax.legend(handles=_h, frameon=True, framealpha=0.92,
+                  edgecolor="0.8", fontsize=9, ncol=2,
+                  loc="lower right", handlelength=2.0)
 
     # ── Right: angular-shuffle null control — winner-gap heatmap ─────────────
     ax = axes[1]
