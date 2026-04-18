@@ -113,7 +113,9 @@ python nbody_paper.py --workers 30 --replicates 500
 ./build.sh
 ```
 
-Runs the analysis pipeline and compiles the LaTeX manuscript via `latexmk`. Requires a LaTeX distribution.
+Runs the analysis pipeline and compiles the LaTeX manuscript via `latexmk`.
+Requires a LaTeX distribution with AASTeX 7.0.1 (`aastex701.cls`).
+Install via `tlmgr --usermode install aastex` if not already present.
 
 ## Force Models
 
@@ -146,7 +148,7 @@ If you use this code or data, please cite:
 ```
 Bhatia, K. (2026). Predictive Structure in Three-Dimensional Self-Gravitating
 N-body Systems: Initial-Condition Families, Observable Classes, and the Role
-of Gravitational Softening. Preprint.
+of Gravitational Softening. Submitted to ApJ.
 ```
 
 ## License
