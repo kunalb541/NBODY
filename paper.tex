@@ -38,40 +38,30 @@
 
 % ---------------------------------------------------------------------------
 \begin{abstract}
-The gravitational collapse of self-gravitating particle systems is
-seeded by structure present in the initial conditions, yet it remains
-unclear which scale of initial structure---large-scale density contrast
-or small-scale phase-space substructure---best predicts the subsequent
-dynamical evolution.  We address this with \TotalRuns{} three-dimensional
-$N$-body simulations spanning particle counts
-$N \in [\NParticleMin{}, \NParticleMax{}]$, Plummer softening
-$\heps \in [\EpsMin{}, \EpsMax{}]$, \NICs{} initial-condition families
-(including Hernquist and Plummer cusps, merging binary clusters, and
-cold multi-clump configurations), and both direct-summation and
-particle-mesh force solvers with \NReplicates{} realisations per cell.
-For merging binary clusters, coarse grid-scale density variance
-dominates future clustering prediction ($r = \BimodalBestCoarseR{}$ at $\heps = 0.05$;
-winner-gap CI $[\BimodalWinnerGapCILo{}, \BimodalWinnerGapCIHi{}]$ at $\heps = 0.05$,
-strengthening to $[-0.78, -0.65]$ at $\heps = 0.02$)
-across all tested $N$, $\heps$, and force models---consistent with
-Jeans-scale instability governing the merger dynamics.
-For concentrated cusp profiles, local velocity dispersion outperforms
-the coarse predictor at low softening (Hernquist $\heps \le 0.05$,
-Plummer $\heps = 0.02$; gap CIs exclude zero), indicating that
-phase-space substructure below the softening scale carries predictive
-information when the force resolution partially resolves the cusp.
-This advantage erodes with increasing $\heps$ and vanishes by
-$\heps = 0.10$, where the softening length exceeds the cusp
-scale radius.
-No positional fine-scale observable (nearest-neighbour density,
-small-scale Fourier power, close-pair fraction, or friends-of-friends
-group count) outperforms the coarse predictor in any tested cell,
-with one exception: cold-clumpy at $\heps = 0.10$, where ClosePairs
-acts as a proxy for inter-clump connectivity rather than true
-fine-scale structure.
-The predictive hierarchy is thus not universal but depends jointly
-on the initial-condition family, the observable class, and the
+We perform a controlled battery study of predictive performance across
+coarse positional, fine positional, and fine kinematic observables in
+four stylised three-dimensional self-gravitating $N$-body families,
+using \TotalRuns{} simulations with \NReplicates{} realisations per
+cell, two force models, and a five-point softening sweep
+($\heps \in [\EpsMin{}, \EpsMax{}]$).
+The primary result is robust coarse dominance for merging binary
+clusters: grid-scale density variance predicts future clustering at
+$r = \BimodalBestCoarseR{}$ ($\heps = 0.05$; winner-gap CI
+$[\BimodalWinnerGapCILo{}, \BimodalWinnerGapCIHi{}]$) across all
+tested $N$, $\heps$, and force models.
+A secondary result is a restricted fine-kinematic regime: local
+velocity dispersion outperforms the coarse predictor for concentrated
+cusp profiles at low softening (Hernquist $\heps \le 0.05$, Plummer
+$\heps = 0.02$; gap CIs exclude zero), but this advantage erodes
+with increasing $\heps$ and vanishes by $\heps = 0.10$.
+The strongest negative result is that no positional fine-scale
+observable outperforms the coarse predictor in any tested cell.
+No universal ranking is supported: predictive advantage is structured
+by initial-condition family, observable class, and the
 softening-to-scale-radius ratio $\heps/a$.
+The point is not that finer descriptions are generally worse, but
+that additional spatial detail alone is insufficient unless it carries
+the dynamically relevant information channel.
 \end{abstract}
 
 % \tableofcontents  % omitted for submission
@@ -80,21 +70,16 @@ softening-to-scale-radius ratio $\heps/a$.
 \section{Introduction}
 \label{sec:intro}
 
-How does the initial phase-space structure of a self-gravitating system
-determine its dynamical fate?  This question is central to astrophysics:
-the collapse of dark matter haloes from cosmological perturbations
-\citep{NFW1997}, the merging of galaxies in groups and clusters, the
-long-term evolution of globular clusters, and the hierarchical assembly
-of large-scale structure all depend on which scales of initial structure
-seed the subsequent dynamics.  Hernquist profiles model elliptical
-galaxies and the stellar component of dark matter haloes
-\citep{Hernquist1990}; Plummer profiles model globular clusters and
-dwarf spheroidal galaxies \citep{Plummer1911}; bimodal configurations
-model pre-merger galaxy pairs.  Understanding which initial
-summary statistic---large-scale density contrast or small-scale
-phase-space substructure---best predicts future clustering is therefore
-a question with direct implications for simulation design and
-interpretation across these contexts.
+Which initial summary statistic of a self-gravitating particle system
+best predicts future clustering?  The question is not which level of
+description is fundamentally correct, but which observable class---coarse
+positional, fine positional, or fine kinematic---carries the most
+predictive power for a fixed clustering target under controlled numerical
+conditions.
+The goal is comparative rather than universal: to map when coarse
+density contrast, fine spatial structure, or fine phase-space
+substructure is most predictive across stylised initial-condition
+families and softening regimes.
 
 The Jeans instability criterion provides a physical prior.
 The Jeans length $\lambda_J \propto \sigma_v \rho^{-1/2}$ sets the
@@ -141,15 +126,19 @@ families test, in a controlled setting, the same dichotomy: does the
 large-scale density contrast or the small-scale kinematic substructure
 carry more predictive power for future clustering?
 
-We study four initial condition families spanning these structural types
-(Section~\ref{sec:ics}) with \TotalRuns{} three-dimensional $N$-body
-simulations.  For each we test observables belonging to three
-classes---coarse positional, fine positional, and fine kinematic---using
-Pearson correlation with bootstrap confidence intervals as the verdict
+We study four initial-condition families spanning these structural
+types (Section~\ref{sec:ics}) with \TotalRuns{} three-dimensional
+$N$-body simulations.
+For each we test observables belonging to three classes---coarse
+positional, fine positional, and fine kinematic---using Pearson
+correlation with bootstrap confidence intervals as the verdict
 criterion.
 The winner gap is defined as $\max|r_{\rm fine}| - \max|r_{\rm coarse}|$
 throughout: positive values indicate fine advantage, negative values
 indicate coarse dominance.
+The key question is whether additional spatial detail beyond the coarse
+density field carries predictive power, or whether only the kinematic
+(phase-space) channel does so, and under what conditions.
 
 
 % ---------------------------------------------------------------------------
@@ -822,9 +811,11 @@ substructure---governs the merger rate \citep{White1996}.
 
 \subsection{Physical interpretation: concentrated profiles}
 
-Local velocity dispersion encodes kinematic pressure: regions with
-higher initial $\sigma_v^{\rm loc}$ have more virial support and resist
-collapse, producing a negative correlation with future clustering growth.
+A plausible interpretation is that local velocity dispersion captures
+support against near-term collapse in a way unavailable to purely
+positional summaries: regions with higher initial $\sigma_v^{\rm loc}$
+have more virial support and resist collapse, producing a negative
+correlation with future clustering growth.
 Positional fine observables cannot detect this because the equilibrium
 density profile is smooth above the softening scale; the fine advantage
 is observable-class-specific, requiring phase-space access.
@@ -892,37 +883,44 @@ assembly---requires further investigation.
 \subsection{What is and is not earned}
 \label{sec:discussion:scope}
 
-\textit{Earned.}  Bimodal coarse dominance holds across all tested $N$,
-$\heps$, and force models.  No positional fine observable outperforms the
-coarse predictor in any cell, except cold-clumpy at $\heps = 0.10$
-(ClosePairs as inter-clump connectivity proxy; not a physical fine-scale win).  VelDisp outperforms it for concentrated
-profiles at low softening (gap CIs exclude zero), with a real
-$\heps$-dependent transition governed in part by $\heps/a$.
+\textit{Earned within this battery:}
+\begin{itemize}
+  \item Robust coarse dominance for bimodal ICs across all tested
+    $N$, $\heps$, and both force models.
+  \item No positional fine observable outperforms the coarse predictor
+    in any tested cell (cold-clumpy $\heps = 0.10$ excepted; ClosePairs
+    acts as inter-clump connectivity proxy, not true fine-scale structure).
+  \item Fine kinematic (VelDisp) advantage for Hernquist at
+    $\heps \le 0.05$ and Plummer at $\heps = 0.02$ (gap CIs exclude zero).
+  \item $\heps$-dependent transition from fine to coarse dominance for
+    concentrated profiles, governed in part by $\heps/a$.
+  \item All load-bearing claims survive direct pairwise comparison
+    ($|r_{\rm VelDisp}| > |r_{\rm CoarseG8}|$ in the same cells)
+    and removal of the null-bias correction.
+\end{itemize}
 
-\textit{Robust to simpler tests.}  The class-level winner gap
-($\max|r_{\rm fine}| - \max|r_{\rm coarse}|$) is the primary verdict
-statistic, but the load-bearing claims also hold under direct pairwise
-comparison: $|r_{\rm VelDisp}| > |r_{\rm CoarseG8}|$ in the same
-concentrated/low-$\heps$ cells where the class-level verdict is
-\textsc{fine}, and the sign pattern is unchanged when the null-bias
-correction is removed (correction shifts CI bounds by $0.05$--$0.15$
-but does not flip any established verdict).
+\textit{Unresolved:}
+\begin{itemize}
+  \item Hernquist at $\heps = 0.07$ and Plummer at
+    $\heps = 0.03$--$0.05$: gap CIs span zero.
+  \item Exact transition boundary in $\heps/a$.
+  \item Whether results generalise beyond these four IC families
+    and this target.
+\end{itemize}
 
-\textit{Unresolved.}  Hernquist at $\heps = 0.07$ and Plummer at
-$\heps = 0.03$--$0.05$ have gap CIs spanning zero.  The precise
-transition $\heps/a$ is not sharply located.
-
-\textit{Not earned.}  Universal coarse dominance, universal fine
-superiority, or a sharp critical boundary in $\heps/a$.  Family
-stability is low (\NFamilyStableCells{} of \NCells{} cells with
-$\ge 100$ listwise-complete replicates, spanning all $N$,
-$\heps$, and both models), so a stable law across
-families is not supported.  The study measures correlation, not
-causation, and excludes cosmological processes.
+\textit{Not earned:}
+\begin{itemize}
+  \item Universal ranking across self-gravitating systems.
+  \item Sharp critical transition in $\heps/a$.
+  \item Causal mechanism (this study measures correlation, not causation).
+  \item Cosmological relevance (no expansion, tidal fields, or baryons).
+  \item Family-stable law (\NFamilyStableCells{} of \NCells{} cells
+    with $\ge 100$ listwise-complete replicates are family-stable).
+\end{itemize}
 All main verdicts are reproduced when the coarse final state
-$\sigrho(8)|_{t=t_e}$ is used as the target instead of the difference
-$\dCearly$, ruling out shared-baseline deflation as a driver of the
-reported hierarchy (see Section~\ref{sec:methods:prediction}).
+$\sigrho(8)|_{t=t_e}$ replaces the difference $\dCearly$ as the
+target, ruling out shared-baseline deflation
+(Section~\ref{sec:methods:prediction}).
 
 \subsection{Scope and limitations}
 
@@ -936,24 +934,28 @@ but not the precise boundary in $\heps/a$.
 \section{Conclusion}
 \label{sec:conclusion}
 
-Across \TotalRuns{} simulations spanning \NICs{} initial-condition
-families, \NModels{} force models, and $\heps \in [\EpsMin{}, \EpsMax{}]$,
-the central result is a verdict asymmetry between observable classes.
-Bimodal (two-cluster) initial conditions are coarse-dominant in every
-tested cell---all $N$, $\heps$, and both force models---with
-$r = \BimodalBestCoarseR{}$ at $\heps = 0.05$ (ranging from $0.961$
-to $0.994$ across $\heps$) and winner-gap CIs entirely below zero
-in every cell.
-For concentrated profiles (Hernquist, Plummer), local velocity dispersion
-outperforms the coarse predictor at low softening ($\heps \le 0.05$ for
-Hernquist, $\heps = 0.02$ for Plummer), with a transition to coarse
-dominance by $\heps = 0.10$.
-No tested positional fine observable outperforms the coarse predictor
-in any parameter cell (cold-clumpy $\heps = 0.10$ ClosePairs excepted;
-see Section~\ref{sec:results:verdict_map}).  The kinematic fine advantage requires three
-conditions simultaneously: a concentrated-cusp family, small $\heps/a$,
-and phase-space access.
-Outside this intersection, coarse dominance or ties prevail.
+This battery of \TotalRuns{} simulations across \NICs{} families,
+\NModels{} force models, and five softening values yields three results.
+
+\textit{Primary}: coarse density variance robustly dominates for
+merging binary clusters across every tested cell ($r = \BimodalBestCoarseR{}$
+at $\heps = 0.05$; winner-gap CIs entirely below zero at all $N$,
+$\heps$, and both force models).
+
+\textit{Secondary}: local velocity dispersion outperforms the coarse
+predictor for concentrated cusp profiles in a restricted low-softening
+regime (Hernquist $\heps \le 0.05$, Plummer $\heps = 0.02$; gap CIs
+exclude zero), with a transition to coarse dominance by $\heps = 0.10$.
+
+\textit{Negative}: no tested positional fine-scale observable
+outperforms the coarse predictor in any cell of this battery.
+The only fine advantage is kinematic, not positional, and requires
+three conditions simultaneously: a concentrated-cusp family, small
+$\heps/a$, and phase-space access.
+
+No universal ranking is supported.  Predictive advantage is conditional
+on the initial-condition family, the observable class, and the
+softening regime---not a general property of self-gravitating systems.
 
 \clearpage
 
