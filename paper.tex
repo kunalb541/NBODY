@@ -114,15 +114,16 @@ For a comprehensive review of N-body force algorithms and the resolution
 tradeoffs that frame this question, see \citet{DehnenRead2011}.
 
 The question of which initial summaries survive into later structure
-has direct astrophysical precedent.  Cosmological $N$-body simulations
-produce dark matter haloes with a nearly universal density profile
-\citep{NFW1997}, yet the route to this profile---whether through
-monolithic collapse or hierarchical merging---imprints different
-phase-space signatures \citep{White1996}.  Merger remnants retain
-kinematic memory of their progenitors: shells, streams, and velocity
-anisotropy persist well after the density profile has relaxed
-\citep{HernquistSpergel1992}.  Our bimodal and concentrated-cusp
-families test, in a controlled setting, the same dichotomy: does the
+has an operational dimension: it determines which statistics are worth
+computing at the initial-condition stage and which are dynamically
+irrelevant.  Structure-formation studies show that merger remnants
+retain kinematic memory of their progenitors---shells, streams, and
+velocity anisotropy persist well after the density profile has relaxed
+\citep{White1996,HernquistSpergel1992}---but whether that memory is
+accessible from the scalar summary statistics routinely computed in
+simulation pipelines is an open question.
+Our bimodal and concentrated-cusp families test, in a controlled and
+deliberately stylised setting, the same dichotomy: does the
 large-scale density contrast or the small-scale kinematic substructure
 carry more predictive power for future clustering?
 
@@ -948,7 +949,11 @@ regime (Hernquist $\heps \le 0.05$, Plummer $\heps = 0.02$; gap CIs
 exclude zero), with a transition to coarse dominance by $\heps = 0.10$.
 
 \textit{Negative}: no tested positional fine-scale observable
-outperforms the coarse predictor in any cell of this battery.
+outperforms the coarse predictor in any cell of this battery
+(with one numerical boundary case: cold-clumpy at $\heps = 0.10$,
+where ClosePairs acts as a proxy for inter-clump connectivity because
+the linking radius $4\heps$ approaches the inter-clump separation,
+not as evidence of genuine fine-scale structure).
 The only fine advantage is kinematic, not positional, and requires
 three conditions simultaneously: a concentrated-cusp family, small
 $\heps/a$, and phase-space access.
