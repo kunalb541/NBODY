@@ -1,4 +1,4 @@
-## Observable-Class Predictability in Stylised Three-Dimensional Self-Gravitating N-body Families
+### Observable-Class Predictability in Stylised Three-Dimensional Self-Gravitating N-body Families
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
