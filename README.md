@@ -1,4 +1,4 @@
-#### Observable-Class Predictability in Stylised Three-Dimensional Self-Gravitating N-body Families
+### Observable-Class Predictability in Stylised Three-Dimensional Self-Gravitating N-body Families
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
@@ -6,8 +6,7 @@
 
 Code and analysis pipeline for the paper:
 
-> **Observable-Class Predictability in Stylised Three-Dimensional Self-Gravitating N-body Families:
-> Coarse Dominance, Kinematic Advantage, and Softening Dependence**
+> **Observable-Class Predictability in Stylised Three-Dimensional Self-Gravitating N-body Families**
 >
 > Kunal Bhatia (2026)
 > [ORCID: 0009-0007-4447-6325](https://orcid.org/0009-0007-4447-6325)
