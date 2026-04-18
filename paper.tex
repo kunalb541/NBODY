@@ -204,7 +204,7 @@ The softening parameter $\heps$ is treated as a force-resolution control
 variable: smaller values sharpen the interaction potential at the cost of
 larger integration errors for close approaches, while larger values
 suppress cusp dynamics by smoothing the potential over a physical scale
-\citep{DehnenRead2011}.
+\citep{Dehnen2001,DehnenRead2011,Athanassoula2000}.
 The five-point $\heps$ grid spans $\heps/a \in [0.10, 0.50]$ for the
 concentrated families, bracketing the force-convergence regime identified
 by \citet{PowerEtal2003} as necessary for reliable cusp profiles.
@@ -708,6 +708,9 @@ both model classes at $N = 1024$.
 \label{fig:model_comparison}
 \end{figure}
 
+The PM-periodic model serves as a robustness cross-check on the
+family-level verdict structure rather than co-equal evidence for the
+$\heps$-dependent transition (which is a direct-isolated phenomenon).
 Both model classes agree on the bimodal verdict at all $\heps$.
 For concentrated profiles, quantitative differences arise because the
 PM force resolution ($\sim L/32$) is set by the mesh, making PM rows
@@ -865,44 +868,26 @@ Appendix~\ref{app:validation} (Figure~\ref{fig:radial_and_null}).
 
 \subsection{Astrophysical implications}
 
-The bimodal merger timescale $t_{\rm merge} \sim d/v_{\rm rel}$ is
-analogous to the dynamical friction timescale in galaxy mergers, and
-the coarse density variance at scale $L/8$ measures essentially the
-large-scale overdensity that drives dynamical friction.  For dark matter
-halo mergers, this is consistent with the picture that the large-scale
-density contrast at the virial-radius scale, not internal substructure,
-governs the merger rate---as assumed in merger-tree models used in
-cosmological simulations \citep{NFW1996}.
+The bimodal coarse-dominance result is consistent with the hierarchical
+picture in which large-scale overdensity governs merger timing
+\citep{White1996}: the inter-cluster density contrast at scale $L/8$
+plays a role analogous to the overdensity that drives dynamical friction
+in galaxy mergers.
 
-The $\heps/a$ transition maps onto whether a simulation resolves the
-half-mass radius of a cusp.  For dark matter haloes with NFW-like cusps
-($r_s \sim 10$--$30$~kpc), the critical softening implied by our results
-is $\heps \sim 0.25\,r_s$.  Below this threshold, velocity-dispersion
-substructure carries predictive information about future collapse;
-above it, the kinematic signal vanishes.  This is consistent with the
-\citet{PowerEtal2003} convergence criterion, which requires force
-resolution well inside the scale radius for reliable halo profiles.
+The $\heps/a$ transition for concentrated profiles is suggestive of
+resolution-dependent access to cusp kinematics.  For NFW-like dark
+matter haloes ($r_s \sim 10$--$30$\,kpc), the transition at
+$\heps/a \approx 0.25$--$0.50$ maps onto softening scales of a few kpc,
+comparable to the convergence radius identified by \citet{PowerEtal2003}.
+We stress that this mapping is qualitative: our battery uses idealised
+isolated families, not cosmological populations, and the threshold
+$\heps/a \approx 0.25$--$0.50$ is measured, not prescribed as a universal
+design rule.
 
-Self-gravitating $N$-body systems are the fundamental building blocks of
-dark matter structure formation.  The finding that coarse density
-contrast dominates prediction for multi-component mergers is consistent
-with the hierarchical merging picture, where large-scale overdensity
-determines collapse timing.  The kinematic fine advantage for
-concentrated cusps suggests that velocity anisotropy and phase-space
-substructure (streams, shells) may carry predictive information in
-resolved dark matter haloes---connecting to debates on the diagnostic
-role of internal kinematics in the cusp--core and missing-satellites
-problems.
-
-These results have practical implications for $N$-body simulation design.
-For simulations of merging systems (galaxy pairs, halo mergers), the
-coarse density field at the virial-radius scale is the primary predictor
-of merger outcome; initial substructure below this scale is dynamically
-irrelevant at early times.  For simulations of isolated cusp-dominated
-systems (elliptical galaxies, dark matter haloes), force resolution must
-satisfy $\heps/a \lesssim 0.25$ for initial velocity substructure to
-carry predictive information.  Above this threshold, the kinematic signal
-vanishes and only the coarse density field matters.
+These findings may have practical relevance for collisionless $N$-body
+simulation design, but direct transfer to cosmological contexts---which
+include tidal fields, baryonic processes, and hierarchical
+assembly---requires further investigation.
 
 \subsection{What is and is not earned}
 \label{sec:discussion:scope}
@@ -913,6 +898,15 @@ coarse predictor in any cell, except cold-clumpy at $\heps = 0.10$
 (ClosePairs as inter-clump connectivity proxy; not a physical fine-scale win).  VelDisp outperforms it for concentrated
 profiles at low softening (gap CIs exclude zero), with a real
 $\heps$-dependent transition governed in part by $\heps/a$.
+
+\textit{Robust to simpler tests.}  The class-level winner gap
+($\max|r_{\rm fine}| - \max|r_{\rm coarse}|$) is the primary verdict
+statistic, but the load-bearing claims also hold under direct pairwise
+comparison: $|r_{\rm VelDisp}| > |r_{\rm CoarseG8}|$ in the same
+concentrated/low-$\heps$ cells where the class-level verdict is
+\textsc{fine}, and the sign pattern is unchanged when the null-bias
+correction is removed (correction shifts CI bounds by $0.05$--$0.15$
+but does not flip any established verdict).
 
 \textit{Unresolved.}  Hernquist at $\heps = 0.07$ and Plummer at
 $\heps = 0.03$--$0.05$ have gap CIs spanning zero.  The precise
@@ -1035,6 +1029,14 @@ Pre-computed figures and tables are included in \texttt{outputs/}.
 
 \bibitem[Chavanis(2002)]{Chavanis2002}
 Chavanis, P.-H.\ 2002, \textit{Physical Review E}, 65, 056123.
+
+\bibitem[Athanassoula et al.(2000)]{Athanassoula2000}
+Athanassoula, E., Bosma, A., Lambert, J.-C., \& Makino, J.\ 2000,
+\textit{Monthly Notices of the Royal Astronomical Society}, 314, 475.
+
+\bibitem[Dehnen(2001)]{Dehnen2001}
+Dehnen, W.\ 2001,
+\textit{Monthly Notices of the Royal Astronomical Society}, 324, 273.
 
 \bibitem[Dehnen \& Read(2011)]{DehnenRead2011}
 Dehnen, W., \& Read, J.~I.\ 2011,
