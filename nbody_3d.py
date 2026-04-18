@@ -805,168 +805,6 @@ def run_one(cfg: SimConfig, use_numba: bool = False) -> Dict:
         ))
 
 
-# ── ODD correlation analysis ───────────────────────────────────────────────────
-
-def _bootstrap_winner_gap_ci(
-    coarse_pred: list,
-    fine_preds:  List[list],
-    target:      list,
-    n_boot:      int = 2000,
-    seed:        int = 0,
-) -> Tuple[float, float]:
-    """Bootstrap 95 % CI for the winner-gap statistic max|r_fine| − |r_coarse|.
-
-    Resamples rows with replacement and recomputes the gap on each resample.
-    Returns (lo, hi) = (2.5th, 97.5th) percentile of the bootstrap distribution.
-    Returns (nan, nan) when there are fewer than 10 valid rows.
-    """
-    # Build joint-valid index: rows where coarse_pred AND target are finite
-    valid = [
-        i for i, (c, t) in enumerate(zip(coarse_pred, target))
-        if c is not None and t is not None and np.isfinite(c) and np.isfinite(t)
-    ]
-    if len(valid) < 10:
-        return float("nan"), float("nan")
-
-    c_arr = np.array([coarse_pred[i] for i in valid], float)
-    t_arr = np.array([target[i]      for i in valid], float)
-    f_arrs = []
-    for fp in fine_preds:
-        f_arrs.append(np.array([fp[i] for i in valid], float))
-
-    rng  = np.random.default_rng(seed)
-    n    = len(valid)
-    gaps = np.empty(n_boot, float)
-    for b in range(n_boot):
-        idx = rng.integers(0, n, size=n)
-        c_b = c_arr[idx]; t_b = t_arr[idx]
-        if np.std(c_b) < 1e-12 or np.std(t_b) < 1e-12:
-            gaps[b] = float("nan")
-            continue
-        rc_b = float(np.corrcoef(c_b, t_b)[0, 1])
-        rc_abs = abs(rc_b)
-        fine_abs_b = []
-        for f_a in f_arrs:
-            f_b = f_a[idx]
-            if np.std(f_b) < 1e-12:
-                continue
-            fine_abs_b.append(abs(float(np.corrcoef(f_b, t_b)[0, 1])))
-        best_fine_b = max(fine_abs_b) if fine_abs_b else 0.0
-        gaps[b] = best_fine_b - rc_abs
-
-    valid_gaps = gaps[np.isfinite(gaps)]
-    if len(valid_gaps) < 10:
-        return float("nan"), float("nan")
-    lo, hi = float(np.percentile(valid_gaps, 2.5)), float(np.percentile(valid_gaps, 97.5))
-    return lo, hi
-
-
-def _pearson(x: list, y: list) -> Optional[float]:
-    a = np.array([v for v, w in zip(x, y)
-                  if v is not None and w is not None
-                  and np.isfinite(v) and np.isfinite(w)], float)
-    b = np.array([w for v, w in zip(x, y)
-                  if v is not None and w is not None
-                  and np.isfinite(v) and np.isfinite(w)], float)
-    if len(a) < 3:
-        return None
-    # Zero variance in either variable → r is undefined, not zero
-    if np.std(a) < 1e-12 or np.std(b) < 1e-12:
-        return None   # degenerate: observable constant across replicates
-    return float(np.corrcoef(a, b)[0, 1])
-
-
-def odd_correlations(rows: List[Dict]) -> Dict:
-    """For each model×integrator×init group, test whether fine or coarse
-    initial structure better predicts future dynamical evolution.
-
-    Baseline-free primary ODD test (no shared-variable inflation):
-      r(coarse_var_0,  coarse_var_e)  — initial coarse → final coarse state
-    Using the delta d_coarse_early = coarse_var_e − coarse_var_0 as target
-    induces an algebraic anti-correlation r(X, Y−X) < 0 even under a null
-    where Y is independent of X, inflating |r_coarse| and overstating coarse
-    dominance.  coarse_var_e is the correct baseline-free target.
-
-    Kill-test fine observables (all must fail to confirm coarse dominance):
-      r(fine_knn_0,      coarse_var_e)  — top-k kNN density (original)
-      r(fine_knn_all_0,  coarse_var_e)  — full-distribution kNN density
-      r(fine_pk_small_0, coarse_var_e)  — small-scale Fourier power
-      r(fine_close_0,    coarse_var_e)  — fraction of close pairs
-
-    Winner-gap verdict uses a bootstrap 95 % CI rather than a raw point
-    estimate so that sampling noise cannot produce spurious hard verdicts.
-    """
-    _T = 0.05   # same gap threshold as flagship nbody_stress pipeline
-    groups: Dict[str, list] = {}
-    for r in rows:
-        if r["status"] != "ok":
-            continue
-        key = f"N={r['n']}|eps={r['eps']}|{r['model']}|{r['integrator']}|{r['init']}"
-        groups.setdefault(key, []).append(r)
-
-    out = {}
-    for key, rs in groups.items():
-        coarse0      = [r["coarse_var_0"]        for r in rs]
-        fine_knn     = [r["fine_knn_0"]           for r in rs]
-        fine_knn_all = [r["fine_knn_all_0"]       for r in rs]
-        fine_pk      = [r["fine_pk_small_0"]      for r in rs]
-        fine_close   = [r["fine_close_pairs_0"]   for r in rs]
-        # Baseline-free target: final coarse state (not delta)
-        cv_early     = [r["coarse_var_e"]          for r in rs]
-        cv_late      = [r["coarse_var_f"]          for r in rs]
-        dh_early     = [r["d_hmr_early"]           for r in rs]
-        dh_late      = [r["d_hmr_late"]            for r in rs]
-
-        rc     = _pearson(coarse0,      cv_early)
-        rf_top = _pearson(fine_knn,     cv_early)
-        rf_all = _pearson(fine_knn_all, cv_early)
-        rf_pk  = _pearson(fine_pk,      cv_early)
-        rf_cl  = _pearson(fine_close,   cv_early)
-
-        # best fine competitor: skip None (degenerate/constant observable) and nan
-        fine_abs = [abs(v) for v in [rf_top, rf_all, rf_pk, rf_cl]
-                    if v is not None and np.isfinite(v)]
-        best_fine_r = max(fine_abs) if fine_abs else 0.0
-        rc_abs      = abs(rc) if (rc is not None and np.isfinite(rc)) else 0.0
-        fine_adv    = best_fine_r - rc_abs   # point estimate (stored; use CI for verdict)
-
-        # Bootstrap 95 % CI for the winner gap
-        gap_lo, gap_hi = _bootstrap_winner_gap_ci(
-            coarse_pred=coarse0,
-            fine_preds=[fine_knn, fine_knn_all, fine_pk, fine_close],
-            target=cv_early,
-        )
-
-        # CI-based verdict: gap CI must clear the threshold on the correct side
-        if gap_lo is not None and np.isfinite(gap_lo) and gap_lo > _T:
-            verdict = "FINE"
-        elif gap_hi is not None and np.isfinite(gap_hi) and gap_hi < -_T:
-            verdict = "COARSE"
-        else:
-            verdict = "TIE"
-
-        out[key] = {
-            "n": len(rs),
-            # coarse predictor vs baseline-free target
-            "r_coarse0_vs_coarse_var_e":      rc,
-            "r_coarse0_vs_coarse_var_f":      _pearson(coarse0, cv_late),
-            "r_coarse0_vs_d_hmr_early":       _pearson(coarse0, dh_early),
-            "r_coarse0_vs_d_hmr_late":        _pearson(coarse0, dh_late),
-            # fine predictors — kill-test battery
-            "r_fine_topk_vs_coarse_var_e":    rf_top,
-            "r_fine_all_vs_coarse_var_e":     rf_all,
-            "r_fine_pk_vs_coarse_var_e":      rf_pk,
-            "r_fine_close_vs_coarse_var_e":   rf_cl,
-            # winner-gap summary
-            "best_fine_r_abs":      best_fine_r,
-            "fine_advantage_early": fine_adv,
-            "winner_gap_ci_lo":     gap_lo,
-            "winner_gap_ci_hi":     gap_hi,
-            "verdict":              verdict,
-        }
-    return out
-
-
 # ── Summary ────────────────────────────────────────────────────────────────────
 
 def _smean(vals: list) -> Optional[float]:
@@ -996,11 +834,10 @@ def summarize(rows: List[Dict]) -> Dict:
         }
 
     return {
-        "n_total":          len(rows),
-        "n_ok":             len(ok),
-        "n_error":          len(rows) - len(ok),
-        "groups":           group_sum,
-        "odd_correlations": odd_correlations(rows),
+        "n_total":  len(rows),
+        "n_ok":     len(ok),
+        "n_error":  len(rows) - len(ok),
+        "groups":   group_sum,
     }
 
 
@@ -1151,46 +988,6 @@ def main() -> None:
 
     print(f"\nDone.  {summary['n_ok']}/{summary['n_total']} ok.")
     print(f"Results written to  {data_dir}/\n")
-
-    # ── ODD verdict table ─────────────────────────────────────────────────────
-    corr = summary["odd_correlations"]
-    print("ODD kill-test battery — all fine observables vs coarse_var_e (baseline-free target):")
-    print(f"  {'Group':<48} {'n':>4} {'r_coarse':>9} "
-          f"{'r_knn_top':>10} {'r_knn_all':>10} {'r_pk_sm':>8} {'r_close':>8} "
-          f"{'gap_CI_lo':>10} {'gap_CI_hi':>10}  verdict")
-    print("  " + "─" * 133)
-    for key in sorted(corr.keys()):
-        c      = corr[key]
-        rc     = c["r_coarse0_vs_coarse_var_e"]
-        rf_top = c["r_fine_topk_vs_coarse_var_e"]
-        rf_all = c["r_fine_all_vs_coarse_var_e"]
-        rf_pk  = c["r_fine_pk_vs_coarse_var_e"]
-        rf_cl  = c["r_fine_close_vs_coarse_var_e"]
-        gap_lo = c["winner_gap_ci_lo"]
-        gap_hi = c["winner_gap_ci_hi"]
-        verdict = c["verdict"]
-
-        def _fs(v: Optional[float], width: int = 0) -> str:
-            if v is None or (isinstance(v, float) and not np.isfinite(v)):
-                return "—".rjust(width) if width else "—"
-            return f"{v:+.3f}".rjust(width) if width else f"{v:+.3f}"
-
-        print(f"  {key:<48} {c['n']:>4} {_fs(rc):>9} "
-              f"{_fs(rf_top):>10} {_fs(rf_all):>10} {_fs(rf_pk):>8} {_fs(rf_cl):>8} "
-              f"{_fs(gap_lo):>10} {_fs(gap_hi):>10}  [{verdict:<6}]")
-
-    print(
-        "\nTarget: coarse_var_e — final coarse-grid variance (baseline-free; no shared-variable inflation).\n"
-        "Columns: r_coarse = r(coarse_var_0, coarse_var_e)\n"
-        "         r_knn_top = fine kNN top-k   r_knn_all = kNN over all particles\n"
-        "         r_pk_sm = small-scale Fourier power   r_close = close-pair fraction\n"
-        "         gap_CI_lo/hi = bootstrap 95% CI of (max|r_fine| − |r_coarse|)\n"
-        "         '—' = observable degenerate (zero variance) or too few replicates\n"
-        "Verdict from CI (threshold ±0.05):\n"
-        "  FINE   : CI lo > +0.05 — fine beats coarse with 95% confidence\n"
-        "  COARSE : CI hi < −0.05 — coarse beats fine with 95% confidence\n"
-        "  TIE    : CI straddles ±0.05 — inconclusive\n"
-    )
 
 
 if __name__ == "__main__":
