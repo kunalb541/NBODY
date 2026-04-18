@@ -1162,21 +1162,32 @@ def fig05_cond_fine(analysis: Dict) -> None:
 
 def fig06_eps_transition(analysis: Dict) -> None:
     plt.rcParams.update(STYLE)
-    fig, ax = plt.subplots(figsize=(10.0, 5.2))
+    fig, (ax_left, ax_right) = plt.subplots(1, 2, figsize=(12.0, 4.5),
+                                             gridspec_kw={"width_ratios": [1, 1]})
     mk_cycle = ["o", "s", "D", "^"]
     for idx, init in enumerate(IC_ORDER):
         vals = []
         for eps in PAPER_EPS:
             cell = get_cell(analysis, "direct_isolated", init, 1024, eps)
-            bf   = get_best_fine_abs_r(cell); bc = get_best_coarse_abs_r(cell)
+            bf = get_best_fine_abs_r(cell); bc = get_best_coarse_abs_r(cell)
             vals.append(np.nan if (bf is None or bc is None) else bf - bc)
-        ax.plot(PAPER_EPS, vals, marker=mk_cycle[idx], lw=2.2, ms=7,
-                color=IC_COLORS[init], label=IC_LABELS[init], zorder=4)
-    ax.axhline(0.0, color="0.5", lw=1, ls="--")
-    ax.set_xlabel(r"$\epsilon$")
-    ax.set_ylabel(r"Winner gap: $|r_{\rm best\ fine}| - |r_{\rm best\ coarse}|$")
-    ax.set_title(r"Winner gap vs softening ($N=1024$, direct-isolated)")
-    ax.legend(frameon=False, ncol=2, loc="upper left", fontsize=9)
+        # Bimodal + cold-clumpy on left, concentrated on right
+        if init in ("bimodal3d", "cold_clumpy3d"):
+            ax_left.plot(PAPER_EPS, vals, marker=mk_cycle[idx], lw=2.2, ms=7,
+                         color=IC_COLORS[init], label=IC_LABELS[init], zorder=4)
+        else:
+            ax_right.plot(PAPER_EPS, vals, marker=mk_cycle[idx], lw=2.2, ms=7,
+                          color=IC_COLORS[init], label=IC_LABELS[init], zorder=4)
+    for ax in (ax_left, ax_right):
+        ax.axhline(0.0, color="0.5", lw=1, ls="--")
+        ax.set_xlabel(r"$\epsilon$")
+        ax.legend(frameon=False, fontsize=9, loc="best")
+    ax_left.set_ylabel(r"Winner gap: $|r_{\rm best\ fine}| - |r_{\rm best\ coarse}|$")
+    ax_left.set_title("Multi-cluster ICs", fontweight="bold")
+    ax_right.set_title("Concentrated profiles", fontweight="bold")
+    fig.suptitle(r"Winner gap vs softening ($N=1024$, direct-isolated)",
+                 fontsize=11, fontweight="bold")
+    fig.tight_layout()
     savefig(fig, "fig06_eps_transition.pdf")
 
 
@@ -1285,10 +1296,18 @@ def fig09_diagnostics(rows: List[Dict]) -> None:
     drifts = np.array([safe_float(r.get("energy_rel_drift")) for r in direct_rows], dtype=float)
     drifts = drifts[np.isfinite(drifts)]
     if len(drifts) > 0:
-        ax1.hist(drifts, bins=20, color="#4c78a8", alpha=0.85)
+        # Clip to [1e-7, 1e-1] for readability; annotate outliers
+        clipped = drifts[drifts < 0.1]
+        n_outliers = int(np.sum(drifts >= 0.1))
+        ax1.hist(clipped, bins=30, color="#4c78a8", alpha=0.85)
         ax1.set_xscale("log")
+        ax1.set_xlim(1e-6, 1e-1)
         ax1.set_title("Relative energy drift")
         ax1.set_xlabel(r"$|\Delta E|/|E_0|$")
+        if n_outliers > 0:
+            ax1.text(0.97, 0.95, f"{n_outliers} runs with drift $> 0.1$\n(max = {np.max(drifts):.1f})",
+                     transform=ax1.transAxes, ha="right", va="top", fontsize=7,
+                     bbox=dict(fc="white", alpha=0.8, ec="0.7", boxstyle="round,pad=0.3"))
     else:
         draw_missing(ax1, "Relative energy drift")
 
@@ -1501,7 +1520,7 @@ def fig12_veldisp_mechanism(showcase_snaps: Dict[str, Dict],
                 if r_vd is not None:
                     lbl += rf"  ($r_{{VD}} = {r_vd:.2f}$)"
             ax3.plot(rc, mu, color=col, lw=2.5, label=lbl)
-            ax3.fill_between(rc, mu - sd, mu + sd, color=col, alpha=0.15)
+            ax3.fill_between(rc, mu - 0.5*sd, mu + 0.5*sd, color=col, alpha=0.12)
 
     ax3.set_title("Radial VelDisp profile", fontsize=10, fontweight="bold")
     ax3.set_xlabel("projected radius from centre")

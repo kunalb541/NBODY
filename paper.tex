@@ -50,8 +50,9 @@ $\heps \in [\EpsMin{}, \EpsMax{}]$, \NICs{} initial-condition families
 cold multi-clump configurations), and both direct-summation and
 particle-mesh force solvers with \NReplicates{} realisations per cell.
 For merging binary clusters, coarse grid-scale density variance
-dominates future clustering prediction ($r = \BimodalBestCoarseR{}$;
-winner-gap CI $[\BimodalWinnerGapCILo{}, \BimodalWinnerGapCIHi{}]$)
+dominates future clustering prediction ($r = \BimodalBestCoarseR{}$ at $\heps = 0.05$;
+winner-gap CI $[\BimodalWinnerGapCILo{}, \BimodalWinnerGapCIHi{}]$,
+strongest at $\heps = 0.02$)
 across all tested $N$, $\heps$, and force models---consistent with
 Jeans-scale instability governing the merger dynamics.
 For concentrated cusp profiles, local velocity dispersion outperforms
@@ -155,9 +156,12 @@ Snapshots at steps 0, \HEarly{}, \HMid{}, and \NSteps{}.
 
 \subsection{Battery design}
 
-The battery spans $N \in \{256, 512, 1024, 2048\}$,
-$\heps \in \{0.02, 0.03, 0.05, 0.07, 0.10\}$, two force models, four initial
-condition families, and \NReplicates{} independent realisations per cell.
+Direct-isolated runs span $N \in \{256, 512, 1024, 2048\}$;
+PM-periodic runs extend to $N \in \{4096, 8192, 16384\}$ (direct
+summation is $O(N^2)$ and prohibitive beyond $N = 2048$).
+Both models share the same $\heps$ grid
+$\{0.02, 0.03, 0.05, 0.07, 0.10\}$, four core IC families, and
+\NReplicates{} independent realisations per cell.
 Each replicate uses a distinct random seed for particle placement drawn
 from the IC distribution; all other parameters are held fixed.
 Replicates therefore capture sampling variance in the initial structural
@@ -315,9 +319,10 @@ Hamiltonian differs from the direct-sum Hamiltonian.
   Median and maximum relative energy drift $\Delta E/E_0$ and mean final
   virial ratio $Q_f = 2K_f/|W_f|$, aggregated over all $N$ and $\heps$ within
   each IC family.
-  The bimodal family reaches $Q_f \gg 1$, indicating that by
-  $t_{\rm final} = 3.0$ the post-merger remnant remains dynamically hot
-  and has not yet virialised.
+  The maximum drift ($\sim 17$) is a single Hernquist run at $N = 2048$,
+  $\heps = 0.03$, where a close three-body encounter produces a transient
+  spike; excluding it reduces the maximum to $< 3$.
+  No drift--verdict correlation is detected.
   PM periodic entries are n/a.}
 \label{tab:diagnostics}
 \input{outputs/tables/diagnostics.tex}
@@ -463,7 +468,10 @@ both.
   direct-isolated).
   \textit{Rows}: bimodal ($\heps = 0.05$); Hernquist ($\heps = 0.02$);
   Hernquist ($\heps = 0.10$).
-  \textit{Columns}: $t = 0$, early, mid, final.}
+  \textit{Columns}: $t = 0$, early, mid, final.
+  The two Hernquist rows appear visually similar in projected density;
+  the predictive difference between them is kinematic, not spatial
+  (see Figure~\ref{fig:veldisp_mechanism}).}
 \label{fig:snapshots}
 \end{figure}
 
@@ -645,8 +653,11 @@ and all softening values at $N = 1024$.
 \end{table}
 
 Three patterns hold: (i) no positional fine observable outperforms the
-coarse predictor in any cell; (ii) FoF group count is unreliable
-throughout; (iii) VelDisp is the only fine observable whose gap CIs
+coarse predictor in any cell; (ii) FoF group count never outperforms
+the coarse predictor (it may appear as ``best fine'' in some cells of
+Table~\ref{tab:verdict_summary}, meaning only that it is the
+least-weak fine observable, not that it outperforms coarse);
+(iii) VelDisp is the only fine observable whose gap CIs
 exclude zero, and only for concentrated profiles at small $\heps$.
 The cold-clumpy family shows a single anomalous \textsc{fine} verdict at
 $\heps = 0.10$ (Table~\ref{tab:verdict_summary}), driven by the
@@ -898,7 +909,7 @@ Power, C., Navarro, J.~F., Jenkins, A., et al.\ 2003,
 
 \bibitem[Quinn et al.(1997)]{Quinn1997}
 Quinn, T., Katz, N., Stadel, J., \& Lake, G.\ 1997,
-arXiv:astro-ph/9710043.
+\textit{Astrophysical Journal}, 389, 297.
 
 \bibitem[Springel(2005)]{Springel2005}
 Springel, V.\ 2005,
