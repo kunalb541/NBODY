@@ -629,11 +629,21 @@ def write_macros(analysis: Dict, rows: List[Dict], path: str,
         # diagnostics
         "EnergyDriftMedian": f"{{${drift_med:.2e}$}}",
         "EnergyDriftMax":    f"{{${drift_max:.2e}$}}",
+        # family stability: cells whose verdict is consistent across all
+        # active prediction-target families (excluding underpowered cells)
+        "NFamilyStableCells": str(sum(
+            1 for cell in analysis.values()
+            if cell.get("family_stable") and not cell.get("underpowered")
+        )),
     }
     with open(path, "w") as f:
         for k, v in mapping.items():
-            # Strip leading '+' from positive numbers.
-            if isinstance(v, str) and v.startswith("+"):
+            # Strip leading '+' only for standalone numeric macros (r values,
+            # means).  Keep explicit sign for CI bound macros (ending in
+            # CILo / CIHi) so mixed-sign intervals render as [-0.05, +0.19]
+            # rather than the asymmetric [-0.05, 0.19].
+            is_ci_bound = k.endswith("CILo") or k.endswith("CIHi")
+            if not is_ci_bound and isinstance(v, str) and v.startswith("+"):
                 v = v[1:]
             f.write(f"\\newcommand{{\\{k}}}{{{v}}}\n")
 

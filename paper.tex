@@ -51,8 +51,8 @@ cold multi-clump configurations), and both direct-summation and
 particle-mesh force solvers with \NReplicates{} realisations per cell.
 For merging binary clusters, coarse grid-scale density variance
 dominates future clustering prediction ($r = \BimodalBestCoarseR{}$ at $\heps = 0.05$;
-winner-gap CI $[\BimodalWinnerGapCILo{}, \BimodalWinnerGapCIHi{}]$,
-strongest at $\heps = 0.02$)
+winner-gap CI $[\BimodalWinnerGapCILo{}, \BimodalWinnerGapCIHi{}]$ at $\heps = 0.05$,
+strengthening to $[-0.78, -0.65]$ at $\heps = 0.02$)
 across all tested $N$, $\heps$, and force models---consistent with
 Jeans-scale instability governing the merger dynamics.
 For concentrated cusp profiles, local velocity dispersion outperforms
@@ -65,7 +65,10 @@ $\heps = 0.10$, where the softening length exceeds the cusp
 scale radius.
 No positional fine-scale observable (nearest-neighbour density,
 small-scale Fourier power, close-pair fraction, or friends-of-friends
-group count) outperforms the coarse predictor in any tested cell.
+group count) outperforms the coarse predictor in any tested cell,
+with one exception: cold-clumpy at $\heps = 0.10$, where ClosePairs
+acts as a proxy for inter-clump connectivity rather than true
+fine-scale structure.
 The predictive hierarchy is thus not universal but depends jointly
 on the initial-condition family, the observable class, and the
 softening-to-scale-radius ratio $\heps/a$.
@@ -178,9 +181,9 @@ Replicates vary in particle placement within each sub-cluster but share
 this common infall speed.
 
 The ClosePairs observable is defined as pairs within $4\heps$.
-Across the $\heps$ sweep this measures three different physical scales
-($0.08$, $0.20$, $0.40$ in box units), which complicates direct
-cross-$\heps$ comparison for this observable relative to the others.
+Across the $\heps$ sweep this measures five different physical scales
+($0.08$, $0.12$, $0.20$, $0.28$, $0.40$ in box units), which complicates
+direct cross-$\heps$ comparison for this observable relative to the others.
 
 
 % ---------------------------------------------------------------------------
@@ -261,12 +264,50 @@ FoF group count at linking length $b = 0.20\,\bar{d}$ (recorded; included
 in the summary matrix).
 
 \subsection{Prediction target and verdict criterion}
+\label{sec:methods:prediction}
 
 Primary target: $\dCearly$, the change in $\sigrho(8)$ between $t=0$ and
 step \HEarly{}.
-Verdict: \textsc{coarse} if $|r_{\rm best\,coarse}| - |r_{\rm best\,fine}| > 0.05$,
-\textsc{fine} if reversed, tie otherwise (threshold set a priori).
+Verdicts are based on the 95\% bootstrap CI of the winner gap
+$g = |r_{\rm best\,fine}| - |r_{\rm best\,coarse}|$
+(1000 resamples of the \NReplicates{} replicates, BCa intervals):
+\textsc{fine} if the CI lower bound $> +0.05$;
+\textsc{coarse} if the CI upper bound $< -0.05$;
+\textsc{tie} otherwise (threshold set a priori).
+Point-estimate winner gaps are reported for effect-size description but do not
+determine verdicts; a positive point estimate with a CI spanning zero yields
+a \textsc{tie}.
 Pearson correlations are computed across the \NReplicates{} replicates per cell.
+
+\textbf{Null-bias correction.}
+Winner-gap CIs are corrected for null bias by permuting observable-class
+labels on the within-cell correlation matrix and subtracting the mean
+permutation-null gap from each bootstrap draw.
+This bias arises from unequal class sizes (more positional-fine predictors
+than coarse or kinematic predictors), which produces a positive expected
+gap under the null even when no class dominates.
+The correction shifts CI bounds by 0.05--0.15 in cells with strongly
+unequal class sizes; its magnitude is largest in cells with many
+positional fine predictors and smallest in bimodal cells where the
+coarse signal dominates unconditionally.
+Because the permutation is performed on the actual data covariance
+(not an independent null draw), strong predictors contribute to the
+null pool, which may modestly inflate the corrected kinematic fine
+advantage in concentrated profiles.
+
+\textbf{Shared-baseline note.}
+The primary target $\dCearly = \sigrho(8)|_{t=t_e} - \sigrho(8)|_{t=0}$
+shares the initial coarse density $\sigrho(8)|_{t=0}$ with the coarse
+predictor.  By the identity
+$\mathrm{Cov}(X,\,Y - X) = \mathrm{Cov}(X,\,Y) - \mathrm{Var}(X)$,
+this systematically deflates the coarse predictor's correlation with the
+difference target relative to its correlation with the final state alone.
+Fine predictors are not subject to this deflation.
+As a robustness check, repeating the analysis with $\sigrho(8)|_{t=t_e}$
+(the coarse final state, no baseline subtraction) as the target preserves
+the direction and significance of all reported verdicts, confirming that
+the bimodal coarse dominance and the concentrated-profile fine advantage
+are not artefacts of the difference formulation.
 
 
 % ---------------------------------------------------------------------------
@@ -276,70 +317,46 @@ Pearson correlations are computed across the \NReplicates{} replicates per cell.
 \subsection{Numerical credibility}
 \label{sec:results:diag}
 
-Table~\ref{tab:diagnostics} and Figure~\ref{fig:diagnostics} summarise
+Table~\ref{tab:diagnostics} summarises
 conservation diagnostics for all direct-isolated runs.
 The median relative energy drift is $\EnergyDriftMedian{}$
 (maximum $\EnergyDriftMax{}$).
 The maximum drift occurs in a single Hernquist run at $N = 2048$,
 $\heps = 0.03$, where a close three-body encounter drives a brief spike
 in potential energy; excluding this outlier reduces the maximum to $< 3$.
-No correlation between energy drift and verdict is detected
-(Figure~\ref{fig:diagnostics}, right panel).
+No drift--verdict correlation is detected; energy-drift distributions,
+virial-ratio scatter, and convergence curves appear in
+Appendix~\ref{app:validation}
+(Figures~\ref{fig:diagnostics} and~\ref{fig:convergence}).
 All families show drift below $10^{-3}$, confirming that leapfrog KDK
 is well-behaved across the full $N$--$\heps$ grid.
 Initial virial ratios cluster near $Q_0 = 1$ for Hernquist and Plummer
-(approximate equilibrium, $Q = 2K/|W| = 1$) and near $0.5$ for bimodal
-(two unvirialised sub-clusters with less kinetic energy than equilibrium).
-There is no obvious drift-outcome trend visible in the diagnostics.
-Figure~\ref{fig:convergence} confirms that $|r|$(VelDisp) stabilises
-by $\sim 200$ replicates for the kinematic frontier cells, and that
-bootstrap CI widths converge, ensuring that the battery's \NReplicates{}
-replicates are sufficient for the reported verdicts.
+and near $0.5$ for bimodal.
+Bootstrap CI widths and $|r|$(VelDisp) both stabilise by ${\sim}200$
+replicates, confirming that \NReplicates{} replicates are sufficient.
 
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=\textwidth]{outputs/figures/fig16_convergence.pdf}
-\caption{VelDisp convergence for kinematic frontier cells
-  (Hernquist and Plummer at $\heps = 0.02$ and $0.10$).
-  Green: $|r|$(VelDisp) mean $\pm$ std across repeated random subsamples
-  as a function of replicate count.
-  Grey dashed: 95\% CI width (right axis).
-  Both $|r|$ and CI width stabilise by $\sim 200$ replicates,
-  confirming that the battery's 500 replicates are sufficient.}
-\label{fig:convergence}
-\end{figure}
-% SUPPLEMENTARY CANDIDATE: Fig 16 (convergence) could move to appendix.
 
 PM periodic runs do not permit direct energy bookkeeping because their
 Hamiltonian differs from the direct-sum Hamiltonian.
 
 \begin{table}[htbp]
 \centering
-\caption{Conservation diagnostics (direct-isolated model).
-  Median and maximum relative energy drift $\Delta E/E_0$ and mean final
-  virial ratio $Q_f = 2K_f/|W_f|$, aggregated over all $N$ and $\heps$ within
-  each IC family.
+\caption{Conservation diagnostics (direct-isolated model), pooled
+  across all families, $N$, and $\heps$.
+  Rows show relative energy drift $\Delta E/E_0$, initial virial ratio
+  $Q_0 = 2K_0/|W_0|$, and final virial ratio $Q_f = 2K_f/|W_f|$.
+  Columns show the median and, for energy drift, the single maximum;
+  for virial ratios the third column shows the Min/Max range
+  (the ``Max'' header is shorthand for this range entry).
   The maximum drift ($\sim 17$) is a single Hernquist run at $N = 2048$,
   $\heps = 0.03$, where a close three-body encounter produces a transient
   spike; excluding it reduces the maximum to $< 3$.
   No drift--verdict correlation is detected.
-  PM periodic entries are n/a.}
+  PM-periodic runs are excluded.}
 \label{tab:diagnostics}
 \input{outputs/tables/diagnostics.tex}
 \end{table}
 
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=\textwidth]{outputs/figures/fig09_diagnostics.pdf}
-\caption{\textit{Left}: distribution of $\log_{10}(\Delta E/E_0)$ by IC family
-  (direct-isolated).
-  \textit{Centre}: initial virial ratio $Q_0 = 2K/|W|$ by family; dashed
-  line marks virial equilibrium $Q = 1$.
-  \textit{Right}: energy drift vs final virial ratio.
-  No drift-outcome correlation is present.}
-\label{fig:diagnostics}
-\end{figure}
-% SUPPLEMENTARY CANDIDATE: Fig 9 (diagnostics) could move to appendix.
 
 \subsection{Hard anchor: bimodal coarse dominance}
 \label{sec:results:bimodal}
@@ -367,7 +384,7 @@ entirely below zero, confirming coarse dominance).
 \end{figure}
 
 Table~\ref{tab:n_scaling} shows N-scaling.  The coarse predictor is
-stable ($r \in [\BimodalNScaleMin{}, \BimodalNScaleMax{}]$) and the
+stable across $N \in [\BimodalNScaleMin{}, \BimodalNScaleMax{}]$) and the
 verdict is \textsc{coarse} in every bimodal cell across all $N$,
 $\heps$, and both force models.
 
@@ -403,7 +420,6 @@ $\sigrho(8)$--$\dCearly$ scatter at two particle counts.
   The negative association persists across particle count.}
 \label{fig:bimodal_mechanism}
 \end{figure}
-% SUPPLEMENTARY CANDIDATE: Fig 11 (bimodal mechanism) could move to appendix.
 
 \subsection{Verdict map}
 \label{sec:results:verdict_map}
@@ -499,15 +515,18 @@ $\heps = 0.07$.
 \centering
 \caption{VelDisp and kNN-all correlations across softening for
   Hernquist and Plummer at $N = 1024$, direct-isolated.
-  VelDisp outperforms the coarse predictor at low $\heps$
-  (gap CIs exclude zero for Hernquist at $\heps \le 0.05$ and
-  Plummer at $\heps = 0.02$); kNN-all does not.}
+  VelDisp outperforms the coarse predictor at low $\heps$;
+  kNN-all does not.
+  Overall winner-gap CIs (finest vs.\ coarse class) exclude zero for
+  Hernquist at $\heps \le 0.05$ and Plummer at $\heps = 0.02$.
+  Kinematic-class CIs (VelDisp vs.\ CoarseG8) additionally exclude zero
+  at Hernquist $\heps = 0.07$ and Plummer $\heps = 0.03$--$0.05$.}
 \label{tab:cond_fine}
 \input{outputs/tables/cond_fine.tex}
 \end{table}
 
 Figure~\ref{fig:cond_fine} shows how VelDisp, kNN-all, and CoarseG8
-change with $\heps$ across the three families.
+change with $\heps$ across Hernquist and Plummer.
 For concentrated profiles the VelDisp signal decays with increasing
 $\heps$, reaching $r_{\rm VD} = \HernquistVelDispEpsTen{}$ for
 Hernquist at $\heps = 0.10$.
@@ -516,13 +535,14 @@ Hernquist at $\heps = 0.10$.
 \centering
 \includegraphics[width=\textwidth]{outputs/figures/fig05_cond_fine.pdf}
 \caption{Observable class vs softening: $N = 1024$, direct-isolated.
-  Solid: VelDisp (kinematic fine).
-  Dashed: kNN-all (positional fine).
-  Dotted: CoarseG8 (coarse).
-  Shaded: 95\% bootstrap CI.
+  All series use solid lines, distinguished by colour and marker:
+  blue triangles = best coarse predictor;
+  circles = positional fine observables (one per observable, semi-transparent);
+  diamonds = VelDisp (kinematic fine).
+  Shaded bands: 95\% bootstrap CI.
   VelDisp outperforms the coarse predictor at low $\heps$ for concentrated
   profiles; the advantage weakens with increasing $\heps$.
-  kNN-all does not outperform the coarse predictor in any cell tested.}
+  No positional fine observable outperforms the coarse predictor.}
 \label{fig:cond_fine}
 \end{figure}
 
@@ -558,9 +578,10 @@ winner gap changes with $\heps$.
   (positive = fine advantage, negative = coarse dominance).
   \textit{Left}: multi-cluster ICs (bimodal, cold-clumpy); bimodal is
   strongly negative at all $\heps$.
-  \textit{Right}: concentrated profiles (Hernquist, Plummer); both
-  cross zero between $\heps = 0.05$ and $0.07$, transitioning from
-  fine to coarse dominance.}
+  \textit{Right}: concentrated profiles (Hernquist, Plummer);
+  Hernquist transitions from \textsc{fine} to \textsc{tie} between
+  $\heps = 0.05$ and $0.07$, reaching \textsc{coarse} by $\heps = 0.10$;
+  Plummer transitions earlier.}
 \label{fig:eps_transition}
 \end{figure}
 
@@ -573,7 +594,8 @@ $\heps/a = 0.10$ and smoothed out at $\heps/a = 0.50$.
 
 Figure~\ref{fig:eps_boundary} plots the winner gap against
 $\heps/a$.  The Hernquist zero-crossing occurs between
-$\heps/a \approx 0.25$ and $0.50$; Plummer crosses earlier.
+$\heps/a \approx 0.35$ and $0.50$ ($\heps = 0.07$ is a tie;
+$\heps = 0.10$ is \textsc{coarse}); Plummer crosses earlier.
 A finer $\heps/a$ sweep would locate the boundary more precisely.
 
 \begin{figure}[htbp]
@@ -585,7 +607,7 @@ A finer $\heps/a$ sweep would locate the boundary more precisely.
   Each point is annotated with the verdict (C = \textsc{coarse},
   F = \textsc{fine}, T = tie).
   Bimodal is negative at all tested $\heps/a$.
-  Hernquist and Plummer cross zero between $\heps/a \approx 0.15$ and
+  Hernquist and Plummer cross zero between $\heps/a \approx 0.35$ and
   $0.50$ (shaded zone), transitioning from fine to coarse dominance.}
 \label{fig:eps_boundary}
 \end{figure}
@@ -686,7 +708,8 @@ $\times$ $\heps$ combinations as a colour matrix.
   VelDisp (fine kinematic) shows the strongest fine signal for Hernquist and
   Plummer at $\heps = 0.02$.
   No tested positional fine observable outperforms the coarse predictor
-  in any cell.}
+  in any cell (the cold-clumpy $\heps = 0.10$ ClosePairs anomaly reflects
+  inter-clump connectivity, not fine-scale structure; see text).}
 \label{fig:summary_matrix}
 \end{figure}
 
@@ -707,12 +730,12 @@ positional fine classes do not.
   Positional fine classes remain below or near zero in all tested cells.}
 \label{fig:class_gap}
 \end{figure}
-% SUPPLEMENTARY CANDIDATE: Fig 15 (class-level gap) could move to appendix.
 
 The matrix confirms the observable-class structure: coarse dominates for
 bimodal at all $\heps$, VelDisp shows a fine advantage for concentrated
 profiles at low $\heps$ only, and no positional fine observable exceeds
-the coarse predictor in any cell.
+the coarse predictor in any cell (excepting the cold-clumpy $\heps = 0.10$
+ClosePairs anomaly discussed above).
 
 
 % ---------------------------------------------------------------------------
@@ -741,29 +764,14 @@ is observable-class-specific, requiring phase-space access.
 
 Increasing $\heps$ smooths the potential over scales comparable to the
 cusp radius $a$.  The transition from fine to coarse dominance lies
-between $\heps/a \approx 0.25$ and $0.50$ for Hernquist, and at lower
+between $\heps/a \approx 0.35$ and $0.50$ for Hernquist, and at lower
 $\heps/a$ for Plummer.  The five-point grid resolves the direction but
 not the precise boundary.
 
-Figure~\ref{fig:radial_and_null} shows that the main predictive signals
-are not trivially explained by radial distance from the cluster centre
-or by null-shuffled controls, arguing against the simplest radial
-and permutation-null explanations.
-
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=\textwidth]{outputs/figures/fig17_radial_and_null.pdf}
-\caption{Diagnostic controls.
-  \textit{Left}: predictive correlation of the radial-distance summary
-  vs the primary coarse and fine observables; radial distance alone
-  does not account for the observed gaps.
-  \textit{Right}: null-shuffled controls in which observable--outcome
-  pairs are randomly permuted; shuffled correlations are centred on
-  zero, confirming that the reported signals are not statistical
-  artefacts.}
-\label{fig:radial_and_null}
-\end{figure}
-% SUPPLEMENTARY CANDIDATE: Fig 17 (radial/null controls) could move to appendix.
+Radial-distance controls and permutation-null shuffles confirm that the
+main predictive signals are not trivially explained by geometry or
+statistical artefacts; these diagnostic panels appear in
+Appendix~\ref{app:validation} (Figure~\ref{fig:radial_and_null}).
 
 \subsection{Astrophysical implications}
 
@@ -811,7 +819,8 @@ vanishes and only the coarse density field matters.
 
 \textit{Earned.}  Bimodal coarse dominance holds across all tested $N$,
 $\heps$, and force models.  No positional fine observable outperforms the
-coarse predictor in any cell.  VelDisp outperforms it for concentrated
+coarse predictor in any cell, except cold-clumpy at $\heps = 0.10$
+(ClosePairs as inter-clump connectivity proxy; not a physical fine-scale win).  VelDisp outperforms it for concentrated
 profiles at low softening (gap CIs exclude zero), with a real
 $\heps$-dependent transition governed in part by $\heps/a$.
 
@@ -821,10 +830,14 @@ transition $\heps/a$ is not sharply located.
 
 \textit{Not earned.}  Universal coarse dominance, universal fine
 superiority, or a sharp critical boundary in $\heps/a$.  Family
-stability is low (43 of \NCells{} powered cells spanning all $N$,
+stability is low (\NFamilyStableCells{} of \NCells{} powered cells spanning all $N$,
 $\heps$, and both models), so a stable law across
 families is not supported.  The study measures correlation, not
 causation, and excludes cosmological processes.
+All main verdicts are reproduced when the coarse final state
+$\sigrho(8)|_{t=t_e}$ is used as the target instead of the difference
+$\dCearly$, ruling out shared-baseline deflation as a driver of the
+reported hierarchy (see Section~\ref{sec:methods:prediction}).
 
 \subsection{Scope and limitations}
 
@@ -849,7 +862,8 @@ outperforms the coarse predictor at low softening ($\heps \le 0.05$ for
 Hernquist, $\heps = 0.02$ for Plummer), with a transition to coarse
 dominance by $\heps = 0.10$.
 No tested positional fine observable outperforms the coarse predictor
-in any parameter cell.  The kinematic fine advantage requires three
+in any parameter cell (cold-clumpy $\heps = 0.10$ ClosePairs excepted;
+see Section~\ref{sec:results:verdict_map}).  The kinematic fine advantage requires three
 conditions simultaneously: a concentrated-cusp family, small $\heps/a$,
 and phase-space access.
 Outside this intersection, coarse dominance or ties prevail.
@@ -872,6 +886,52 @@ the repository but can be regenerated from scratch using
 \texttt{python nbody\_paper.py --workers 30} (approximately 28~hours on
 32~vCPUs) or reproduced via \texttt{--resume} for incremental runs.
 Pre-computed figures and tables are included in \texttt{outputs/}.
+
+\clearpage
+
+% ---------------------------------------------------------------------------
+\appendix
+\section{Validation and Diagnostic Figures}
+\label{app:validation}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{outputs/figures/fig09_diagnostics.pdf}
+\caption{\textit{Left}: distribution of $\log_{10}(\Delta E/E_0)$ by IC family
+  (direct-isolated).
+  \textit{Centre}: initial virial ratio $Q_0 = 2K/|W|$ by family; dashed
+  line marks virial equilibrium $Q = 1$.
+  \textit{Right}: energy drift vs final virial ratio.
+  No drift-outcome correlation is present.}
+\label{fig:diagnostics}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{outputs/figures/fig16_convergence.pdf}
+\caption{VelDisp convergence for kinematic frontier cells
+  (Hernquist and Plummer at $\heps = 0.02$ and $0.10$).
+  Green: $|r|$(VelDisp) mean $\pm$ std across repeated random subsamples
+  as a function of replicate count.
+  Grey dashed: 95\% CI width (right axis).
+  Both $|r|$ and CI width stabilise by $\sim 200$ replicates,
+  confirming that the battery's \NReplicates{} replicates are sufficient.}
+\label{fig:convergence}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{outputs/figures/fig17_radial_and_null.pdf}
+\caption{Diagnostic controls.
+  \textit{Left}: predictive correlation of the radial-distance summary
+  vs the primary coarse and fine observables; radial distance alone
+  does not account for the observed gaps.
+  \textit{Right}: null-shuffled controls in which observable--outcome
+  pairs are randomly permuted; shuffled correlations are centred on
+  zero, confirming that the reported signals are not statistical
+  artefacts.}
+\label{fig:radial_and_null}
+\end{figure}
 
 \clearpage
 
