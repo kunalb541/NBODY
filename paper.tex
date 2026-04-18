@@ -55,8 +55,11 @@ $\heps = 0.02$; gap CIs exclude zero), though the effect is modest
 ($R^2 \approx 0.18$--$0.28$ at $N = 1024$).
 This advantage erodes with increasing $\heps$ and vanishes by
 $\heps = 0.10$.
-The strongest negative result is that no positional fine-scale
-observable outperforms the coarse predictor in any tested cell.
+The strongest negative result is that positional fine-scale
+observables rarely outperform the coarse predictor: the positional-class
+gap CI excludes zero in only 10 of 80 direct-isolated cells (Hernquist
+at low $\heps$ and cold-clumpy at $\heps = 0.10$), compared to the
+kinematic class which dominates the fine advantage wherever it appears.
 No universal ranking is supported: predictive advantage is structured
 by initial-condition family, observable class, and the
 softening-to-scale-radius ratio $\heps/a$.
@@ -615,7 +618,8 @@ Hernquist at $\heps = 0.10$.
   Shaded bands: 95\% bootstrap CI.
   VelDisp outperforms the coarse predictor at low $\heps$ for concentrated
   profiles; the advantage weakens with increasing $\heps$.
-  No positional fine observable outperforms the coarse predictor.}
+  Positional fine observables rarely outperform the coarse predictor;
+  the kinematic class drives the fine advantage.}
 \label{fig:cond_fine}
 \end{figure*}
 
@@ -765,9 +769,10 @@ and all softening values at $N = 1024$.
 }
 \end{table*}
 
-Three patterns hold: (i) no positional fine observable outperforms the
-coarse predictor in any cell (cold-clumpy at $\heps = 0.10$ excepted;
-see below); (ii) FoF group count never outperforms
+Three patterns hold: (i) positional fine observables rarely outperform
+the coarse predictor (the positional-class gap CI excludes zero in only
+10 of 80 direct-isolated cells, mostly Hernquist at low $\heps$;
+the kinematic class dominates the fine advantage); (ii) FoF group count never outperforms
 the coarse predictor (it may appear as ``best fine'' in some cells of
 Table~\ref{tab:verdict_summary}, meaning only that it is the
 least-weak fine observable, not that it outperforms coarse);
@@ -796,9 +801,8 @@ $\times$ $\heps$ combinations as a colour matrix.
   $\heps$.
   VelDisp (fine kinematic) shows the strongest fine signal for Hernquist and
   Plummer at $\heps = 0.02$.
-  No tested positional fine observable outperforms the coarse predictor
-  in any cell (the cold-clumpy $\heps = 0.10$ ClosePairs anomaly reflects
-  inter-clump connectivity, not fine-scale structure; see text).}
+  Positional fine observables rarely outperform coarse (10 of 80
+  direct-isolated cells); the kinematic class drives the fine advantage.}
 \label{fig:summary_matrix}
 \end{figure*}
 
@@ -899,9 +903,10 @@ baryonic processes, and hierarchical assembly.
 \begin{itemize}
   \item Robust coarse dominance for bimodal ICs across all tested
     $N$, $\heps$, and both force models.
-  \item No positional fine observable outperforms the coarse predictor
-    in any tested cell (cold-clumpy $\heps = 0.10$ excepted; ClosePairs
-    acts as inter-clump connectivity proxy, not true fine-scale structure).
+  \item Positional fine observables rarely outperform the coarse predictor
+    (10 of 80 direct-isolated cells, concentrated at Hernquist low-$\heps$
+    and cold-clumpy $\heps = 0.10$); the kinematic class dominates the
+    fine advantage wherever it appears.
   \item Fine kinematic (VelDisp) advantage for Hernquist at
     $\heps \le 0.05$ and Plummer at $\heps = 0.02$ (gap CIs exclude zero).
   \item $\heps$-dependent transition from fine to coarse dominance for
@@ -973,13 +978,11 @@ predictor for concentrated cusp profiles in a restricted low-softening
 regime (Hernquist $\heps \le 0.05$, Plummer $\heps = 0.02$; gap CIs
 exclude zero), with a transition to coarse dominance by $\heps = 0.10$.
 
-\textit{Negative}: no tested positional fine-scale observable
-outperforms the coarse predictor in any cell of this battery
-(with one numerical boundary case: cold-clumpy at $\heps = 0.10$,
-where ClosePairs acts as a proxy for inter-clump connectivity because
-the linking radius $4\heps$ approaches the inter-clump separation,
-not as evidence of genuine fine-scale structure).
-The only fine advantage is kinematic, not positional, and requires
+\textit{Negative}: positional fine-scale observables rarely outperform
+the coarse predictor (the positional-class gap CI excludes zero in only
+10 of 80 direct-isolated cells, concentrated at Hernquist low-$\heps$
+and cold-clumpy $\heps = 0.10$).
+The dominant fine advantage is kinematic, not positional, and requires
 three conditions simultaneously: a concentrated-cusp family, small
 $\heps/a$, and phase-space access.
 

@@ -55,7 +55,7 @@ across four initial-condition families (plus three angular-shuffle null controls
 ├── nbody_3d.py           # Force models, integrators, observables (standalone utility)
 ├── nbody_stress.py       # Battery runner, statistical analysis, bootstrap CI engine
 ├── nbody_paper.py        # Figure/table generation, analysis pipeline, paper macros
-├── test_regression.py    # 34 regression tests
+├── test_regression.py    # 36 regression tests
 ├── build.sh              # Reproducible build: run battery + compile paper
 ├── paper.tex             # LaTeX manuscript (anonymised for double-blind review)
 ├── paper.pdf             # Compiled paper (anonymised for double-blind review)
