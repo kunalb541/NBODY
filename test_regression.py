@@ -197,6 +197,32 @@ class TestObservables(unittest.TestCase):
             float(row["coarse_rshell_var_0"]), float(rshell), places=12,
             msg="bimodal angshuf row must report radial shell variance from the shuffled IC actually simulated")
 
+    def test_bimodal_angshuf_preserves_clump_separation(self):
+        """Per-clump angular shuffle must not move particles across the half-box boundary.
+
+        _angular_shuffle_bimodal_pos shuffles angles within each clump around
+        its own centroid while preserving per-particle radii.  Because the
+        centroid of the left clump is well inside x < L/2, all shuffled
+        positions must stay in x < L/2 (and vice versa for the right clump).
+        A regression that accidentally used the global centroid would place
+        the shuffle origin at x ≈ L/2 and violate this property.
+        """
+        s = import_stress()
+        rng = np.random.default_rng(42)
+        box = 2.0
+        # Two tight clusters: left centroid ≈ (0.5, 1.0, 1.0),
+        #                      right centroid ≈ (1.5, 1.0, 1.0)
+        left  = rng.normal([0.5, 1.0, 1.0], 0.08, size=(40, 3))
+        right = rng.normal([1.5, 1.0, 1.0], 0.08, size=(40, 3))
+        pos   = np.vstack([left, right])
+        orig_in_left  = pos[:, 0] < box / 2.0
+        shuffled = s._angular_shuffle_bimodal_pos(pos, rng, box)
+        shuf_in_left  = shuffled[:, 0] < box / 2.0
+        self.assertTrue(
+            np.all(orig_in_left == shuf_in_left),
+            "bimodal per-clump shuffle moved a particle across the half-box "
+            "boundary — likely regressed to global-centroid shuffle")
+
     def test_fof_isolated_uses_number_density_linking_scale(self):
         s = self.s
         pos = np.array([
@@ -273,6 +299,47 @@ class TestWinnerGapBootstrap(unittest.TestCase):
         overlap = radial_cols & spec_cols
         self.assertEqual(overlap, set(),
                          f"_PRED_SPECS_PERIODIC includes radial cols: {overlap}")
+
+    def test_null_bias_nonzero_when_class_sizes_unequal(self):
+        """winner_gap_null_bias must be nonzero when fine and coarse class sizes differ.
+
+        When there are more fine predictors than coarse ones, the best-of-fine
+        score is inflated by order-statistic selection bias relative to
+        best-of-coarse.  The permutation null corrects for this.  If the
+        correction were accidentally zeroed out, this test would catch it:
+        we construct rows where all predictors carry the same signal, so the
+        true winner gap is zero, but an uncorrected best-of-many vs best-of-few
+        comparison would show a spurious positive gap.
+        """
+        s = self.s
+        rng = np.random.default_rng(17)
+        n = 80
+        signal = rng.normal(0, 1, n)
+        noise  = lambda: rng.normal(0, 0.6, n)  # noqa: E731
+        rows = []
+        for i in range(n):
+            row: dict = {"d_coarse_g8_early": float(signal[i])}
+            for col, _ in s.FINE_OBS:
+                row[col] = float(signal[i] + noise()[i])
+            row["coarse_g4_0"]         = float(signal[i] + noise()[i])
+            row["coarse_g8_0"]         = float(signal[i] + noise()[i])
+            row["coarse_g16_0"]        = float(signal[i] + noise()[i])
+            row["coarse_conc_0"]       = float(rng.uniform(0.1, 0.5))
+            row["coarse_rshell_var_0"] = float(rng.uniform(0.0, 1.0))
+            rows.append(row)
+        result = s._winner_gap_bootstrap(
+            rows, "d_coarse_g8_early", n_boot=300, seed=17,
+            pred_specs=s._PRED_SPECS_DIRECT,
+        )
+        # The overall fine/coarse split is 5 vs 5 (na == nb), so overall
+        # null_bias is always 0.  The kinematic sub-gap is 1 (VelDisp) vs 5
+        # coarse (na != nb), which is where the correction must fire.
+        nb = result.get("winner_gap_kin_null_bias")
+        self.assertIsNotNone(nb, "winner_gap_kin_null_bias key missing from result")
+        self.assertNotEqual(
+            float(nb), 0.0,
+            "kinematic null_bias is zero even though kin/coarse class sizes "
+            "differ (1 vs 5) — permutation null correction may be disabled")
 
     def test_bootstrap_discards_degenerate_resamples(self):
         s = self.s

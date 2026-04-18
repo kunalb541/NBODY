@@ -803,7 +803,10 @@ def pearson_with_ci(x: list, y: list, n_boot: int = 1000,
     samp  = samp[:, valid, :]                      # (2, B', N)
 
     if samp.shape[1] < 10:
-        return r, float("nan"), float("nan"), n
+        # Fewer than 10 valid bootstrap resamples — discard the point estimate
+        # too so downstream code never sees a finite-r / NaN-CI combination,
+        # which would be misleading (a CI-less correlation looks usable but isn't).
+        return float("nan"), float("nan"), float("nan"), n
 
     samp -= samp.mean(axis=2, keepdims=True)
     cov   = (samp[0] * samp[1]).sum(axis=1)
