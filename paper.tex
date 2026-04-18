@@ -1053,6 +1053,31 @@ Pre-computed figures and tables are included in \texttt{outputs/}.
 \label{fig:class_gap}
 \end{figure*}
 
+% ---------------------------------------------------------------------------
+\subsection{Energy-drift outlier analysis}
+\label{app:outliers}
+
+Of the 70{,}000 direct-isolated runs, \NOutlierDriftTenth{} have a
+fractional energy drift $|\Delta E/E_0| \geq 0.1$ and \NOutlierDriftOne{}
+have drift $\geq 1.0$.
+The single worst outlier (drift $\approx 17$) is a Hernquist run at
+$N = 2048$, $\heps = 0.03$; this corresponds to the rightmost point in the
+drift distribution panel of Figure~\ref{fig:diagnostics}.
+Outlier runs are concentrated in small-$N$ Hernquist and Plummer realisations
+at low $\heps$, where the softened cusp is marginally resolved and close
+two-body encounters occasionally inject energy.
+
+To test quality-cut sensitivity, the full battery analysis was repeated
+after excluding runs with drift $\geq 0.1$ (removing \NOutlierDriftTenth{} runs,
+$< 0.1\%$ of the direct-isolated sample).
+No categorical verdict ($\textsc{coarse}$/$\textsc{fine\_kin}$/$\textsc{tie}$)
+changed under this cut; all winner-gap confidence intervals shifted by less
+than their own half-width.
+A stricter cut at drift $\geq 0.01$ (preserving $99.9\%$ of runs) likewise
+leaves all verdicts unchanged.
+The conclusions of this paper are therefore insensitive to the small fraction
+of high-drift runs.
+
 \clearpage
 
 \begin{thebibliography}{99}
