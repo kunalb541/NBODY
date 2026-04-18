@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-04-18T10:05:06.570988Z",
+  "timestamp": "2026-04-18T12:01:36.369630Z",
   "python_version": "3.11.8 (main, Mar 20 2026, 19:11:57) [Clang 17.0.0 (clang-1700.6.4.2)]",
   "platform": "macOS-26.4-arm64-arm-64bit",
   "numpy_version": "2.3.5",
@@ -50,7 +50,7 @@
   "battery_csv": "outputs/data/paper_battery.csv",
   "analysis_json": "outputs/data/analysis.json",
   "convergence_json": "outputs/data/convergence.json",
-  "completed_at": "2026-04-18T10:13:02.425835Z",
+  "completed_at": "2026-04-18T12:09:36.134388Z",
   "validation_warnings": [
     "PM force accuracy OK: RMS relative error = 0.149 (N=256, eps=0.05, pm_grid=32)"
   ],
