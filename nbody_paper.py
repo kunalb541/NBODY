@@ -1063,9 +1063,13 @@ def fig03_verdict_map(analysis: Dict) -> None:
                 txt_col = "white" if (np.isfinite(bg) and abs(bg) > 0.2) else "0.15"
                 ax.text(j, i, vstr, ha="center", va="center",
                         fontsize=11, fontweight="bold", color=txt_col)
-    # Place colorbar to the right of both panels without eating into cell area
-    fig.subplots_adjust(right=0.87, wspace=0.08)
-    cbar_ax = fig.add_axes([0.89, 0.15, 0.018, 0.65])
+    # Place colorbar to the right of both panels.
+    # Use a manually-placed axes so the colorbar doesn't steal space from
+    # the rightmost column cells.  _tight_rect tells savefig to constrain
+    # tight_layout to leave room for the colorbar at x=0.91.
+    fig._tight_rect = [0, 0, 0.89, 1]
+    fig.subplots_adjust(wspace=0.08)
+    cbar_ax = fig.add_axes([0.91, 0.15, 0.018, 0.65])
     cbar = fig.colorbar(im, cax=cbar_ax)
     cbar.set_label(r"$|r_{\rm best\ fine}| - |r_{\rm best\ coarse}|$", fontsize=10)
     cbar.ax.tick_params(labelsize=9)
@@ -1870,8 +1874,8 @@ def fig17_radial_and_null(analysis: Dict) -> None:
         ax.set_xlabel(r"$\epsilon$", fontsize=11)
         ax.set_ylabel(r"$|r|$", fontsize=11)
         ax.tick_params(labelsize=10)
-        ax.set_title("Radial coarse family vs best fine", fontsize=11,
-                      fontweight="bold")
+        ax.set_title("Radial coarse family: CoarseConc and RShellVar",
+                      fontsize=11, fontweight="bold")
         # Two-section legend: line style (top) + IC colour (bottom)
         _h = [plt.Line2D([0], [0], color="0.3", ls="-",  marker="o", lw=1.8,
                           label="CoarseConc  (solid)"),
@@ -1927,7 +1931,7 @@ def fig17_radial_and_null(analysis: Dict) -> None:
         ax.set_title("Angular-shuffle null control", fontsize=10,
                       fontweight="bold")
         ax.set_xticks(range(len(PAPER_EPS)))
-        ax.set_xticklabels([f"{e}" for e in PAPER_EPS], fontsize=10)
+        ax.set_xticklabels([f"{e:.2f}" for e in PAPER_EPS], fontsize=10)
         ax.set_yticks(range(len(present)))
         ax.set_yticklabels(ylabels, fontsize=10)
         ax.set_xlabel(r"$\epsilon$", fontsize=11)
@@ -1937,14 +1941,15 @@ def fig17_radial_and_null(analysis: Dict) -> None:
                 tc = "white" if (np.isfinite(bg) and abs(bg) > 0.2) else "0.15"
                 ax.text(j, i, str(lbl_a[i, j]), ha="center", va="center",
                         fontsize=11, fontweight="bold", color=tc)
-        plt.colorbar(im, ax=ax, shrink=0.82,
-                     label="winner gap").ax.tick_params(labelsize=9)
+        cb = fig.colorbar(im, ax=ax, shrink=0.82, pad=0.06)
+        cb.set_label("winner gap", fontsize=9, labelpad=6)
+        cb.ax.tick_params(labelsize=9)
 
     fig.suptitle(
         "Radial coarse family (left) and angular-shuffle null (right)",
         fontsize=11, fontweight="bold"
     )
-    fig.tight_layout()
+    fig.tight_layout(pad=1.5, rect=[0, 0, 1, 0.95])
     savefig(fig, "fig17_radial_and_null.pdf")
 
 
@@ -1955,7 +1960,14 @@ def fig17_radial_and_null(analysis: Dict) -> None:
 def savefig(fig: plt.Figure, name: str) -> None:
     path = os.path.join(FIG_DIR, name)
     try:
-        fig.tight_layout()
+        # If the figure has a _tight_rect attribute, use it to prevent
+        # tight_layout from expanding subplots into manually-placed axes
+        # (e.g. colorbars added via fig.add_axes).
+        rect = getattr(fig, "_tight_rect", None)
+        if rect is not None:
+            fig.tight_layout(rect=rect)
+        else:
+            fig.tight_layout()
     except Exception:
         pass  # some figures use constrained_layout instead
     fig.savefig(path)

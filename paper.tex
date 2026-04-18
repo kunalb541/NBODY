@@ -29,7 +29,7 @@
 
 \author{Kunal Bhatia\\
 \small Independent Researcher, Heidelberg\\
-\small \texttt{kunal29bhatia@gmail.com}}
+\small \href{https://orcid.org/0009-0007-4447-6325}{ORCID: 0009-0007-4447-6325}}
 
 \date{March 2026\quad\textit{Preprint --- not peer reviewed}}
 
@@ -151,9 +151,10 @@ Two force-model classes are compared as distinct physics.
 Forces are computed via the softened pairwise potential
 $\phi_{ij} = -Gm(r_{ij}^2 + \heps^2)^{-1/2}$
 at $O(N^2)$ cost.
-The domain is open; all observables use a discard-outside rule restricting
-measurements to $[0,L)^3$, so coarse and fine observables share identical
-particle sets.
+The domain is open.  Grid-based observables (coarse density variance,
+small-scale Fourier power) restrict to particles inside $[0,L)^3$;
+distance-based observables (kNN, ClosePairs, VelDisp, FoF) use all
+particles via KDTree queries without box restriction.
 
 \textit{Particle-mesh periodic} (\texttt{pm\_periodic}).
 The density field is deposited via cloud-in-cell (CIC) interpolation onto
@@ -295,7 +296,8 @@ Primary target: $\dCearly$, the change in $\sigrho(8)$ between $t=0$ and
 step \HEarly{}.
 Verdicts are based on the 95\% bootstrap CI of the winner gap
 $g = |r_{\rm best\,fine}| - |r_{\rm best\,coarse}|$
-(1000 resamples of the \NReplicates{} replicates, BCa intervals):
+(1000 resamples of the \NReplicates{} replicates, percentile bootstrap
+intervals with null-bias correction):
 \textsc{fine} if the CI lower bound $> +0.05$;
 \textsc{coarse} if the CI upper bound $< -0.05$;
 \textsc{tie} otherwise (threshold set a priori).
@@ -355,8 +357,10 @@ Appendix~\ref{app:validation}
 (Figures~\ref{fig:diagnostics} and~\ref{fig:convergence}).
 All families show drift below $10^{-3}$, confirming that leapfrog KDK
 is well-behaved across the full $N$--$\heps$ grid.
-Initial virial ratios cluster near $Q_0 = 1$ for Hernquist and Plummer
-and near $0.5$ for bimodal.
+Per-family median initial virial ratios are $Q_0 \approx 3.3$ for bimodal
+(super-virial; two unvirialised sub-clusters), $2.0$ for Hernquist,
+$1.8$ for Plummer (both mildly super-virial from the approximate velocity
+sampling), and $0.01$ for cold-clumpy (essentially pressureless).
 Bootstrap CI widths and $|r|$(VelDisp) both stabilise by ${\sim}200$
 replicates, confirming that \NReplicates{} replicates are sufficient.
 
@@ -409,7 +413,7 @@ entirely below zero, confirming coarse dominance).
 \end{figure}
 
 Table~\ref{tab:n_scaling} shows N-scaling.  The coarse predictor is
-stable across $N \in [\BimodalNScaleMin{}, \BimodalNScaleMax{}]$) and the
+stable across $N \in [\BimodalNScaleMin{}, \BimodalNScaleMax{}]$ and the
 verdict is \textsc{coarse} in every bimodal cell across all $N$,
 $\heps$, and both force models.
 
@@ -674,14 +678,16 @@ both model classes at $N = 1024$.
   Both models agree on the bimodal verdict.
   Concentrated profiles show quantitative differences: direct-isolated
   exhibits a clear $\heps$-dependent transition while PM-periodic is
-  nearly $\heps$-invariant (force resolution set by grid, not $\heps$).}
+  exactly $\heps$-invariant for all force-independent observables
+(only ClosePairs varies because its threshold $4\heps$ changes by design) (force resolution set by grid, not $\heps$).}
 \label{fig:model_comparison}
 \end{figure}
 
 Both model classes agree on the bimodal verdict at all $\heps$.
 For concentrated profiles, quantitative differences arise because the
 PM force resolution ($\sim L/32$) is set by the mesh, making PM rows
-nearly $\heps$-invariant.  The direct-isolated results show the
+exactly $\heps$-invariant for all force-independent observables
+(only ClosePairs varies because its threshold $4\heps$ changes by design).  The direct-isolated results show the
 clearest $\heps$-dependent transition.
 The qualitative agreement between force models on categorical verdicts
 provides useful cross-method robustness evidence; sensitivity of N-body
@@ -707,7 +713,8 @@ and all softening values at $N = 1024$.
 \end{table}
 
 Three patterns hold: (i) no positional fine observable outperforms the
-coarse predictor in any cell; (ii) FoF group count never outperforms
+coarse predictor in any cell (cold-clumpy at $\heps = 0.10$ excepted;
+see below); (ii) FoF group count never outperforms
 the coarse predictor (it may appear as ``best fine'' in some cells of
 Table~\ref{tab:verdict_summary}, meaning only that it is the
 least-weak fine observable, not that it outperforms coarse);
@@ -895,7 +902,9 @@ families, \NModels{} force models, and $\heps \in [\EpsMin{}, \EpsMax{}]$,
 the central result is a verdict asymmetry between observable classes.
 Bimodal (two-cluster) initial conditions are coarse-dominant in every
 tested cell---all $N$, $\heps$, and both force models---with
-$r = \BimodalBestCoarseR{}$ and a winner-gap CI entirely below zero.
+$r = \BimodalBestCoarseR{}$ at $\heps = 0.05$ (ranging from $0.961$
+to $0.994$ across $\heps$) and winner-gap CIs entirely below zero
+in every cell.
 For concentrated profiles (Hernquist, Plummer), local velocity dispersion
 outperforms the coarse predictor at low softening ($\heps \le 0.05$ for
 Hernquist, $\heps = 0.02$ for Plummer), with a transition to coarse
@@ -961,14 +970,17 @@ Pre-computed figures and tables are included in \texttt{outputs/}.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{outputs/figures/fig17_radial_and_null.pdf}
-\caption{Diagnostic controls.
-  \textit{Left}: predictive correlation of the radial-distance summary
-  vs the primary coarse and fine observables; radial distance alone
-  does not account for the observed gaps.
-  \textit{Right}: null-shuffled controls in which observable--outcome
-  pairs are randomly permuted; shuffled correlations are centred on
-  zero, confirming that the reported signals are not statistical
-  artefacts.}
+\caption{Diagnostic controls at $N = 1024$, direct-isolated.
+  \textit{Left}: $|r|$ for two radial coarse observables---CoarseConc
+  (solid, circles) and CoarseRShellVar (dashed, squares)---by IC family
+  and $\heps$.  Both remain weaker than the grid-based coarse predictor,
+  confirming that the coarse advantage is not an artefact of grid geometry.
+  \textit{Right}: angular-shuffle null control.  Colour encodes
+  winner-gap mean; cell labels show the verdict (CO/FI/TI).
+  Bimodal angshuf ($\dagger$) preserves inter-clump separation, so
+  \textsc{coarse} there is expected.  For Hernquist and Plummer, the fine
+  signal collapses under shuffling at large $\heps$, confirming
+  structure-dependence.}
 \label{fig:radial_and_null}
 \end{figure}
 
