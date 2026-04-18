@@ -1,0 +1,7 @@
+Highlights
+
+• Coarse density variance robustly dominates prediction for merging binary clusters across all tested N, ε, and force models.
+• No positional fine-scale observable outperforms the coarse predictor in any tested cell.
+• Local velocity dispersion shows a restricted fine-kinematic advantage for concentrated cusp profiles at low softening.
+• The fine-kinematic advantage erodes with increasing ε and disappears by ε = 0.10.
+• Predictive advantage depends on initial-condition family, observable class, and softening-to-scale-radius ratio ε/a.
