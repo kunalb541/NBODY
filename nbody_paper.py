@@ -1032,7 +1032,7 @@ def fig02_snapshots(showcase_snaps: Dict[str, Dict]) -> None:
 
 def fig03_verdict_map(analysis: Dict) -> None:
     plt.rcParams.update(STYLE)
-    fig, axes = plt.subplots(1, 2, figsize=(13.0, 5.2), sharey=True)
+    fig, axes = plt.subplots(1, 2, figsize=(14.0, 5.8), sharey=True)
     panel_titles = {
         "direct_isolated": "direct-isolated  (primary evidence)",
         "pm_periodic":     "PM-periodic  (cross-check only)",
@@ -1050,22 +1050,27 @@ def fig03_verdict_map(analysis: Dict) -> None:
                 labels[i, j] = v[:2] if v not in ("---", None) else "---"
         im = ax.imshow(mat, origin="upper", aspect="auto",
                        cmap="RdBu_r", vmin=-0.35, vmax=0.35)
-        ax.set_title(panel_titles.get(model, model), fontsize=10)
+        ax.set_title(panel_titles.get(model, model), fontsize=11, pad=8)
         ax.set_xticks(range(len(PAPER_EPS)))
-        ax.set_xticklabels([f"{e:.2f}" for e in PAPER_EPS])
+        ax.set_xticklabels([f"{e:.2f}" for e in PAPER_EPS], fontsize=10)
         ax.set_yticks(range(len(IC_ORDER)))
-        ax.set_yticklabels([IC_LABELS[i] for i in IC_ORDER])
-        ax.set_xlabel(r"$\epsilon$")
+        ax.set_yticklabels([IC_LABELS[i] for i in IC_ORDER], fontsize=11)
+        ax.set_xlabel(r"$\epsilon$", fontsize=11)
         for i in range(len(IC_ORDER)):
             for j in range(len(PAPER_EPS)):
                 vstr    = str(labels[i, j])
                 bg      = mat[i, j]
                 txt_col = "white" if (np.isfinite(bg) and abs(bg) > 0.2) else "0.15"
                 ax.text(j, i, vstr, ha="center", va="center",
-                        fontsize=8.5, fontweight="bold", color=txt_col)
-    cbar = fig.colorbar(im, ax=axes.ravel().tolist(), shrink=0.85, pad=0.02)
-    cbar.set_label(r"$|r_{\rm best\ fine}| - |r_{\rm best\ coarse}|$")
-    fig.suptitle("Verdict map at $N=1024$: fine advantage by IC family and softening")
+                        fontsize=11, fontweight="bold", color=txt_col)
+    # Place colorbar to the right of both panels without eating into cell area
+    fig.subplots_adjust(right=0.87, wspace=0.08)
+    cbar_ax = fig.add_axes([0.89, 0.15, 0.018, 0.65])
+    cbar = fig.colorbar(im, cax=cbar_ax)
+    cbar.set_label(r"$|r_{\rm best\ fine}| - |r_{\rm best\ coarse}|$", fontsize=10)
+    cbar.ax.tick_params(labelsize=9)
+    fig.suptitle("Verdict map at $N=1024$: fine advantage by IC family and softening",
+                 fontsize=12, y=0.98)
     savefig(fig, "fig03_verdict_map.pdf")
 
 
@@ -1301,7 +1306,7 @@ def fig08_model_comparison(analysis: Dict) -> None:
 
 def fig09_diagnostics(rows: List[Dict]) -> None:
     plt.rcParams.update(STYLE)
-    fig, axes = plt.subplots(1, 3, figsize=(11.0, 3.6))
+    fig, axes = plt.subplots(1, 3, figsize=(13.0, 4.8))
     ax1, ax2, ax3 = axes
     direct_rows = filter_rows(rows, model="direct_isolated")
     drifts = np.array([safe_float(r.get("energy_rel_drift")) for r in direct_rows], dtype=float)
@@ -1314,8 +1319,8 @@ def fig09_diagnostics(rows: List[Dict]) -> None:
         ax1.hist(clipped, bins=log_bins, color="#4c78a8", alpha=0.85)
         ax1.set_xscale("log")
         ax1.set_xlim(1e-6, 1e-1)
-        ax1.set_title("Relative energy drift")
-        ax1.set_xlabel(r"$|\Delta E|/|E_0|$")
+        ax1.set_title("Relative energy drift", fontsize=11)
+        ax1.set_xlabel(r"$|\Delta E|/|E_0|$", fontsize=11)
         if n_outliers > 0:
             ax1.text(0.97, 0.95, f"{n_outliers} runs with drift $> 0.1$\n(max = {np.max(drifts):.1f})",
                      transform=ax1.transAxes, ha="right", va="top", fontsize=7,
@@ -1330,9 +1335,9 @@ def fig09_diagnostics(rows: List[Dict]) -> None:
     if len(vir0) and len(virf):
         ax2.hist(vir0, bins=18, alpha=0.55, label="initial")
         ax2.hist(virf, bins=18, alpha=0.55, label="final")
-        ax2.set_title("Virial-ratio distribution")
-        ax2.set_xlabel(r"$Q = 2K/|U|$")
-        ax2.legend(frameon=False)
+        ax2.set_title("Virial-ratio distribution", fontsize=11)
+        ax2.set_xlabel(r"$Q = 2K/|U|$", fontsize=11)
+        ax2.legend(frameon=False, fontsize=10)
     else:
         draw_missing(ax2, "Virial-ratio distribution")
 
@@ -1358,12 +1363,13 @@ def fig09_diagnostics(rows: List[Dict]) -> None:
                 ax3.scatter(xv, yv, s=15, alpha=0.6, color=IC_COLORS[init],
                             edgecolors="none", label=IC_LABELS[init])
         ax3.set_xscale("log")
-        ax3.set_xlabel(r"$|\Delta E|/|E_0|$")
-        ax3.set_ylabel(r"final virial ratio")
-        ax3.set_title("Energy drift vs final virial ratio")
-        ax3.legend(frameon=False, fontsize=7, loc="upper left")
+        ax3.set_xlabel(r"$|\Delta E|/|E_0|$", fontsize=11)
+        ax3.set_ylabel(r"Final virial ratio $Q_f$", fontsize=11)
+        ax3.set_title("Energy drift vs final virial ratio", fontsize=11)
+        ax3.legend(frameon=False, fontsize=9, loc="upper left")
     else:
         draw_missing(ax3, "Energy drift vs final virial ratio")
+    fig.tight_layout()
     savefig(fig, "fig09_diagnostics.pdf")
 
 
@@ -1389,28 +1395,40 @@ def fig10_summary_matrix(analysis: Dict) -> None:
                 v = get_metric(cell, pred)
                 if v is not None:
                     mat[i, j * len(PAPER_EPS) + k] = v
-    fig, ax = plt.subplots(figsize=(max(16.0, len(preds) * 3.0), 4.5))
+    n_cols = len(preds) * len(PAPER_EPS)
+    fig, ax = plt.subplots(figsize=(max(18.0, len(preds) * 3.2), 5.5))
     im = ax.imshow(mat, origin="upper", cmap="RdBu_r", vmin=-1, vmax=1, aspect="auto")
     ax.set_yticks(range(len(IC_ORDER)))
-    ax.set_yticklabels([IC_LABELS[i] for i in IC_ORDER], fontsize=11, fontweight="bold")
-    # Only label first ε set, suppress repeats
-    col_labels = [rf"{eps}" for _ in preds for eps in PAPER_EPS]
-    ax.set_xticks(range(len(col_labels)))
-    ax.set_xticklabels(col_labels, rotation=0, ha="center", fontsize=6)
-    ax.set_xlabel(r"$\epsilon$", fontsize=10)
+    ax.set_yticklabels([IC_LABELS[i] for i in IC_ORDER], fontsize=12, fontweight="bold")
+    # ε labels under each column — show only on first and last of each group
+    col_labels = []
+    for g in range(len(preds)):
+        for k, eps in enumerate(PAPER_EPS):
+            if k == 0 or k == len(PAPER_EPS) - 1:
+                col_labels.append(f"{eps:.2f}")
+            else:
+                col_labels.append("")
+    ax.set_xticks(range(n_cols))
+    ax.set_xticklabels(col_labels, rotation=0, ha="center", fontsize=8.5)
+    ax.set_xlabel(r"$\epsilon$", fontsize=11, labelpad=30)
     for divider in range(1, len(preds)):
-        ax.axvline(divider * len(PAPER_EPS) - 0.5, color="white", lw=2.5)
-    # Add predictor group labels above
+        ax.axvline(divider * len(PAPER_EPS) - 0.5, color="white", lw=3)
+    # Group labels below x-axis ticks — use transform for stable placement
     pred_labels = [n for _, n in obs_classes]
+    ax.tick_params(axis="x", pad=4)
     for j, name in enumerate(pred_labels):
         mid = j * len(PAPER_EPS) + (len(PAPER_EPS) - 1) / 2
-        ax.text(mid, -0.7, name, ha="center", va="bottom", fontsize=7,
-                fontweight="bold", clip_on=False)
-    # No cell text — let colorbar convey values
-    cbar = fig.colorbar(im, ax=ax, shrink=0.85, pad=0.02)
-    cbar.set_label(r"Pearson $r$ with primary target")
+        # Use figure fraction y so labels sit reliably below tick marks
+        ax.annotate(name, xy=(mid, 0), xycoords=("data", "axes fraction"),
+                    xytext=(0, -38), textcoords="offset points",
+                    ha="center", va="top", fontsize=8.5, fontweight="bold",
+                    annotation_clip=False)
+    cbar = fig.colorbar(im, ax=ax, shrink=0.75, pad=0.02)
+    cbar.set_label(r"Pearson $r$ with primary target", fontsize=11)
+    cbar.ax.tick_params(labelsize=10)
     ax.set_title(f"Summary matrix at $N={n_ref}$, {MODEL_LABELS[model]}",
-                 fontsize=11, fontweight="bold", pad=25)
+                 fontsize=12, fontweight="bold", pad=14)
+    fig.subplots_adjust(bottom=0.22)
     savefig(fig, "fig10_summary_matrix.pdf")
 
 
@@ -1703,7 +1721,7 @@ def fig16_convergence(conv_path: str) -> None:
     ncols = min(len(rows_to_plot), 4)
     nrows = math.ceil(len(rows_to_plot) / ncols)
     fig, axes = plt.subplots(nrows, ncols,
-                             figsize=(4.0 * ncols, 3.8 * nrows),
+                             figsize=(4.8 * ncols, 4.5 * nrows),
                              squeeze=False)
 
     for idx, (key, v) in enumerate(rows_to_plot):
@@ -1746,11 +1764,13 @@ def fig16_convergence(conv_path: str) -> None:
                              color="0.55", alpha=0.15)
 
         init = v.get("init", ""); eps = v.get("eps", 0.0)
-        ax.set_title(f"{IC_LABELS.get(init, init)}, $\\epsilon={eps:.2f}$",
-                     fontsize=9)
-        ax.set_xlabel("n replicates")
-        ax.set_ylabel(r"$|r|$ (VelDisp)", color=color_r)
-        ax2.set_ylabel("CI width", color="0.55")
+        ax.set_title(f"{IC_LABELS.get(init, init)},  $\\epsilon={eps:.2f}$",
+                     fontsize=11, fontweight="bold")
+        ax.set_xlabel("Replicates", fontsize=10)
+        ax.set_ylabel(r"$|r|$ (VelDisp)", color=color_r, fontsize=10)
+        ax2.set_ylabel("95% CI width", color="0.55", fontsize=10)
+        ax.tick_params(labelsize=9)
+        ax2.tick_params(labelsize=9)
         ax.axhline(0.0, color="0.8", lw=0.8, ls=":")
 
     for idx in range(len(rows_to_plot), nrows * ncols):
@@ -1816,7 +1836,7 @@ def fig17_radial_and_null(analysis: Dict) -> None:
         for c in analysis.values()
     )
 
-    fig, axes = plt.subplots(1, 2, figsize=(12.0, 4.8))
+    fig, axes = plt.subplots(1, 2, figsize=(14.0, 5.5))
 
     # ── Left: radial coarse family performance — line plot ────────────────────
     ax = axes[0]
@@ -1847,20 +1867,21 @@ def fig17_radial_and_null(analysis: Dict) -> None:
             ax.plot(PAPER_EPS, _yr, marker="s", color=col, ls="--", lw=1.2,
                     alpha=0.7)
         ax.axhline(0.0, color="0.7", lw=1, ls="--")
-        ax.set_xlabel(r"$\epsilon$")
-        ax.set_ylabel(r"$|r|$")
-        ax.set_title("Radial coarse family vs best fine", fontsize=10,
+        ax.set_xlabel(r"$\epsilon$", fontsize=11)
+        ax.set_ylabel(r"$|r|$", fontsize=11)
+        ax.tick_params(labelsize=10)
+        ax.set_title("Radial coarse family vs best fine", fontsize=11,
                       fontweight="bold")
-        # Compact legend: line types + IC colors
-        _h = [plt.Line2D([0], [0], color="0.3", ls="-", marker="o", lw=1.5,
-                          label="CoarseConc"),
-              plt.Line2D([0], [0], color="0.3", ls="--", marker="s", lw=1.2,
-                          label="RShellVar")]
+        # Two-section legend: line style (top) + IC colour (bottom)
+        _h = [plt.Line2D([0], [0], color="0.3", ls="-",  marker="o", lw=1.8,
+                          label="CoarseConc  (solid)"),
+              plt.Line2D([0], [0], color="0.3", ls="--", marker="s", lw=1.4,
+                          label="RShellVar  (dashed)")]
         for init in IC_ORDER:
-            _h.append(plt.Line2D([0], [0], color=IC_COLORS[init], lw=2,
+            _h.append(plt.Line2D([0], [0], color=IC_COLORS[init], lw=2.5,
                                   label=IC_LABELS[init]))
-        ax.legend(handles=_h, frameon=False, fontsize=7, ncol=2,
-                  loc="upper left")
+        ax.legend(handles=_h, frameon=False, fontsize=9, ncol=1,
+                  loc="upper left", handlelength=2.2)
 
     # ── Right: angular-shuffle null control — winner-gap heatmap ─────────────
     ax = axes[1]
@@ -1906,17 +1927,18 @@ def fig17_radial_and_null(analysis: Dict) -> None:
         ax.set_title("Angular-shuffle null control", fontsize=10,
                       fontweight="bold")
         ax.set_xticks(range(len(PAPER_EPS)))
-        ax.set_xticklabels([f"{e}" for e in PAPER_EPS], fontsize=9)
+        ax.set_xticklabels([f"{e}" for e in PAPER_EPS], fontsize=10)
         ax.set_yticks(range(len(present)))
-        ax.set_yticklabels(ylabels, fontsize=9)
-        ax.set_xlabel(r"$\epsilon$")
+        ax.set_yticklabels(ylabels, fontsize=10)
+        ax.set_xlabel(r"$\epsilon$", fontsize=11)
         for i in range(len(present)):
             for j in range(len(PAPER_EPS)):
                 bg = mat_a[i, j]
                 tc = "white" if (np.isfinite(bg) and abs(bg) > 0.2) else "0.15"
                 ax.text(j, i, str(lbl_a[i, j]), ha="center", va="center",
-                        fontsize=9, fontweight="bold", color=tc)
-        plt.colorbar(im, ax=ax, shrink=0.82, label="winner gap")
+                        fontsize=11, fontweight="bold", color=tc)
+        plt.colorbar(im, ax=ax, shrink=0.82,
+                     label="winner gap").ax.tick_params(labelsize=9)
 
     fig.suptitle(
         "Radial coarse family (left) and angular-shuffle null (right)",
