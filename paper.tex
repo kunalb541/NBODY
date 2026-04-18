@@ -361,6 +361,15 @@ are not artefacts of the difference formulation.
 \section{Results}
 \label{sec:results}
 
+Throughout this section, $r$ denotes the Pearson correlation of an
+initial observable with $\dCearly$.
+Comparisons use $|r|$ (predictive strength); the sign of $r$ reflects
+the direction of the effect (e.g.\ $r < 0$ for bimodal coarse means
+higher initial density variance predicts more collapse, i.e.\ smaller
+$\dCearly$).
+The winner gap is defined as $|r_{\rm best\,fine}| - |r_{\rm best\,coarse}|$;
+negative values indicate coarse dominance.
+
 \subsection{Numerical credibility}
 \label{sec:results:diag}
 
@@ -375,8 +384,11 @@ No drift--verdict correlation is detected; energy-drift distributions,
 virial-ratio scatter, and convergence curves appear in
 Appendix~\ref{app:validation}
 (Figures~\ref{fig:diagnostics} and~\ref{fig:convergence}).
-All families show drift below $10^{-3}$, confirming that leapfrog KDK
-is well-behaved across the full $N$--$\heps$ grid.
+The typical per-run drift is below $10^{-3}$ (median $|\Delta E / E_0|$
+across all families); \NOutlierDriftTenth{} runs ($<0.1\%$ of
+direct-isolated runs) exceed $0.1$ and \NOutlierDriftOne{} exceed $1.0$
+(see Appendix~\ref{app:outliers}).
+Excluding high-drift runs changes no categorical verdict.
 Per-family median initial virial ratios are $Q_0 \approx 3.3$ for bimodal
 (super-virial; two unvirialised sub-clusters), $2.0$ for Hernquist,
 $1.8$ for Plummer (both mildly super-virial from the approximate velocity
@@ -836,10 +848,11 @@ This is consistent with the finding that merger remnants retain kinematic
 signatures (shells, streams, velocity anisotropy) long after spatial
 relaxation \citep{HernquistSpergel1992}: the VelDisp advantage we
 measure is the predictive counterpart of this incomplete phase-space mixing.
-The physical mechanism is clear in the battery: when $\heps$ exceeds the
-cusp scale radius, the potential is smoothed over the region that carries
-kinematic substructure; phase-space memory becomes inaccessible, and only
-the coarse density contrast retains predictive value.
+The battery supports a consistent mechanistic interpretation: when
+$\heps$ exceeds the cusp scale radius, the potential is smoothed over the
+region that carries kinematic substructure; phase-space memory becomes
+inaccessible, and only the coarse density contrast retains predictive
+value.
 For dark matter haloes with NFW-like cusps \citep{NFW1996,NFW1997},
 the transition range $\heps/a \approx 0.35$--$0.50$ maps onto scales
 comparable to the convergence radius identified by \citet{PowerEtal2003},
@@ -961,6 +974,11 @@ $\heps/a$, and phase-space access.
 No universal ranking is supported.  Predictive advantage is conditional
 on the initial-condition family, the observable class, and the
 softening regime---not a general property of self-gravitating systems.
+
+All results are specific to the scalar target $\dCearly$ and the
+stylised families studied here; the paper is fundamentally an
+observable-class comparison under a fixed target choice, not a
+broader characterisation of predictive structure in gravity.
 
 \clearpage
 
