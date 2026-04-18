@@ -1884,9 +1884,14 @@ def fig17_radial_and_null(analysis: Dict) -> None:
         for init in IC_ORDER:
             _h.append(plt.Line2D([0], [0], color=IC_COLORS[init], lw=2.5,
                                   label=IC_LABELS[init]))
+        # Place legend in the open gap between the top pair of lines
+        # (bimodal/Plummer solid ~0.27–0.31) and the lower cluster
+        # (~0.07–0.17).  bbox_to_anchor in axes fraction; upper-right
+        # corner of the legend sits at ~y_axes=0.76 ≈ y_data=0.22.
         ax.legend(handles=_h, frameon=True, framealpha=0.92,
                   edgecolor="0.8", fontsize=9, ncol=2,
-                  loc="lower right", handlelength=2.0)
+                  loc="upper right", bbox_to_anchor=(0.98, 0.76),
+                  handlelength=2.0)
 
     # ── Right: angular-shuffle null control — winner-gap heatmap ─────────────
     ax = axes[1]
