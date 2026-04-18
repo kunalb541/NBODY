@@ -30,7 +30,7 @@ across four initial-condition families (plus three angular-shuffle null controls
 
 ### Key Results
 
-1. **Bimodal (hard anchor)**: Coarse density variance dominates in every tested cell (|r| = 0.984 at ε = 0.05, ranging from 0.961 to 0.994 across ε; winner-gap CIs entirely below zero at all N, ε, and both force models).
+1. **Bimodal (calibration anchor)**: Coarse density variance dominates in every tested cell (|r| = 0.984 at ε = 0.05, ranging from 0.961 to 0.994 across ε; winner-gap CIs entirely below zero at all N, ε, and both force models).
 
 2. **Concentrated cusps — restricted kinematic advantage**: Local velocity dispersion outperforms the coarse predictor for concentrated cusp profiles at low softening (Hernquist ε ≤ 0.05, Plummer ε = 0.02; gap CIs exclude zero). The effect is modest: VelDisp explains ~18–28% of variance (R² at N = 1024). The advantage erodes with increasing ε and vanishes by ε = 0.10; the transition lies between ε/a ≈ 0.35 and 0.50 for these idealised families.
 
@@ -58,8 +58,10 @@ across four initial-condition families (plus three angular-shuffle null controls
 ├── nbody_paper.py        # Figure/table generation, analysis pipeline, paper macros
 ├── test_regression.py    # 34 regression tests
 ├── build.sh              # Reproducible build: run battery + compile paper
-├── paper.tex             # LaTeX manuscript
-├── paper.pdf             # Compiled paper
+├── paper.tex             # LaTeX manuscript (anonymised for double-blind review)
+├── paper.pdf             # Compiled paper (anonymised for double-blind review)
+├── highlights.txt        # Elsevier submission highlights
+├── declaration_of_interest.txt  # Declaration of no competing interests
 ├── .gitignore            # Excludes large data files, caches, build artifacts
 ├── LICENSE               # MIT License
 ├── outputs/
