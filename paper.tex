@@ -19,10 +19,10 @@
 
 \begin{document}
 
-\title{Predictive Structure in Three-Dimensional
-       Self-Gravitating N-body Systems:
-       Initial-Condition Families, Observable Classes,
-       and the Role of Gravitational Softening}
+\title{Observable-Class Predictability in Stylised
+       Three-Dimensional Self-Gravitating N-body Families:
+       Coarse Dominance, Kinematic Advantage,
+       and Softening Dependence}
 
 \author[orcid=0009-0007-4447-6325]{Kunal Bhatia}
 \affiliation{Independent Researcher, Heidelberg, Germany}
@@ -45,8 +45,10 @@ tested $N$, $\heps$, and force models.
 A secondary result is a restricted fine-kinematic regime: local
 velocity dispersion outperforms the coarse predictor for concentrated
 cusp profiles at low softening (Hernquist $\heps \le 0.05$, Plummer
-$\heps = 0.02$; gap CIs exclude zero), but this advantage erodes
-with increasing $\heps$ and vanishes by $\heps = 0.10$.
+$\heps = 0.02$; gap CIs exclude zero), though the effect is modest
+($R^2 \approx 0.20$--$0.30$).
+This advantage erodes with increasing $\heps$ and vanishes by
+$\heps = 0.10$.
 The strongest negative result is that no positional fine-scale
 observable outperforms the coarse predictor in any tested cell.
 No universal ranking is supported: predictive advantage is structured
@@ -65,19 +67,15 @@ the dynamically relevant information channel.
 \section{Introduction}
 \label{sec:intro}
 
-Which initial summary statistic of a self-gravitating particle system
-best predicts future clustering?  The question is not which level of
-description is fundamentally correct, but which observable class---coarse
-positional, fine positional, or fine kinematic---carries the most
-predictive power for a fixed clustering target under controlled numerical
-conditions.
-The goal is comparative rather than universal: to map when coarse
-density contrast, fine spatial structure, or fine phase-space
-substructure is most predictive across stylised initial-condition
-families and softening regimes.
-This is a controlled audit of summary classes for a fixed target,
-not an attempt to identify a universally privileged description of
-self-gravitating systems.
+This paper asks, in a controlled setting with stylised initial-condition
+families, which observable class---coarse positional, fine positional, or
+fine kinematic---best predicts future clustering.
+The systems are intentionally simplified (isolated or periodic, idealised
+IC families, fixed scalar target, no cosmological expansion), so the result
+is a statement about predictive structure in this controlled setting, not a
+general claim about self-gravitating systems.
+The goal is comparative: to map which observable class wins, and under what
+conditions, across a large battery of three-dimensional $N$-body simulations.
 
 The Jeans instability criterion provides a physical prior.
 The Jeans length $\lambda_J \propto \sigma_v \rho^{-1/2}$ sets the
@@ -146,7 +144,10 @@ density field carries predictive power, or whether only the kinematic
 
 \subsection{Force models}
 
-Two force-model classes are compared as distinct physics.
+A direct-sum isolated solver and a particle-mesh periodic solver are run
+across the same IC families; PM results serve as a numerical cross-check
+with a different force architecture and boundary conditions
+(Section~\ref{sec:results:model_compare}).
 
 \textit{Direct-sum isolated} (\texttt{direct\_isolated}).
 Forces are computed via the softened pairwise potential
@@ -162,9 +163,9 @@ The density field is deposited via cloud-in-cell (CIC) interpolation onto
 a $32^3$ grid; the Poisson equation is solved spectrally by fast Fourier
 transform \citep{HockneyEastwood1988}.
 Periodic boundary conditions are enforced.
-The PM Hamiltonian differs from the direct-sum Hamiltonian; the two model
-classes represent distinct physics and are compared in
-Section~\ref{sec:results:model_compare}.
+The PM Hamiltonian differs from the direct-sum Hamiltonian; PM results
+are reported as a cross-check in Section~\ref{sec:results:model_compare}
+rather than as a co-equal second measurement of the same physics.
 
 \subsection{Integrator}
 
@@ -244,8 +245,13 @@ at $\pm 0.25\,L$ along the $x$-axis with an infall velocity of $0.1$ code
 units toward the midpoint (approximately $10\%$ of the sub-cluster velocity
 dispersion).
 Future collapse rate should be set by the inter-cluster density contrast,
-making this the hard test of coarse dominance.
-This configuration models pre-merger galaxy pairs or interacting dark matter haloes.
+making coarse dominance the expected outcome from Jeans-scale arguments.
+This configuration serves as a calibration anchor: confirming the
+expected coarse win validates the battery methodology before examining
+the more scientifically interesting concentrated-profile families, where
+the outcome is not predicted a priori.
+This configuration models pre-merger galaxy pairs or interacting dark
+matter haloes.
 
 \textit{Hernquist} (\texttt{hernquist3d}).
 Drawn from $\rho \propto r^{-1}(r+a)^{-3}$ \citep{Hernquist1990}
@@ -709,7 +715,13 @@ For concentrated profiles the PM rows are nearly $\heps$-invariant
 (force resolution set by mesh, not $\heps$), so the direct-isolated
 results carry the weight of the softening-transition evidence;
 PM agreement on categorical verdicts provides robustness confirmation
-\citep{DehnenRead2011}.
+\citep{Springel2005,DehnenRead2011}.
+The cold-clumpy family shows a verdict discrepancy between solvers
+(TIE in direct-isolated, COARSE in some PM cells): this likely reflects
+the PM grid's insensitivity to sub-grid clump structure, which the
+direct solver partially resolves.  This discrepancy does not affect the
+paper's main claims, which rest on bimodal and concentrated-profile
+cells where both solvers agree.
 
 \subsection{Observable-class dependence}
 \label{sec:results:obs_class}
@@ -823,16 +835,16 @@ as a predictive residue of incomplete memory erasure \citep{Chavanis2002}.
 This is consistent with the finding that merger remnants retain kinematic
 signatures (shells, streams, velocity anisotropy) long after spatial
 relaxation \citep{HernquistSpergel1992}: the VelDisp advantage we
-measure is the predictive counterpart of this incomplete phase-space
-mixing.
-For real dark matter haloes with NFW-like cusps ($r_s \sim 10$--$30$\,kpc),
-the critical softening $\heps \sim 0.25\,r_s$ maps onto scales of a few
-kpc---comparable to the convergence radius below which \citet{PowerEtal2003}
-find that halo profiles become resolution-dependent.
-When $\heps$ exceeds the cusp scale radius, the potential is smoothed over
-the region that would otherwise carry kinematic substructure; phase-space
-memory becomes inaccessible to the observable, and only the coarse density
-contrast retains predictive value.
+measure is the predictive counterpart of this incomplete phase-space mixing.
+The physical mechanism is clear in the battery: when $\heps$ exceeds the
+cusp scale radius, the potential is smoothed over the region that carries
+kinematic substructure; phase-space memory becomes inaccessible, and only
+the coarse density contrast retains predictive value.
+For dark matter haloes with NFW-like cusps \citep{NFW1996,NFW1997},
+the transition range $\heps/a \approx 0.35$--$0.50$ maps onto scales
+comparable to the convergence radius identified by \citet{PowerEtal2003},
+but any direct connection would require dedicated investigation with
+realistic populations and is not claimed here.
 
 Radial-distance controls and permutation-null shuffles confirm that the
 main predictive signals are not trivially explained by geometry or
@@ -847,18 +859,13 @@ picture in which large-scale overdensity governs merger timing
 plays a role analogous to the overdensity that drives dynamical friction
 in galaxy mergers.
 
-The $\heps/a$ transition for concentrated profiles is suggestive of
-resolution-dependent access to cusp kinematics.
-As a purely illustrative connection, the transition range
-$\heps/a \approx 0.35$--$0.50$ sits in the same regime as the
-convergence criterion of \citet{PowerEtal2003} for cusp-dominated
-systems; but this is a qualitative parallel, not a derived design rule.
-Our battery uses idealised isolated families, not cosmological
-populations, so the threshold should be read as a feature of this
-controlled setting rather than a prescription for general use.
-Direct transfer to cosmological contexts---which include tidal fields,
-baryonic processes, and hierarchical assembly---would require
-dedicated investigation.
+The $\heps/a$ transition for concentrated profiles reflects
+resolution-dependent access to cusp kinematics within this controlled
+setting.
+The transition range $\heps/a \approx 0.35$--$0.50$ is a feature of these
+idealised families; it is not a prescriptive design rule and should not
+be extrapolated to cosmological populations, which include tidal fields,
+baryonic processes, and hierarchical assembly.
 
 \subsection{What is and is not earned}
 \label{sec:discussion:scope}
@@ -902,12 +909,26 @@ $\sigrho(8)|_{t=t_e}$ replaces the difference $\dCearly$ as the
 target, ruling out shared-baseline deflation
 (Section~\ref{sec:methods:prediction}).
 
-\subsection{Scope and limitations}
 
-The prediction target is a single scalar ($\dCearly$); fine observables
-might carry more information for spatially resolved targets or longer
-horizons.  The five-point $\heps$ grid resolves transition direction
-but not the precise boundary in $\heps/a$.
+
+\subsection{Future work}
+
+Several extensions would strengthen and broaden these results.
+First, a denser $\heps/a$ sweep in the transition region
+($\heps/a \in [0.30, 0.55]$) for Hernquist and Plummer would sharpen
+the boundary location; this is computationally tractable within the
+existing framework.
+Second, testing whether the VelDisp advantage persists at the
+intermediate horizon (step~\HMid{}, $t = 1.5$) would clarify whether
+the fine-kinematic signal is a transient feature of the initial
+violent-relaxation phase or a persistent predictive advantage.
+Third, the prediction target is a single scalar ($\dCearly$); fine
+observables might carry more information for spatially resolved targets
+(e.g.\ radial profile shape) or longer prediction horizons.
+Finally, extending the battery to cosmological initial conditions---with
+tidal fields, hierarchical assembly, and baryonic processes---would test
+whether the family-dependent verdict structure observed here survives in
+more realistic settings.
 
 
 % ---------------------------------------------------------------------------
