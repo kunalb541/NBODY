@@ -1,4 +1,4 @@
-# Predictive Structure in Three-Dimensional Self-Gravitating N-body Systems
+ Predictive Structure in Three-Dimensional Self-Gravitating N-body Systems
 
 Code and analysis pipeline for the paper:
 
