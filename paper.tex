@@ -295,14 +295,13 @@ and replicate subsets yields consistent verdict assignments.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{outputs/figures/fig16_convergence.pdf}
-\caption{Convergence check: verdict stability under bootstrap resampling
-  and replicate subsampling.
-  Each panel shows the fraction of bootstrap draws in which the
-  point-estimate verdict agrees with the reported verdict, across
-  parameter cells.
-  Established verdicts (bimodal coarse, Hernquist fine at low
-  $\heps$) show high stability, whereas boundary cells show the
-  expected instability near the decision threshold.}
+\caption{VelDisp convergence for kinematic frontier cells
+  (Hernquist and Plummer at $\heps = 0.02$ and $0.10$).
+  Green: $|r|$(VelDisp) mean $\pm$ std across repeated random subsamples
+  as a function of replicate count.
+  Grey dashed: 95\% CI width (right axis).
+  Both $|r|$ and CI width stabilise by $\sim 200$ replicates,
+  confirming that the battery's 500 replicates are sufficient.}
 \label{fig:convergence}
 \end{figure}
 % SUPPLEMENTARY CANDIDATE: Fig 16 (convergence) could move to appendix.
