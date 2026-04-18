@@ -1,43 +1,42 @@
-## Predictive Structure in Three-Dimensional Self-Gravitating N-body Systems
+## Observable-Class Predictability in Stylised Three-Dimensional Self-Gravitating N-body Families
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-**140,000 three-dimensional N-body simulations testing which initial-condition observables — coarse density contrast, fine positional structure, or phase-space kinematics — best predict future gravitational clustering across dark matter halo profiles, galaxy mergers, and globular cluster models.**
+**140,000 three-dimensional N-body simulations testing which observable class — coarse positional, fine positional, or fine kinematic — best predicts future gravitational clustering across four stylised initial-condition families, as a function of particle count and gravitational softening.**
 
 Code and analysis pipeline for the paper:
 
-> **Predictive Structure in Three-Dimensional Self-Gravitating N-body Systems:
-> Initial-Condition Families, Observable Classes, and the Role of Gravitational Softening**
+> **Observable-Class Predictability in Stylised Three-Dimensional Self-Gravitating N-body Families:
+> Coarse Dominance, Kinematic Advantage, and Softening Dependence**
 >
 > Kunal Bhatia (2026)
 > [ORCID: 0009-0007-4447-6325](https://orcid.org/0009-0007-4447-6325)
 
 ## Scientific Summary
 
-This paper asks: **which scale of initial structure in a self-gravitating particle system best predicts future gravitational clustering?**
+This paper asks: **in a controlled setting with stylised initial-condition families, which observable class — coarse positional, fine positional, or fine kinematic — best predicts future clustering?**
+The systems are intentionally simplified (isolated or periodic boundaries, idealised IC families, fixed scalar target, no cosmological expansion), so the result is a statement about predictive structure in this controlled setting, not a general claim about self-gravitating systems.
 
 We test three observable classes:
-- **Coarse positional**: grid-scale density variance (analogous to large-scale overdensity in cosmological simulations)
+- **Coarse positional**: grid-scale density variance and radial concentration proxies
 - **Fine positional**: nearest-neighbour density, Fourier power, close-pair fraction, FoF group count
 - **Fine kinematic**: local velocity dispersion (the only observable accessing phase-space information)
 
 across four initial-condition families (plus three angular-shuffle null controls = 7 total):
-- **Bimodal** (two-cluster merger): models galaxy-galaxy interactions and dark matter halo mergers
-- **Hernquist** cusp: models elliptical galaxies and the stellar component of dark matter haloes
-- **Plummer** sphere: models globular clusters and dwarf spheroidal galaxies
-- **Cold-clumpy** (multi-clump): models young stellar groups and early dark matter substructure assembly
+- **Bimodal** (two-cluster merger): stylised merger-like initial condition
+- **Hernquist** cusp: concentrated cusp profile (scale radius *a*)
+- **Plummer** sphere: softer concentrated profile (scale radius *a*)
+- **Cold-clumpy** (multi-clump): pressureless multi-clump initial condition
 
 ### Key Results
 
-1. **Bimodal mergers**: Coarse density variance dominates in every tested cell (r = 0.984 at ε = 0.05, ranging from 0.961 to 0.994 across ε; winner-gap CIs entirely below zero in all cells). The inter-cluster density contrast at the Jeans scale governs the merger dynamics.
+1. **Bimodal (hard anchor)**: Coarse density variance dominates in every tested cell (|r| = 0.984 at ε = 0.05, ranging from 0.961 to 0.994 across ε; winner-gap CIs entirely below zero at all N, ε, and both force models).
 
-2. **Concentrated cusps**: Local velocity dispersion outperforms coarse predictors at low softening (Hernquist at ε ≤ 0.05, Plummer at ε = 0.02; gap CIs exclude zero), indicating that phase-space substructure below the softening scale carries predictive information when the force resolution partially resolves the cusp.
+2. **Concentrated cusps — restricted kinematic advantage**: Local velocity dispersion outperforms the coarse predictor for concentrated cusp profiles at low softening (Hernquist ε ≤ 0.05, Plummer ε = 0.02; gap CIs exclude zero). The effect is modest: VelDisp explains ~18–28% of variance (R² at N = 1024). The advantage erodes with increasing ε and vanishes by ε = 0.10; the transition lies between ε/a ≈ 0.35 and 0.50 for these idealised families.
 
-3. **Softening transition**: The fine kinematic advantage erodes with increasing softening and vanishes by ε = 0.10, where the softening length exceeds the cusp scale radius. The zero-crossing occurs between ε/a ≈ 0.25 and 0.50.
+3. **No positional fine advantage**: No tested positional fine-scale observable outperforms the coarse predictor in any cell, with one exception: cold-clumpy at ε = 0.10, where ClosePairs acts as a proxy for inter-clump connectivity rather than true fine-scale structure.
 
-4. **No positional fine advantage**: No tested positional fine-scale observable outperforms the coarse predictor in any parameter cell, with one exception: cold-clumpy at ε = 0.10, where ClosePairs acts as a proxy for inter-clump connectivity rather than true fine-scale structure.
-
-5. **Practical implication**: For simulations of cusp-dominated systems, force resolution must satisfy ε/a ≲ 0.25 for initial velocity substructure to carry predictive information. Above this threshold, only the coarse density field matters.
+4. **Scope**: All results are specific to the scalar target ΔC_8^early and the stylised families studied here. The paper is an observable-class comparison under a fixed target choice, not a broader characterisation of predictive structure in gravity. The ε/a transition range is a feature of these idealised profiles and should not be extrapolated to cosmological populations.
 
 ## Battery Design
 
@@ -124,7 +123,7 @@ Install via `tlmgr --usermode install aastex` if not already present.
 | `direct_isolated` | Pairwise O(N²) with Newton's 3rd law | Open | N(N−1)/2 pairs | Plummer ε |
 | `pm_periodic` | FFT Poisson solver on 32³ grid | Periodic | O(N log N) | Grid resolution (~L/32) |
 
-Direct-isolated is capped at N ≤ 2048. PM-periodic runs the full N range up to 16384. The two models represent distinct physics and are compared as separate experiments.
+Direct-isolated is capped at N ≤ 2048. PM-periodic runs the full N range up to 16384. PM-periodic serves as a numerical cross-check with a different force architecture and boundary conditions; results are reported separately rather than pooled.
 
 ## Observable Classes
 
@@ -146,9 +145,9 @@ Grid-based observables restrict to particles inside [0, L)³. Distance-based obs
 If you use this code or data, please cite:
 
 ```
-Bhatia, K. (2026). Predictive Structure in Three-Dimensional Self-Gravitating
-N-body Systems: Initial-Condition Families, Observable Classes, and the Role
-of Gravitational Softening. Submitted to ApJ.
+Bhatia, K. (2026). Observable-Class Predictability in Stylised
+Three-Dimensional Self-Gravitating N-body Families: Coarse Dominance,
+Kinematic Advantage, and Softening Dependence. Submitted to ApJ.
 ```
 
 ## License
