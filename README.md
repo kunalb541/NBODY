@@ -6,10 +6,18 @@
 
 Code and analysis pipeline for the paper:
 
-> **Observable-Class Predictability in Stylised Three-Dimensional Self-Gravitating N-body Families**
+> **Observable-Class Predictability in Stylised Three-Dimensional Self-Gravitating N-body Families:
+> Coarse Dominance, Kinematic Advantage, and Softening Dependence**
 >
 > Kunal Bhatia (2026)
 > [ORCID: 0009-0007-4447-6325](https://orcid.org/0009-0007-4447-6325)
+>
+> Submitted to *New Astronomy* (Manuscript ID: NEWAST-D-26-00163)
+> Zenodo: [10.5281/zenodo.19643717](https://doi.org/10.5281/zenodo.19643717)
+
+### ⚠️ Errata for submitted manuscript
+
+The submitted manuscript states "no positional fine-scale observable outperforms the coarse predictor in any tested cell" in five places. This is overstated: the positional-class gap CI excludes zero in 10 of 80 direct-isolated cells (Hernquist at low ε and cold-clumpy at ε = 0.10). The corrected language ("rarely outperform; 10/80 cells") is in the current `paper.tex` on this repository and will be incorporated in the first revision.
 
 ## Scientific Summary
 
@@ -148,7 +156,8 @@ If you use this code or data, please cite:
 ```
 Bhatia, K. (2026). Observable-Class Predictability in Stylised Three-Dimensional
 Self-Gravitating N-body Families: Coarse Dominance, Kinematic Advantage, and
-Softening Dependence. Submitted to ApJ. Zenodo: https://doi.org/10.5281/zenodo.19643717
+Softening Dependence. Submitted to New Astronomy (NEWAST-D-26-00163).
+Zenodo: https://doi.org/10.5281/zenodo.19643717
 ```
 
 ## License
