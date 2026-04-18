@@ -145,9 +145,9 @@ Grid-based observables restrict to particles inside [0, L)³. Distance-based obs
 If you use this code or data, please cite:
 
 ```
-Bhatia, K. (2026). Observable-Class Predictability in Stylised
-Three-Dimensional Self-Gravitating N-body Families: Coarse Dominance,
-Kinematic Advantage, and Softening Dependence. Submitted to ApJ.
+Bhatia, K. (2026). Observable-Class Predictability in Stylised Three-Dimensional
+Self-Gravitating N-body Families: Coarse Dominance, Kinematic Advantage, and
+Softening Dependence. Zenodo. https://doi.org/10.5281/zenodo.19643717
 ```
 
 ## License
