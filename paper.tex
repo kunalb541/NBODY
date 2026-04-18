@@ -214,9 +214,10 @@ This configuration models pre-merger galaxy pairs or interacting dark matter hal
 \textit{Hernquist} (\texttt{hernquist3d}).
 Drawn from $\rho \propto r^{-1}(r+a)^{-3}$ \citep{Hernquist1990}
 with $a = 0.20$, velocities from an isotropic Gaussian at
-$\sigma \approx (G/6a)^{1/2}$.
+$\sigma \sim (GM/6a)^{1/2}$ (order-of-magnitude virial estimate).
 The steep inner cusp concentrates kinematic energy at small radii.
-The Hernquist profile is widely used to model elliptical galaxies and the stellar component of dark matter haloes \citep{Hernquist1990}.
+This profile is widely used to model elliptical galaxies and the
+stellar component of dark matter haloes.
 
 \textit{Plummer} (\texttt{plummer3d}).
 Drawn from $\rho \propto (r^2+a^2)^{-5/2}$ \citep{Plummer1911}
@@ -553,12 +554,13 @@ winner gap changes with $\heps$.
 \centering
 \includegraphics[width=\textwidth]{outputs/figures/fig06_eps_transition.pdf}
 \caption{Winner gap vs softening: $N = 1024$, direct-isolated.
-  Each curve shows the winner gap
-  ($|r_{\rm best\,fine}| - |r_{\rm best\,coarse}|$; positive = fine advantage,
-  negative = coarse dominance) for one IC family.
-  Bimodal is strongly negative at all $\heps$.
-  Concentrated profiles cross zero between $\heps = 0.05$ and $0.07$,
-  transitioning from fine to coarse dominance.}
+  Winner gap $= |r_{\rm best\,fine}| - |r_{\rm best\,coarse}|$
+  (positive = fine advantage, negative = coarse dominance).
+  \textit{Left}: multi-cluster ICs (bimodal, cold-clumpy); bimodal is
+  strongly negative at all $\heps$.
+  \textit{Right}: concentrated profiles (Hernquist, Plummer); both
+  cross zero between $\heps = 0.05$ and $0.07$, transitioning from
+  fine to coarse dominance.}
 \label{fig:eps_transition}
 \end{figure}
 

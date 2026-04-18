@@ -1155,7 +1155,8 @@ def fig05_cond_fine(analysis: Dict) -> None:
         ax.set_title(IC_LABELS[init])
         ax.set_xlabel(r"$\epsilon$")
     axes[0].set_ylabel(r"Pearson $r$ with primary target")
-    axes[0].legend(frameon=False, loc="lower left", fontsize=7.5, ncol=2)
+    for ax in axes:
+        ax.legend(frameon=False, loc="lower left", fontsize=7.5, ncol=2)
     fig.suptitle("Conditional fine-leaning candidates: concentrated profiles at $N=1024$")
     savefig(fig, "fig05_cond_fine.pdf")
 
@@ -1921,6 +1922,10 @@ def fig17_radial_and_null(analysis: Dict) -> None:
 
 def savefig(fig: plt.Figure, name: str) -> None:
     path = os.path.join(FIG_DIR, name)
+    try:
+        fig.tight_layout()
+    except Exception:
+        pass  # some figures use constrained_layout instead
     fig.savefig(path)
     plt.close(fig)
     print(f"  wrote {path}")
