@@ -149,7 +149,15 @@ coarse-graining scale — in **either** configuration space (ΔC₈) **or** phas
 relaxation). Once baseline-sharing is properly controlled, no scale-resolved coarse-graining
 description adds robust held-out predictive power.
 
-**N-body program status: FROZEN as a boundary result.** Two physically-motivated coarse-graining
-branches (spatial clustering scale, phase-space mixing) were tested and retired with hardened
-controls. No AWS, no rewrite. The original observable-class paper stands as a methods / stylised
-study; the coarse-graining *law* framing is not supported.
+**N-body program status: OPEN.** Two *specific correlational coarse-scale hypotheses* (spatial
+clustering scale ℓ*∼ε; phase-space mixing scale) were tested and retired with hardened controls —
+**but the N-body branch is not finished.** Both failed the same way (target-self baseline + bulk
+controls explain the apparent signal), which tells us the *class* of question to stop repeating,
+not to stop exploring. No AWS, no rewrite. The original observable-class paper stands as a
+methods / stylised study; the coarse-graining *law* framing is not supported.
+
+**Next direction (open):** an **interventional / causal-handle** test — if we perturb a fine /
+kinematic / coarse handle at t₀, does it *causally* change a future relaxation/clustering target?
+A matched-pair design (same seed, same IC, only the intervention differs) sidesteps the
+baseline-sharing trap that killed the correlational tests. See
+[`nbody_intervention_pilot_plan.md`](nbody_intervention_pilot_plan.md).

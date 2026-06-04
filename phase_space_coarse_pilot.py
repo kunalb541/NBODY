@@ -380,12 +380,13 @@ def _kill_tests(pc: PSConfig, cells: dict, hardening: dict) -> dict:
                     f"{robust_targets} survive it. Treat as a narrow target-specific effect, not a "
                     f"general phase-space coarse-graining result; confirm before any claim.")
     else:
-        decision = ("STOP / FREEZE — after the hardened control (bulk + initial target value), ψ_ℓ "
-                    "adds no robust signal for the mixing headline (survives "
+        decision = ("RETIRE (branch open) — after the hardened control (bulk + initial target "
+                    "value), ψ_ℓ adds no robust signal for the mixing headline (survives "
                     f"{head_hard[0]}/{head_hard[1]} cells). The strong raw Δβ/Δσ_r signals were "
                     "baseline-sharing (β₀/σ_r₀ predicting their own change — the same trap as C₈). "
                     f"Best partial survivor: {best_partial[0]} {best_partial[1]}/{best_partial[2]}. "
-                    "Freeze N-body as a boundary result. No AWS.")
+                    "This specific phase-space coarse-scale hypothesis is retired; the N-body branch "
+                    "remains OPEN for new (e.g. interventional/causal) hypotheses. No AWS.")
 
     return {
         "headline_target": HEADLINE,
@@ -502,7 +503,7 @@ def _report(pc: PSConfig, summary: dict) -> None:
     band = ("🟢 ALIVE" if dec.startswith("ALIVE")
             else "🟡 TARGET-SPECIFIC" if dec.startswith("TARGET-SPECIFIC")
             else "⚪ INCONCLUSIVE" if dec.startswith("INCONCLUSIVE")
-            else "🔴 STOP / FREEZE")
+            else "🔴 RETIRED — this hypothesis killed; N-body branch stays OPEN")
     L.append(f"## Verdict — {band}\n\n> **{dec}**\n")
 
     L.append("## Hardened control — the real bar\n")

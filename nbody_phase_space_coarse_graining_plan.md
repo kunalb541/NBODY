@@ -10,8 +10,10 @@
 > scale law. The raw "ψ beyond bulk" looked strong for Δβ/Δσ_r (4/6), but **collapsed to 0/6 under
 > the hardened control** (bulk + the initial target quantity β₀/σ_r₀) — pure baseline-sharing, the
 > same C₈ trap. The clean mixing headline (Δ comoving phase-space entropy) survives the hardened
-> control in only **1/6** cells. Only residue: `dSigr_early` 3/6 (weak, secondary). **N-body is
-> frozen as a boundary result.** Full results: [`outputs/phase_space_coarse_pilot/pilot_report.md`](outputs/phase_space_coarse_pilot/pilot_report.md).
+> control in only **1/6** cells. Only residue: `dSigr_early` 3/6 (weak, secondary). **This specific
+> phase-space coarse-scale hypothesis is retired; the N-body branch remains OPEN** (next: an
+> interventional/causal test — see [`nbody_intervention_pilot_plan.md`](nbody_intervention_pilot_plan.md)).
+> Full results: [`outputs/phase_space_coarse_pilot/pilot_report.md`](outputs/phase_space_coarse_pilot/pilot_report.md).
 
 > **This is a new branch, not a C₈ rescue.** It moves coarse-graining to where it is physically
 > native in collisionless dynamics — **phase space** — and changes the target from spatial

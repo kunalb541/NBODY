@@ -3,9 +3,9 @@
 **Families:** hernquist3d, plummer3d (cusps)  **ε:** [0.02, 0.05, 0.1]  **N:** 1024  **reps:** 500  **horizons:** [100, 600]  **regressor:** RidgeCV  
 **Headline target:** `dS_late` = Δ coarse phase-space (r,v_r) entropy (mixing).
 
-## Verdict — 🔴 STOP / FREEZE
+## Verdict — 🔴 RETIRED — this hypothesis killed; N-body branch stays OPEN
 
-> **STOP / FREEZE — after the hardened control (bulk + initial target value), ψ_ℓ adds no robust signal for the mixing headline (survives 1/6 cells). The strong raw Δβ/Δσ_r signals were baseline-sharing (β₀/σ_r₀ predicting their own change — the same trap as C₈). Best partial survivor: dSigr_early 3/6. Freeze N-body as a boundary result. No AWS.**
+> **RETIRE (branch open) — after the hardened control (bulk + initial target value), ψ_ℓ adds no robust signal for the mixing headline (survives 1/6 cells). The strong raw Δβ/Δσ_r signals were baseline-sharing (β₀/σ_r₀ predicting their own change — the same trap as C₈). Best partial survivor: dSigr_early 3/6. This specific phase-space coarse-scale hypothesis is retired; the N-body branch remains OPEN for new (e.g. interventional/causal) hypotheses. No AWS.**
 
 ## Hardened control — the real bar
 

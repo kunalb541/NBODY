@@ -1840,6 +1840,6 @@
       "workers": 9
     },
     "aws_needed": false,
-    "decision": "STOP / FREEZE \u2014 after the hardened control (bulk + initial target value), \u03c8_\u2113 adds no robust signal for the mixing headline (survives 1/6 cells). The strong raw \u0394\u03b2/\u0394\u03c3_r signals were baseline-sharing (\u03b2\u2080/\u03c3_r\u2080 predicting their own change \u2014 the same trap as C\u2088). Best partial survivor: dSigr_early 3/6. Freeze N-body as a boundary result. No AWS."
+    "decision": "RETIRE (branch open) \u2014 after the hardened control (bulk + initial target value), \u03c8_\u2113 adds no robust signal for the mixing headline (survives 1/6 cells). The strong raw \u0394\u03b2/\u0394\u03c3_r signals were baseline-sharing (\u03b2\u2080/\u03c3_r\u2080 predicting their own change \u2014 the same trap as C\u2088). Best partial survivor: dSigr_early 3/6. This specific phase-space coarse-scale hypothesis is retired; the N-body branch remains OPEN for new (e.g. interventional/causal) hypotheses. No AWS."
   }
 }
