@@ -1,0 +1,174 @@
+{
+  "hernquist3d": {
+    "n_pairs": 50,
+    "crit1_dose": {
+      "005": {
+        "tstar": 20,
+        "slope": 0.16340734169012655,
+        "slope_ci": [
+          0.15810284304450276,
+          0.16868355341165145
+        ],
+        "partial_r": 0.11532240640407783,
+        "armmean_corr": 0.8937567505783336,
+        "pass": true,
+        "strict_pass": false
+      },
+      "01": {
+        "tstar": 100,
+        "slope": 0.26098535454768185,
+        "slope_ci": [
+          0.25201168194725915,
+          0.26965915070363944
+        ],
+        "partial_r": -0.0415244357993268,
+        "armmean_corr": 0.9868765944425217,
+        "pass": true,
+        "strict_pass": false
+      },
+      "02": {
+        "tstar": 50,
+        "slope": 0.3403709004976044,
+        "slope_ci": [
+          0.3328592929206131,
+          0.3481028180770012
+        ],
+        "partial_r": 0.21943435738939845,
+        "armmean_corr": 0.9798555726050614,
+        "pass": true,
+        "strict_pass": false
+      }
+    },
+    "crit1_pass": true,
+    "crit1_strict_pass": false,
+    "crit2_ordering": {
+      "first_sig_M10": 5,
+      "first_sig_C8": 10,
+      "pass": true
+    },
+    "crit3_locality": {
+      "dM_inner": 0.026640625,
+      "dM_outer": 0.0042138671875,
+      "dLg_inner": -0.014131261576298538,
+      "dLg_outer": -0.2849144378672229,
+      "pass": true
+    },
+    "crit5_sham": {
+      "sham_M_includes0": false,
+      "sham_beta_includes0": false,
+      "sham_vs_full_ratio": 0.022407967277254137,
+      "pass": false
+    },
+    "crit6_conservation": {
+      "ke_drift": 2.3590592409636425e-05,
+      "E_drift_integrator": 0.0020925641895229007,
+      "pass": true
+    },
+    "crit7_Nrobust": {
+      "dM10_4096": 0.0274560546875,
+      "ref": {
+        "512": 0.0299,
+        "1024": 0.0298,
+        "2048": 0.0271
+      },
+      "ratio_vs_512": 0.9182626985785953,
+      "pass": true
+    },
+    "phi_meas_vs_analytic_rel": 0.0076989234282764055,
+    "kill_tests": {
+      "globalL_beats_fperi": true,
+      "outer_reproduces": false,
+      "effect_vanishes_N4096": false,
+      "sham_explains": false
+    },
+    "any_kill": true,
+    "PILOT_PASS": false,
+    "PILOT_PASS_strict": false
+  },
+  "plummer3d": {
+    "n_pairs": 50,
+    "crit1_dose": {
+      "005": {
+        "tstar": 20,
+        "slope": 0.14918562047080397,
+        "slope_ci": [
+          0.146245543647989,
+          0.15198664762655684
+        ],
+        "partial_r": 0.2554267714791898,
+        "armmean_corr": 0.936291429864078,
+        "pass": true,
+        "strict_pass": false
+      },
+      "01": {
+        "tstar": 20,
+        "slope": 0.298019560005663,
+        "slope_ci": [
+          0.29373703414814056,
+          0.30251541146686867
+        ],
+        "partial_r": 0.03963961373266775,
+        "armmean_corr": 0.9397055559122814,
+        "pass": true,
+        "strict_pass": false
+      },
+      "02": {
+        "tstar": 100,
+        "slope": 0.3818725430106716,
+        "slope_ci": [
+          0.37357100365079093,
+          0.3900991766581388
+        ],
+        "partial_r": 0.024253177629602475,
+        "armmean_corr": 0.9779146473197186,
+        "pass": true,
+        "strict_pass": false
+      }
+    },
+    "crit1_pass": true,
+    "crit1_strict_pass": false,
+    "crit2_ordering": {
+      "first_sig_M10": 5,
+      "first_sig_C8": 10,
+      "pass": true
+    },
+    "crit3_locality": {
+      "dM_inner": 0.0358447265625,
+      "dM_outer": 0.0099365234375,
+      "dLg_inner": -0.01401896671316933,
+      "dLg_outer": -0.08286880013687181,
+      "pass": true
+    },
+    "crit5_sham": {
+      "sham_M_includes0": true,
+      "sham_beta_includes0": false,
+      "sham_vs_full_ratio": 0.0040288016458083315,
+      "pass": false
+    },
+    "crit6_conservation": {
+      "ke_drift": 2.3173783445842397e-05,
+      "E_drift_integrator": 0.0003926655353390508,
+      "pass": true
+    },
+    "crit7_Nrobust": {
+      "dM10_4096": 0.056962890625,
+      "ref": {
+        "512": 0.0299,
+        "1024": 0.0298,
+        "2048": 0.0271
+      },
+      "ratio_vs_512": 1.9051133988294313,
+      "pass": true
+    },
+    "phi_meas_vs_analytic_rel": 0.004330469479518633,
+    "kill_tests": {
+      "globalL_beats_fperi": false,
+      "outer_reproduces": false,
+      "effect_vanishes_N4096": false,
+      "sham_explains": false
+    },
+    "any_kill": false,
+    "PILOT_PASS": false,
+    "PILOT_PASS_strict": false
+  }
+}

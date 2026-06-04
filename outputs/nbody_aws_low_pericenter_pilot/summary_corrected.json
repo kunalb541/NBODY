@@ -1,0 +1,188 @@
+{
+  "hernquist3d": {
+    "n_pairs": 50,
+    "crit1_dose": {
+      "005": {
+        "tstar": 20,
+        "slope": 0.16340782056678885,
+        "slope_ci": [
+          0.15822303457374093,
+          0.16883160234102956
+        ],
+        "partial_r": 0.11531373659558386,
+        "armmean_corr": 0.893752753080433,
+        "pass": true,
+        "strict_pass": false
+      },
+      "01": {
+        "tstar": 100,
+        "slope": 0.260986660788566,
+        "slope_ci": [
+          0.2522711423512915,
+          0.2692874646903869
+        ],
+        "partial_r": -0.041647263128980636,
+        "armmean_corr": 0.9868795444159658,
+        "pass": true,
+        "strict_pass": false
+      },
+      "02": {
+        "tstar": 50,
+        "slope": 0.3403707305960983,
+        "slope_ci": [
+          0.33319425068836045,
+          0.3478668337970118
+        ],
+        "partial_r": 0.21961834719135478,
+        "armmean_corr": 0.9798565537470091,
+        "pass": true,
+        "strict_pass": false
+      }
+    },
+    "crit1_pass": true,
+    "crit1_strict_pass": false,
+    "crit2_ordering": {
+      "first_sig_M10": 5,
+      "first_sig_C8": 10,
+      "pass": true
+    },
+    "crit3_locality": {
+      "dM_inner": 0.026640399999999998,
+      "dM_outer": 0.0042136,
+      "dLg_inner": -0.014124,
+      "dLg_outer": -0.28491200000000005,
+      "pass": true
+    },
+    "crit5_sham": {
+      "sham_vs_full_ratio": 0.022413554482346703,
+      "pass": true,
+      "sham_M_includes0": false,
+      "sham_beta_includes0": false,
+      "ci_only_pass": false
+    },
+    "crit6_conservation": {
+      "ke_drift": 0.0,
+      "E_drift_integrator": 0.002092564189522861,
+      "pass": true
+    },
+    "crit7_Nrobust": {
+      "dM10_4096": 0.027456599999999994,
+      "ref": {
+        "512": 0.0299,
+        "1024": 0.0298,
+        "2048": 0.0271
+      },
+      "ratio_vs_512": 0.9182809364548493,
+      "pass": true
+    },
+    "phi_meas_vs_analytic_rel": 0.0076989234282764055,
+    "predictor_compare": {
+      "pcorr_fperi": 0.934747454820367,
+      "pcorr_globalL": 0.16905602504739214,
+      "armmean_fperi": 0.9868795444159658,
+      "armmean_globalL": -0.6974382195301605
+    },
+    "kill_tests": {
+      "globalL_beats_fperi": false,
+      "outer_reproduces": false,
+      "effect_vanishes_N4096": false,
+      "sham_explains": false
+    },
+    "any_kill": false,
+    "PILOT_PASS": true,
+    "PILOT_PASS_strict": false
+  },
+  "plummer3d": {
+    "n_pairs": 50,
+    "crit1_dose": {
+      "005": {
+        "tstar": 20,
+        "slope": 0.14918649616109236,
+        "slope_ci": [
+          0.14618108682457173,
+          0.1522113084458116
+        ],
+        "partial_r": 0.2550222787402291,
+        "armmean_corr": 0.936291491240203,
+        "pass": true,
+        "strict_pass": false
+      },
+      "01": {
+        "tstar": 20,
+        "slope": 0.2980182233917768,
+        "slope_ci": [
+          0.29392183219825085,
+          0.30241908218086083
+        ],
+        "partial_r": 0.03982760439963592,
+        "armmean_corr": 0.939704350533481,
+        "pass": true,
+        "strict_pass": false
+      },
+      "02": {
+        "tstar": 100,
+        "slope": 0.3818747447524647,
+        "slope_ci": [
+          0.37319395094868435,
+          0.3905078296109256
+        ],
+        "partial_r": 0.024310349848585724,
+        "armmean_corr": 0.9779144494793296,
+        "pass": true,
+        "strict_pass": false
+      }
+    },
+    "crit1_pass": true,
+    "crit1_strict_pass": false,
+    "crit2_ordering": {
+      "first_sig_M10": 5,
+      "first_sig_C8": 10,
+      "pass": true
+    },
+    "crit3_locality": {
+      "dM_inner": 0.0358442,
+      "dM_outer": 0.009936799999999999,
+      "dLg_inner": -0.014020000000000001,
+      "dLg_outer": -0.08287000000000001,
+      "pass": true
+    },
+    "crit5_sham": {
+      "sham_vs_full_ratio": 0.004006179558302042,
+      "pass": true,
+      "sham_M_includes0": true,
+      "sham_beta_includes0": false,
+      "ci_only_pass": false
+    },
+    "crit6_conservation": {
+      "ke_drift": 0.0,
+      "E_drift_integrator": 0.0003926655353390096,
+      "pass": true
+    },
+    "crit7_Nrobust": {
+      "dM10_4096": 0.05696199999999999,
+      "ref": {
+        "512": 0.0299,
+        "1024": 0.0298,
+        "2048": 0.0271
+      },
+      "ratio_vs_512": 1.9050836120401335,
+      "pass": true
+    },
+    "phi_meas_vs_analytic_rel": 0.004330469479518633,
+    "predictor_compare": {
+      "pcorr_fperi": 0.9426256597904336,
+      "pcorr_globalL": 0.7900333394962934,
+      "armmean_fperi": 0.939704350533481,
+      "armmean_globalL": -0.7614620815853087
+    },
+    "kill_tests": {
+      "globalL_beats_fperi": false,
+      "outer_reproduces": false,
+      "effect_vanishes_N4096": false,
+      "sham_explains": false
+    },
+    "any_kill": false,
+    "PILOT_PASS": true,
+    "PILOT_PASS_strict": false
+  }
+}
