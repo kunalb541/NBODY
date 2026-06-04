@@ -119,3 +119,37 @@ systems"** — and **does not revive the force-resolution law ℓ*∼ε.**
 
 - **No AWS.** **No rewrite.** This was a useful kill-test: a clean, credible negative that
   sharpens (rather than destroys) the ODD program's read of observer scale.
+
+---
+
+## Follow-up branch: phase-space coarse-graining — also retired (N-body FROZEN)
+
+Plan: [`nbody_phase_space_coarse_graining_plan.md`](nbody_phase_space_coarse_graining_plan.md).
+Result: [`outputs/phase_space_coarse_pilot/pilot_report.md`](outputs/phase_space_coarse_pilot/pilot_report.md).
+
+The next physically-native place for coarse-graining (collisionless relaxation / phase mixing)
+was tested: coarse phase-space features ψ_ℓ (radial-shell σ_r, σ_t, v_r, β + (r,v_r) occupancy
+entropy at resolution ℓ) predicting future **mixing** (Δ comoving phase-space entropy, headline)
+and ΔQ / Δσ_r / Δβ (secondary), in hernquist + plummer × ε{0.02,0.05,0.10} × N=1024 × 500 reps.
+
+**Outcome — 🔴 STOP / FREEZE:**
+- ψ_ℓ beats spatial φ_ℓ **6/6** on the headline — but that is the paper's *known kinematic /
+  VelDisp advantage* (velocities carry more relaxation info than positions), not a new scale law.
+- Raw "ψ_ℓ beyond bulk {Q₀,E,radial,C₈}" looked strong for Δβ / Δσ_r (4/6 cells) — **but it was
+  baseline-sharing.** ψ_ℓ contains the initial β(r)/σ_r(r), and Δβ = β(t₁)−β(t₀) shares −β(t₀).
+  Adding the **initial target quantity** to the control (β₀/σ_r₀/S₀) collapsed Δβ_late and
+  Δσ_r_late from 4/6 → **0/6**. Same trap as C₈, caught by the same hardening.
+- The clean mixing **headline** (Δ comoving phase-space entropy) survives the hardened control in
+  only **1/6** cells (chance). Best partial survivor `dSigr_early` 3/6 — weak, secondary,
+  early-horizon, below the majority bar.
+
+**Boundary lesson (now general):** in this stylised setup, predictive structure is carried by
+**bulk energy / virial / profile quantities and the initial value of the target**, *not* by a
+coarse-graining scale — in **either** configuration space (ΔC₈) **or** phase space (mixing /
+relaxation). Once baseline-sharing is properly controlled, no scale-resolved coarse-graining
+description adds robust held-out predictive power.
+
+**N-body program status: FROZEN as a boundary result.** Two physically-motivated coarse-graining
+branches (spatial clustering scale, phase-space mixing) were tested and retired with hardened
+controls. No AWS, no rewrite. The original observable-class paper stands as a methods / stylised
+study; the coarse-graining *law* framing is not supported.

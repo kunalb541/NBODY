@@ -1,0 +1,30 @@
+{
+  "families": [
+    "hernquist3d",
+    "plummer3d"
+  ],
+  "eps": [
+    0.02,
+    0.05,
+    0.1
+  ],
+  "n": 1024,
+  "replicates": 500,
+  "seed0": 2000,
+  "box_size": 2.0,
+  "plummer_a": 0.2,
+  "k_fine": 16,
+  "pm_grid": 32,
+  "grid_g": 64,
+  "scales": [
+    0.025,
+    0.04,
+    0.06,
+    0.09,
+    0.14,
+    0.2,
+    0.3
+  ],
+  "test_frac": 0.3,
+  "n_boot": 1000
+}

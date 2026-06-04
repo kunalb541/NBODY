@@ -26,6 +26,8 @@ outputs/data/paper_battery.csv
 outputs/data/analysis.json
 .claude/
 
-# Coarse-graining pilot: large caches + run logs (regenerate with coarse_grain_pilot.py)
+# Coarse-graining pilots: large caches + run logs (regenerate with the *_pilot.py scripts)
 outputs/coarse_grain_pilot/cache/
 outputs/coarse_grain_pilot/*.log
+outputs/phase_space_coarse_pilot/cache/
+outputs/phase_space_coarse_pilot/*.log

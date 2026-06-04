@@ -1,9 +1,17 @@
 # N-body Phase-Space Coarse-Graining Pilot — Science Plan
 
-**Status:** Plan only. **No pilot run until approved.** No AWS. `paper.tex` untouched.
+**Status:** Pilot complete. No AWS. `paper.tex` untouched.
 **Date:** 2026-06-04
 **Predecessor:** the spatial-clustering branch (`ℓ*∼ε` for ΔC₈) was tested and **retired**
 ([`nbody_coarse_graining_branch_notes.md`](nbody_coarse_graining_branch_notes.md)).
+
+> **Pilot verdict: 🔴 STOP / FREEZE.** Coarse phase-space ψ_ℓ predicts relaxation targets far
+> better than spatial φ_ℓ (6/6 cells) — but that is the *known kinematic advantage*, not a new
+> scale law. The raw "ψ beyond bulk" looked strong for Δβ/Δσ_r (4/6), but **collapsed to 0/6 under
+> the hardened control** (bulk + the initial target quantity β₀/σ_r₀) — pure baseline-sharing, the
+> same C₈ trap. The clean mixing headline (Δ comoving phase-space entropy) survives the hardened
+> control in only **1/6** cells. Only residue: `dSigr_early` 3/6 (weak, secondary). **N-body is
+> frozen as a boundary result.** Full results: [`outputs/phase_space_coarse_pilot/pilot_report.md`](outputs/phase_space_coarse_pilot/pilot_report.md).
 
 > **This is a new branch, not a C₈ rescue.** It moves coarse-graining to where it is physically
 > native in collisionless dynamics — **phase space** — and changes the target from spatial
