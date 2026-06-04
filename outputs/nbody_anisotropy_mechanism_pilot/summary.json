@@ -1,0 +1,138 @@
+{
+  "effects": {
+    "rad": {
+      "beta": [
+        0.14778450011337865,
+        0.14282048936502756,
+        0.15239096502437588,
+        100
+      ],
+      "Lspec": [
+        -0.3359776617410056,
+        -0.3406618896016771,
+        -0.33096321063876244,
+        100
+      ],
+      "C8": [
+        2.32088264465332,
+        1.4887857904434205,
+        3.224734356880188,
+        100
+      ],
+      "Mcen": [
+        0.016171875,
+        0.013027099609375,
+        0.019521484375,
+        100
+      ],
+      "vr_inner": [
+        -0.006745820876971464,
+        -0.015744637518206404,
+        0.0017786130005004118,
+        100
+      ]
+    },
+    "tan": {
+      "beta": [
+        -0.11415971350454798,
+        -0.1193788733044649,
+        -0.10904891736634403,
+        100
+      ],
+      "Lspec": [
+        0.2100359901806819,
+        0.2062712315153024,
+        0.21390044036882808,
+        100
+      ],
+      "C8": [
+        -1.1616938400268555,
+        -1.837211567878723,
+        -0.472685485839844,
+        100
+      ],
+      "Mcen": [
+        -0.008369140625,
+        -0.01041015625,
+        -0.0063762207031250046,
+        100
+      ],
+      "vr_inner": [
+        0.004106440274096592,
+        -0.0032344464985734167,
+        0.011482332551714691,
+        100
+      ]
+    }
+  },
+  "imposed": {
+    "rad_beta0": [
+      0.6518723884230805,
+      0.6453340396413029,
+      0.6585621801020294,
+      100
+    ],
+    "tan_beta0": [
+      -1.97512300866011,
+      -2.0020776597221244,
+      -1.9488144981633684,
+      100
+    ],
+    "rad_Lspec0": [
+      -0.34374518032721874,
+      -0.34774472092828973,
+      -0.33956212340788855,
+      100
+    ],
+    "tan_Lspec0": [
+      0.21301836901439417,
+      0.21005368260430157,
+      0.21593591212488492,
+      100
+    ]
+  },
+  "sham_beta0": [
+    -0.00020974757832006863,
+    -0.0054039687062238774,
+    0.004615279241829954,
+    100
+  ],
+  "mediation_dC8_dMcen_r": -0.13982411579871035,
+  "antisymmetric": "True",
+  "concentration_mediated": "True",
+  "net_infall_velocity": false,
+  "c8_per_unit_beta": {
+    "rad": 3.5603327980614097,
+    "tan": 0.5881627802082712
+  },
+  "conservation": {
+    "dKE_rel": 8.218163725281743e-05,
+    "dQ_rel": 8.218163725279119e-05,
+    "ok": true
+  },
+  "sham_null": true,
+  "orig_relax": {
+    "beta": [
+      -0.003793153891336928,
+      0.5363566743435046
+    ],
+    "Lspec": [
+      1.2753701669964186,
+      1.2763972111740873
+    ],
+    "C8": [
+      34.82529094696045,
+      23.63918399810791
+    ],
+    "Mcen": [
+      0.07765625,
+      0.02603515625
+    ],
+    "vr_inner": [
+      0.0025371189432332637,
+      0.010588458590392915
+    ]
+  },
+  "aws_needed": false,
+  "decision": "ANTISYMMETRIC + CONCENTRATION-MEDIATED \u2014 radialize raises C\u2088 (+2.32) and central mass M(<0.1) (+0.0162); tangentialize lowers both (-1.16, -0.0084) \u2014 clean SIGN antisymmetry. The clustering tracks central CONCENTRATION at the mean level, via orbital pericenter reduction (lower specific L \u2192 deeper plunge), NOT bulk infall velocity (inner \u27e8v_r\u27e9 effect null). MAGNITUDE is asymmetric/nonlinear: radialize is ~6\u00d7 more effective per unit \u0394\u03b2\u2080 (concentration is one-directional). \u03b2 and |L_i| both flip (entangled) \u2014 the \u03b2-vs-L split needs the L-matched control (test B). [per-pair \u0394C\u2088\u2194\u0394Mcen r=-0.14: weak, scale mismatch.] Proceed to test B."
+}
