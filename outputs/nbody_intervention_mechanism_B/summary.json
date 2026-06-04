@@ -1,0 +1,150 @@
+{
+  "tune": {
+    "score": [
+      0,
+      0.14284717725840415
+    ],
+    "split_pct": 50,
+    "theta_out": 20,
+    "theta_in": 25,
+    "dbeta": 0.07014632166550809,
+    "dL": -0.2946421516212944,
+    "beta_null": true,
+    "l_err": 0.14284717725840415,
+    "dbeta_ref": 0.6518723884230805,
+    "dL_ref": -0.34374518032721874
+  },
+  "effects": {
+    "rad": {
+      "beta": [
+        0.14778450011337865,
+        0.14310878657063347,
+        0.15242616457464478,
+        100
+      ],
+      "Lspec": [
+        -0.3359776617410054,
+        -0.34074214257958996,
+        -0.3309217834721181,
+        100
+      ],
+      "C8": [
+        2.32088264465332,
+        1.505054916381836,
+        3.2582131824493406,
+        100
+      ],
+      "Mcen": [
+        0.016171875,
+        0.012880615234375,
+        0.019521484375,
+        100
+      ],
+      "sigr": [
+        0.06156789718120331,
+        0.05963386403805054,
+        0.06353939217246578,
+        100
+      ],
+      "S": [
+        0.028518310514206967,
+        0.022724721356776556,
+        0.03457385711618836,
+        100
+      ]
+    },
+    "lmatch": {
+      "beta": [
+        0.07695369793465526,
+        0.07222989496753754,
+        0.08173177756338146,
+        100
+      ],
+      "Lspec": [
+        -0.3004529387111103,
+        -0.3052572621653443,
+        -0.29549795312792027,
+        100
+      ],
+      "C8": [
+        -1.0836973571777344,
+        -1.8096134967803954,
+        -0.2835262708663947,
+        100
+      ],
+      "Mcen": [
+        0.00439453125,
+        0.001943359375,
+        0.006768066406249997,
+        100
+      ],
+      "sigr": [
+        0.03613214579428886,
+        0.034110476571772505,
+        0.038147806439071404,
+        100
+      ],
+      "S": [
+        0.002533768302852204,
+        -0.0037453476153118904,
+        0.008961875038967547,
+        100
+      ]
+    }
+  },
+  "imposed": {
+    "rad": {
+      "beta": [
+        0.6518723884230805,
+        0.6454959001170534,
+        0.6586630269584652,
+        100
+      ],
+      "Lspec": [
+        -0.34374518032721874,
+        -0.3478637134190643,
+        -0.33936416617870085,
+        100
+      ]
+    },
+    "lmatch": {
+      "beta": [
+        0.07014632166550809,
+        0.06311480548098423,
+        0.07699292288827987,
+        100
+      ],
+      "Lspec": [
+        -0.2946421516212944,
+        -0.2985114030638195,
+        -0.29054573242776444,
+        100
+      ]
+    }
+  },
+  "sham_beta0": [
+    -0.00020974757832006863,
+    -0.005504622169627912,
+    0.0048731460338033265,
+    100
+  ],
+  "construction": {
+    "beta_null": true,
+    "l_matched": true,
+    "ok": true,
+    "lm_dbeta0": 0.07014632166550809,
+    "rad_dbeta0": 0.6518723884230805,
+    "lm_dL": -0.2946421516212944,
+    "rad_dL": -0.34374518032721874
+  },
+  "frac_c8_reproduced": -0.46693328491825176,
+  "frac_mcen_reproduced": 0.27173913043478265,
+  "confounded": "True",
+  "conservation": {
+    "dKE_rel": 9.118733330978622e-05,
+    "dQ_rel": 9.118733330979622e-05,
+    "ok": true
+  },
+  "aws_needed": false,
+  "verdict": "CONFOUNDED CONSTRUCTION (\u03b2/|L| not cleanly separable) \u2014 the L-matched arm hit the GLOBAL scalar targets (\u0394\u03b2\u2080=+0.070\u22480, \u0394|L|=-0.29\u2248ref -0.34), but depleting the radius-weighted \u27e8|L|\u27e9 at fixed \u03b2 REQUIRES a radial anisotropy gradient (radialize outer / tangentialize inner), and that gradient itself reshapes scale-dependent clustering. Result is scale-split: core concentration M(<0.1) rises (+0.0044, +27% of radialize, SAME sign \u2192 L-depletion DOES drive concentration) while mid-scale C\u2088 REVERSES (-1.08, opposite sign, from inner tangentialization). So C\u2088 cannot cleanly separate \u03b2 vs L here. CLEAN findings: (1) L-depletion at \u03b2-null causally raises central mass \u2192 angular-momentum depletion contributes to concentration; (2) the L-matched arm sustains \u03b2(t\u2081)=+0.077 from an imposed +0.07 \u2192 L-depletion is partly upstream of anisotropy. A confound-free \u03b2/L split is likely unreachable under speed-preserving rotations (\u03b2 and |L| geometrically coupled, as anticipated). Next: a non-rotational handle, or a single-scale concentration target instead of C\u2088."
+}
