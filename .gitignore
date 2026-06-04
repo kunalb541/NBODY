@@ -32,3 +32,4 @@ outputs/coarse_grain_pilot/*.log
 outputs/phase_space_coarse_pilot/cache/
 outputs/phase_space_coarse_pilot/*.log
 outputs/nbody_intervention_medium/*.log
+outputs/nbody_intervention_Ndep/*.log
