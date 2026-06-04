@@ -1,0 +1,53 @@
+{
+  "family": "hernquist3d",
+  "n": 1024,
+  "eps": 0.05,
+  "theta_deg": 20.0,
+  "n_pairs": 100,
+  "imposed_dbeta0": [
+    0.6537224784490373,
+    0.6463691672568168,
+    0.660897966554786,
+    100
+  ],
+  "sham_dbeta0": [
+    0.0009134154349315049,
+    -0.004111066474626086,
+    0.006164851058696408,
+    100
+  ],
+  "causal_int_minus_sham_beta1": [
+    0.15146589307214894,
+    0.1452372217290836,
+    0.15829312659322614,
+    100
+  ],
+  "int_minus_orig_beta1": [
+    0.1507591552932114,
+    0.14413687647445628,
+    0.1580018772214506,
+    100
+  ],
+  "sham_minus_orig_beta1": [
+    -0.0007067377789375418,
+    -0.005803270528870715,
+    0.004571679930769678,
+    100
+  ],
+  "causal_int_minus_sham_sigr1": [
+    0.060943281391191234,
+    0.058600227497716775,
+    0.0632664455729888,
+    100
+  ],
+  "energy_rel_drift_t0_med": 8.218163725281743e-05,
+  "virial_drift_t0_med": 8.218163725279119e-05,
+  "ang_mom_change_t0_med": -0.015524398650074676,
+  "context": {
+    "orig_beta0_mean": -0.006757399232920245,
+    "orig_beta1_mean": 0.4611556364159658,
+    "int_beta1_mean": 0.6119147917091772,
+    "persistence_ratio": 0.23169754454750155
+  },
+  "verdict": "ALIVE \u2014 initial velocity anisotropy is a CAUSAL handle on future anisotropy: \u03b2_int(t\u2081)\u2212\u03b2_sham(t\u2081) = +0.1515 [+0.1452,+0.1583] (same sign as the imposed \u0394\u03b2\u2080=+0.654), with E and Q preserved (not a bulk effect). Worth a medium confirmation (\u03b8-dependence, more families/targets). No AWS."
+}
