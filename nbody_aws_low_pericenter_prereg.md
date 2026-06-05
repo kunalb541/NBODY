@@ -132,21 +132,30 @@ the grid (cusp, core, uniform, bimodal), not just Hernquist.
 | effect vanishes at N=4096 | intensive ΔM(<r_c) at N=4096 < 0.4 × at N=512 | **finite-N warning**; scope to small N |
 | sham or energy drift explains effect | sham effect ≥ 0.5 × intervention, or KE/Q drift > 10⁻² | **reject intervention** as bulk/numerical |
 
-## 6. Runtime estimate (measured per-sim, Numba, 1 core)
+## 6. Runtime estimate — MEASURED (2026-06-04: `nbody_aws_pilot_benchmark.py` + the N=4096 pilot run)
 
-Per-sim scaling ∝ N²·T. Anchor: N=1024 / 100 steps = 158 ms ⇒ 1000 steps = 1.58 s.
+Supersedes the earlier per-sim guess. **Measured single-thread per pair** (7 arms, 600-step grid):
+N=1024 **9.2 s**, N=2048 **36.2 s** — O(N²) confirmed (1024→2048 = **×3.92**). **Cost is ~99 % the
+O(N²) integration**; pericenter, all features (M, C₈, β, entropy ×snapshots) and conservation are
+each **<1 %**; **no plotting, no regression sweeps** — the new code carries none of the 28-h
+paper-battery overhead. Under real 9-way parallel load the N=4096 pilot ran at **29.5 s/pair wall**
+(Plummer, clean; Hernquist 36.7 incl. one-time compile) ≈ **265 CPU-s/pair** — ~1.8× the isolated
+extrapolation, from memory-bandwidth contention. **Plan on the under-load number.**
 
-| N | s/sim (1000 steps) | sims (active) | CPU-h |
-|---|---|---|---|
-| 512  | 0.40 | 2 prof × 4ε × 9 × 100 + ctrl = ~7,920 | 0.9 |
-| 1024 | 1.58 | ~7,920 | 3.5 |
-| 2048 | 6.3 | ~7,920 | 13.9 |
-| 4096 | 25.3 | 2 prof × 4ε × 9 × 50 + ctrl = ~3,960 | 27.8 |
-| **total** | | **~27,700 sims** | **≈ 46 CPU-h** (×1.2 obs overhead ≈ **55 CPU-h**) |
+Battery cost (10 arms × 1000-step grid → ≈ ×2.4 on the integration vs the benchmarked 7 arms/600):
 
-**Honest note:** the full battery is **~55 CPU-h** — ≈ 6 h local on 9 cores, or ≈ 1 wall-h on a
-64-vCPU instance. Per the project's own finding, **AWS here buys wall-clock speed, not feasibility**;
-this is a convenience-scale battery, not a "monster." That is itself a result worth recording.
+| grid | cells | CPU-h | local wall (9 cores) | cloud wall (64 vCPU) |
+|---|---|---|---|---|
+| full (4 ε at every N) | 40 | **≈145** | 15–16 h | ~2.5 h (~$5–8 spot) |
+| **trimmed (4 ε at N≤2048; N=4096 ε=0.05 only)** | **34** | **≈93** | **~10 h overnight** | ~1.5 h (~$3–5 spot) |
+| N=4096 pilot (done) | — | ~7 | **55 min** (measured) | — |
+
+**Decision: run the TRIMMED grid locally, overnight (~10 h, free).** ε-robustness was settled at
+N≤2048, so the only new N=4096 question — finite-N survival — needs ε=0.05 only; the trim gives the
+same scientific answer for ~35 % less compute. Cloud buys ~6× wall-speed for ~$3–5 but adds
+setup/transfer risk; with the runner now checkpointed (`--resume`), **local is simpler and safer.**
+The original 55 CPU-h figure was ~2.6× optimistic (it ignored parallel contention and assumed a
+600-step grid with 9 arms). Runner: `nbody_aws_battery.py` (per-cell checkpoint + manifest + stop rule).
 
 ## 7. AWS instance recommendation
 
