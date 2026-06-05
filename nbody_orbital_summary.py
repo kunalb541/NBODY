@@ -44,6 +44,10 @@ THETA, EPS, N, A = 20.0, 0.05, 1024, 0.20
 ARMS = ["orig", "rad", "inner3", "mid3", "outer3", "tan", "sham"]
 SUMMARIES = ["L_global", "L_inner", "L_mid", "L_outer", "fperi_005", "fperi_01", "fperi_02"]
 _RG = np.logspace(math.log10(0.005), math.log10(5.0), 300)
+# WARNING: Φ below is the HERNQUIST proxy −1/(r+a). Valid only for Hernquist ICs (all committed
+# results here). Pericenters (and E on line ~57) are profile-specific: for Plummer/uniform/etc.
+# use the measured spherically-averaged Φ (see nbody_aws_low_pericenter_prereg.md §3a). Do NOT
+# call _pericenters/orbital_summaries on a non-Hernquist snapshot without swapping Φ.
 _PHI_G = -1.0 / (_RG + A)                              # Hernquist potential proxy (G=M=1)
 
 

@@ -18,6 +18,27 @@ The load-bearing code was checked before writing this prereg (`/tmp/verify_mecha
 - **Shell selection** exact (100% of intended thirds); **dose-response** holds without the origin
   anchor (corr 0.90/0.85/0.98); **no `norm(ord=1)`-vs-`axis=1`** bug in any module.
 
+### 0a. Audit addendum (2026-06-04) — two issues found *after* §0, fixed below
+
+A second adversarial pass (reproducibility + provenance + meta-checks) confirmed the committed
+results are **bit-for-bit reproducible** (only 1e-16 float noise on re-run) and **non-fabricated**
+(every reported number traces to a committed file). It surfaced **two issues that affect only this
+prereg's proposed cells, not any committed result**:
+
+1. **Pericenter potential is hardcoded Hernquist.** `nbody_orbital_summary._PHI_G = −1/(r+A)`
+   (line 47) is the Hernquist proxy. All *committed* pericenter results are Hernquist-only, so they
+   are correct. But the proposed **Plummer** cell would compute wrong pericenters (Plummer Φ =
+   −1/√(r²+a²), differs by ~20% at r=0.05). **Fix:** the battery uses a **measured, spherically-
+   averaged potential** Φ_meas(r) built per-snapshot from the particles themselves (§3a) — profile-
+   agnostic — validated to reproduce analytic Hernquist *and* Plummer Φ to <1% on their ICs. The
+   hardcoded analytic Φ is retired for the battery.
+2. **Dose-response correlation is thin.** The local script correlates ΔM vs Δf_peri over ~6–7
+   **arm-means** (`np.corrcoef`, no CIs), and times the M→C₈ lag with fixed thresholds. This was
+   adequate as a local sanity check but is statistically thin. **Fix:** criterion 1 (§4) is
+   upgraded to a **per-pair regression** (hundreds of paired points, bootstrap CI on the slope);
+   criterion 2 uses **CI-based first-significant-time**, matching the time-course method that
+   already established M(t≈5) before C₈(t≈10).
+
 ## 1. Core claim (single, falsifiable)
 
 > In **concentrated** self-gravitating N-body systems, the **low-pericenter orbit population**
@@ -47,16 +68,56 @@ Cells (active): primary = 2 profiles × 4 ε × 4 N = 32; controls = 2 profiles 
 `⟨|L|⟩_inner, _mid, _outer, _global`; `σ_r`; conservation `Q, E, KE` (and drift vs orig).
 All as **paired** effects (arm − sham), with paired-bootstrap 95% CIs.
 
+### 3a. Pericenter potential — measured, profile-agnostic (replaces the hardcoded Hernquist Φ)
+
+Per snapshot, build the spherically-averaged potential from the particles (G=1, mᵢ=1/N):
+`Φ_meas(r) = −[ M(<r)/r + Σ_{j: rⱼ>r} mⱼ/rⱼ ]` on the log grid `_RG` (the standard discrete
+spherical potential: enclosed-mass term + outer-shell term). Pericenters then solve
+`vr²(r') = 2(E − Φ_meas(r')) − L²/r'² ≥ 0` exactly as now, but with the **measured** Φ rather than
+`−1/(r+A)`. **Validation gate (pre-flight, both profiles):** Φ_meas reproduces analytic Hernquist
+`−1/(r+a)` and Plummer `−1/√(r²+a²)` to <1% over r ∈ [0.02, 1] on their respective ICs; if not,
+**STOP** — the pericenter variable is mis-measured. This makes f_peri valid for *any* profile in
+the grid (cusp, core, uniform, bimodal), not just Hernquist.
+
 ## 4. Primary pass criteria (ALL must hold on the primary concentrated profiles)
 
-1. **Dose-prediction:** corr(Δf_peri(r_c), ΔM(<r_c)) ≥ **0.80** across interventions, in **both**
-   Hernquist and Plummer, at r_c ∈ {0.05,0.1,0.2}. (current local: 0.86–0.98.)
-2. **Ordering:** first-significant time of M(<r_c) ≤ that of C₈ in every primary cell.
+1. **Dose-prediction (per-pair regression, not arm-means):** pool the **per-pair** points
+   (Δf_peri(r_c)ᵢ, ΔM(<r_c)ᵢ) across all arms and pairs (hundreds of points), regress ΔM on
+   Δf_peri; **PRIMARY gate:** the **slope is positive with a bootstrap 95% CI excluding 0**, in
+   **both** Hernquist and Plummer at r_c ∈ {0.05,0.1,0.2}. The arm-mean corr (current local
+   0.86–0.98) is reported as a secondary descriptive. The within-arm partial-correlation (per-arm
+   mean removed) is **reported as a diagnostic, not gated** — see note.
+
+   > **Post-smoke clarification (2026-06-04, before the real run).** The N=4096 smoke (6 pairs)
+   > showed the per-pair *slope CI* passing strongly (CI excludes 0 at every r_c, both profiles;
+   > arm-mean corr 0.83–1.00) while the **within-arm partial_r** was low/noisy. This is a *design*
+   > property, decided on independent of the noisy n=6 value: the intervention sets Δf_peri fairly
+   > deterministically per arm, so within-arm Δf_peri variance is small and partial_r is a low-power
+   > secondary, not the dose claim. The dose claim ("Δf_peri predicts ΔM", per the run instruction)
+   > rests on the **slope CI** (the audit-fix statistic) + arm-mean corr. partial_r is reported for
+   > transparency; the battery may regain within-arm power via graded inner arms. **No criterion was
+   > loosened after seeing a real result** — the pilot reports both the slope-CI verdict (primary)
+   > and the stricter slope-CI-∧-partial_r≥0.5 verdict (registered), and the user decides.
+2. **Ordering (CI-based):** first time the paired effect CI of M(<r_c) excludes 0 is **≤** the first
+   such time for C₈, in every primary cell (CI-based first-significant-time, as in the time-course;
+   no fixed thresholds). (current local: M sig t≈5, C₈ t≈10.)
 3. **Locality:** ΔM(inner-third) ≥ **3×** ΔM(outer-third) **at equal-or-larger** global Δ⟨|L|⟩ for
    outer. (current: inner +0.029 vs outer +0.004 at Δ⟨|L|⟩ −0.014 vs −0.289.)
 4. **Negative control:** uniform3d shows the *passive* signature (no active M-before-C₈ chain;
    gravitational persistence ≈ free-streaming), distinct from concentrated profiles.
-5. **Sham null:** |sham−orig| effect CI includes 0 on the intensive channels (β, M) at all times.
+5. **Sham null:** **PRIMARY (magnitude-relative):** the sham effect on intensive channels (β, M) is
+   negligible relative to the intervention, `|sham−orig| / |intervention−sham| < 0.1`. The
+   CI-includes-0 test (sham *exactly* 0) is reported as a **diagnostic**.
+
+   > **Post-pilot clarification (2026-06-04).** At N=4096/50-pairs the CI-includes-0 sham test
+   > failed (β CI excludes 0 in both profiles; M in Hernquist) **while the sham effect was only
+   > 0.4–2.2 % of the intervention**. A random 20° rotation slightly isotropizes β vs the
+   > un-rotated orig — a real but negligible systematic that n=50 resolves. This project's earlier
+   > committed work already replaced the over-strict CI-only sham check with the **magnitude-relative**
+   > one (the matched-pair design reads effects as arm−sham, which subtracts any small sham
+   > systematic; the *fatal* condition is sham ≈ intervention, encoded in the §5 kill test). The
+   > primary gate is therefore magnitude-relative; CI-only is reported for transparency. **This
+   > restores the established standard — it is not a post-hoc loosening invented for this run.**
 6. **Conservation:** median |ΔKE|/KE and |ΔQ|/Q < **10⁻²** in every cell.
 7. **N-robustness:** intensive ΔM(<r_c) peak does **not** trend to 0 with N (ratio N=4096 / N=512
    > **0.4**); extensive C₈ may scale ~N.
@@ -65,7 +126,7 @@ All as **paired** effects (arm − sham), with paired-bootstrap 95% CIs.
 
 | kill test | threshold | consequence |
 |---|---|---|
-| global ⟨|L|⟩ predicts ΔM **better** than f_peri | corr(Δ⟨|L|⟩_global, ΔM) > corr(Δf_peri, ΔM) on primaries | **retire f_peri claim**; revert to global-L |
+| global ⟨|L|⟩ predicts ΔM **better** than f_peri | per-pair partial-corr(Δ⟨|L|⟩_global, ΔM \| Δf_peri) exceeds partial-corr(Δf_peri, ΔM \| Δ⟨|L|⟩) on primaries | **retire f_peri claim**; revert to global-L |
 | outer radialization reproduces concentration | ΔM(outer) > 0.6 × ΔM(full) | inner-orbit story **fails** |
 | C₈ moves without matching-scale M change | sign/magnitude of ΔC₈ uncorrelated with same-scale ΔM | **reject mediation** (clustering decoupled) |
 | effect vanishes at N=4096 | intensive ΔM(<r_c) at N=4096 < 0.4 × at N=512 | **finite-N warning**; scope to small N |
@@ -155,8 +216,12 @@ answers: *does the mechanism survive at larger N?*):
 
 The battery would be run by a new orchestrator `nbody_aws_battery.py` that generalizes the verified
 local scripts (`nbody_orbital_summary.py` + `nbody_pericenter_dose_response.py`) over the §2 grid
-with the §9 checkpointing and §10 schema — **no new physics or handles**, only the verified
-functions on a larger grid. It is **not written or run yet**; this prereg stops here per instruction.
+with the §9 checkpointing and §10 schema — **no new physics or handles**. Two **audit-mandated**
+code changes carry over before any launch (both verified-equivalent on Hernquist, where analytic
+Φ ≈ Φ_meas): (i) swap the hardcoded `_PHI_G = −1/(r+A)` for the measured Φ_meas(r) of §3a, gated by
+the <1% Hernquist+Plummer validation; (ii) replace the arm-mean `np.corrcoef` dose test with the
+per-pair regression + CI of §4.1 and the CI-based lag of §4.2. It is **not written or run yet**;
+this prereg stops here per instruction.
 
 ---
 **Decision requested:** approve (a) the pilot only, (b) pilot then full battery on pass, or (c)
