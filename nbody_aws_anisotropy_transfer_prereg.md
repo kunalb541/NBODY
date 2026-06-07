@@ -1,166 +1,188 @@
-# AWS Preregistration — Anisotropy-Transfer Battery (N-body)
+# AWS Preregistration — Anisotropy-Transfer Battery (N-body), v2
 
 **Status:** Preregistration. **Do NOT launch until approved.** Criteria fixed *before* running; no
-post-hoc adjustment. Governs by the kill-test constitution used for the low-pericenter battery.
-`paper.tex` untouched. **Date:** 2026-06-07.
+post-hoc adjustment. `paper.tex` untouched. **Date:** 2026-06-07.
+**v2 changes** (grounded by a literature-verification workflow, run 2026-06-07): radial IC moved off
+the radial-orbit-instability boundary (`r_a = 1.5a`, not `a`); **Stage 0** validation gate added with
+a shape/ROI check; multivariate + cluster-bootstrap analysis specified; ξ=2T_r/T_t competitor added;
+confound guards mandated. References in §13.
 
 ## 0. Motivation — the transfer question
 
-The low-pericenter handle is earned for **isotropic** Hernquist/Plummer concentrated systems
-(battery-positive, N-robust to 4096, controls negative; see `outputs/nbody_aws_battery/`). The
-mechanism claims central response is driven by **low-pericenter accessibility**, *not* by global
-angular momentum or generic anisotropy. The hardest fair test of that claim:
+The low-pericenter handle is earned for **isotropic** Hernquist/Plummer (battery-positive, N-robust to
+4096, controls negative; `outputs/nbody_aws_battery/`, independently re-audited to machine precision).
+Hardest fair test of the claim that central response is driven by **low-pericenter accessibility**, not
+anisotropy:
 
-> **Does Δf_peri(<r_c) remain the causal handle on ΔM(<r_c) when the baseline orbital anisotropy is
-> deliberately varied (isotropic / radial / tangential)?**
-
-This directly attacks the literature-facing worry (radial-orbit-instability / anisotropy summaries):
-radial anisotropy is precisely where β and the low-pericenter population are most entangled, so if the
-pericenter dose still beats anisotropy summaries there, the mechanism is genuinely the variable.
+> **Does Δf_peri(<0.1) remain the best predictor of ΔM(<0.1) when baseline orbital anisotropy is
+> deliberately varied (isotropic / radial / tangential), after controlling for the anisotropy
+> summaries and baseline structure?**
 
 ## 1. Core claim (single, falsifiable)
 
 > Across isotropic, radially-anisotropic, and tangentially-anisotropic Hernquist and Plummer
-> equilibria, the intervention-induced **low-pericenter dose Δf_peri(<0.1)** remains the best
-> predictor of the inner-mass response **ΔM(<0.1)** — beating global ⟨|L|⟩, β-based anisotropy
-> summaries, radial kinetic fraction, baseline central mass, and outer-shell response, *after
-> controlling for baseline structure.*
+> equilibria, the intervention-induced low-pericenter dose Δf_peri(<0.1) remains the top predictor of
+> ΔM(<0.1) — beating global ⟨|L|⟩, β(r), the Polyachenko–Shukhman ratio ξ=2T_r/T_t, radial kinetic
+> fraction, baseline central mass, and outer-shell response — **within the radial and tangential
+> families**, not only isotropic.
 
-## 2. Initial conditions — the six anisotropy families (the critical new piece)
+## 2. Initial conditions — six families (the experiment's MAIN RISK)
 
-Six families: {hernquist3d, plummer3d} × {isotropic, radial, tangential}.
+{hernquist3d, plummer3d} × {isotropic, radial, tangential}. Construction (preregistered, fixed;
+feasibility literature-verified):
 
-**Construction (preregistered, fixed):**
-- **Isotropic:** existing Eddington-inversion samplers (as used in the low-pericenter battery).
-- **Radial:** **Osipkov–Merritt** distribution function with anisotropy radius **r_a = a = 0.20**
-  (β = 0 at centre rising outward; analytic OM DF for Hernquist per Hernquist 1990, numerical
-  Eddington–OM inversion for Plummer). Strong-radial variant r_a = a/2 deferred to the optional grid.
-- **Tangential:** a **constant-β = −0.5** distribution (Cuddeford-type construction) sampled at the
-  same density profile, giving a global tangential bias.
+- **Isotropic:** existing Eddington-inversion samplers (as in the committed battery).
+- **Radial (Osipkov–Merritt):** β(r)=r²/(r²+r_a²). **r_a = 1.5a = 0.30 (primary).** Analytic OM DF for
+  Hernquist (Hernquist 1990; Baes & Dejonghe 2002); Plummer via Eddington–OM (analytic, Breen, Varri
+  & Heggie 2017). *DF non-negativity floors* (r_a,min ≈ 0.20a Hernquist; 0.75a Plummer) are easily
+  satisfied. **The binding constraint is the radial-orbit instability:** r_a,crit ≈ 1.0a for Hernquist
+  (Meza & Zamorano 1997; ξ_crit=2.31±0.27); **r_a=a is ON the boundary and is rejected.** r_a=1.5a is
+  comfortably ROI-stable. (Honest note: at r_a=1.5a the radial bias lives mostly in the envelope — β is
+  mild inside <0.1 — so the *inner* anisotropy contrast comes chiefly from the tangential families;
+  inner β(r)/f_peri are measured and reported per family, §5.)
+- **Tangential (constant-β):** β(r) = **−0.5 constant** at all radii. Feasible for both: Hernquist
+  needs β≤½ (An & Evans 2006), Plummer (core) needs β≤0 (An & Evans 2005; β=−0.5 allowed, β>0
+  impossible); no lower bound (Baes & van Hese; Cuddeford 1991). Provides the strong inner-anisotropy
+  contrast.
+- **Softening caveat (preregistered):** ICs are sampled from the *unsoftened* DF but evolved in the
+  *softened* (ε=0.05, ε/a=0.25) potential. We therefore (i) exclude r < 2ε = 0.10 from β/density
+  validation and from inner-anisotropy claims, and (ii) Stage 0 verifies the sampled IC is a quiet
+  equilibrium *in the softened potential it will actually be integrated in* (the equilibrium-hold test).
 
-**Mandatory pre-flight EQUILIBRIUM GATE (per family, N, ε):** integrate the *orig* (un-intervened)
-arm to the full horizon and require the baseline to be stationary —
-`median |ΔM(<0.1)|/M(<0.1) < 0.10` **and** `|Δ⟨β⟩| < 0.05` over the horizon. A family that fails the
-gate is **not** a clean equilibrium (the "anisotropy" would be transient relaxation, confounding the
-test); it is re-derived or excluded, and the gate result is reported. *This gate is the difference
-between testing anisotropy transfer and testing relaxation.* Matched-pair (arm − sham) further
-subtracts any residual common-mode breathing within a family.
+## 2a. STAGE 0 — anisotropic IC validation gate (mandatory; the load-bearing addition)
+
+Run **before any science battery**, **at N=2048, ε=0.05 first** (cheapest place to expose
+construction/ROI errors), for each new family {Hernquist-radial, Hernquist-tangential, Plummer-radial,
+Plummer-tangential}. Eight gates:
+
+1. **Density fidelity.** Binned M(<r) and ρ(r) match the intended Hernquist/Plummer to Poisson error:
+   every fit bin |z|<3, KS p>0.05 vs the analytic CDF.
+2. **β(r) sign/profile.** Binned β(r)=1−σ_t²/2σ_r² over resolved shells r∈[2ε,5a]=[0.10,1.0] traces the
+   target (radial: r²/(r²+r_a²); tangential: −0.5): ≥80% of resolved shells within tolerance.
+3. **Virial at t₀.** 0.90 ≤ 2T/|W| ≤ 1.10 with the *softened* W.
+4. **Baseline M(<0.1) stationary.** Integrate the un-intervened orig arm to the full 1000-step horizon;
+   median_t |ΔM(<0.1;t)|/M < 0.10 (matches the committed battery's gate).
+5. **Baseline β(r) stationary.** |Δ⟨β⟩_global(t)| < 0.05 over the horizon (no anisotropy washout).
+6. **Shape / ROI gate (NEW — catches bar formation).** On the un-intervened run, track inertia-tensor
+   axis ratios c/a, b/a and the inner m=2 quadrupole; require **c/a, b/a stay > 0.9** and Lagrangian
+   radii (10/50/90%) drift < 0.10. *(The drift-only gates 4–5 alone do NOT catch an ROI bar — this is
+   why r_a=a was rejected.)*
+7. **Anchor reproduction.** The generalized runner in *isotropic* mode reproduces the committed-battery
+   anchors (Hernquist base f_peri(<0.1)≈0.34, peak ΔM10≈0.027; Plummer ≈0.36, ≈0.056) to <2% at
+   matched seeds — proves the refactor didn't perturb the verified core.
+8. **Tangential f_peri power.** Constant-β=−0.5 thins the inner plunging tail; confirm f_peri(<0.1)
+   per-pair Poisson noise is small enough to resolve the dose at N=2048/4096; else raise N for those.
+
+**Hard-gate logic:** any family failing 1–6 is **excluded** from the science battery until fixed; if
+**Hernquist-radial fails Stage 0, stop the whole transfer battery** (its construction is the riskiest).
+Gate 7 failing ⇒ a refactor bug ⇒ stop and fix before anything.
 
 ## 3. Battery grid
 
-| axis | values |
-|---|---|
-| family | 6 (above) |
-| N | 2048, 4096 |
-| ε | **0.05 primary**; ε=0.02, 0.10 at N=2048 **optional** (only if compute is cheap) |
-| arms | reuse: orig · sham · tangentialize · inner-{weak,med,strong} · mid · outer · full · vt-rescale |
-| times | preregistered {0,5,10,20,50,100,300,600,1000} |
-| pairs | 100 (N=2048), 50 (N=4096); matched seeds 2000+ |
+6 families × N∈{2048, 4096} × ε=0.05 (primary) = **12 cells**; ε∈{0.02,0.10} at N=2048 optional. Arms:
+**orig, sham, tangentialize, inner-{weak,med,strong}, mid, outer, full, vt-rescale, and the L-matched
+β-null arm — all MANDATED in every family** (not "reuse") so within-family f_peri/β decorrelation is
+testable (§7 confound). Times preregistered {0,5,10,20,50,100,300,600,1000}. Pairs 100 (N=2048), 50
+(N=4096), seeds 2000+.
 
-**Primary cells:** 6 families × 2 N × 1 ε = **12 cells.** (Optional ε-sweep adds 6×2 = 12 cells at
-N=2048.) Reuses the existing isotropic Hernquist/Plummer battery cells as the anchor — only the four
-anisotropic families are new science.
-
-## 4. Primary target, predictor, and competitors
+## 4. Target, predictor, competitors
 
 - **Target:** ΔM(<0.1) (peak paired effect, arm − sham).
-- **Primary causal predictor:** Δf_peri(<0.1) at t₀ (arm − sham).
-- **Competing predictors** (each as Δ, arm − sham, plus baseline structure as controls):
-  global ⟨|L|⟩; β-based anisotropy (Δβ and outer-shell β); **radial kinetic fraction**
-  σ_r²/(σ_r²+σ_t²); **baseline M(<0.1)**; **outer-shell response** ΔM(outer third).
+- **Primary predictor:** Δf_peri(<0.1) at t₀.
+- **Competitors (Δ = arm−sham):** global ⟨|L|⟩; β(r) (Δβ, inner & outer); **ξ = 2T_r/T_t
+  (Polyachenko–Shukhman; the true ROI/anisotropy order parameter)**; radial kinetic fraction
+  σ_r²/(σ_r²+σ_t²); outer-shell response ΔM(outer third). **Baseline controls:** baseline M(<0.1),
+  baseline β, **family fixed effects**.
 
-## 5. Analysis — multi-predictor competition (the heart)
+## 5. Analysis — multivariate competition (upgraded per referee)
 
-Pool per-pair points (arm × pair) across the six families. Compute **partial correlations** of ΔM
-with each candidate, each controlling for the others **and for baseline structure** (baseline M(<0.1),
-baseline β):
-- **Primary:** partial-corr(Δf_peri, ΔM | all competitors + baseline) is **positive with a bootstrap
-  95% CI excluding 0**, and is the **largest** among candidates.
-- Report a full partial-correlation table per family and pooled, plus the per-family dose-slope
-  decomposition (as in the low-pericenter battery), and the equilibrium-gate diagnostics.
+- **Multivariate partial correlation (not the 1-control `_pcorr`).** Residualize ΔM and Δf_peri on the
+  **full covariate matrix** Z = [Δ⟨|L|⟩, Δβ, Δξ, Δradial-KE-frac, Δouter, baseline M, baseline β,
+  family dummies] by multiple regression, then correlate residuals. Primary statistic: partial-corr
+  (Δf_peri, ΔM | Z) > each competitor's partial-corr (controlling for Δf_peri + rest).
+- **Cluster bootstrap over pairs** (resample matched pairs, keeping all arms together) for CIs — the 8
+  arm-points per pair are not independent (shared sham, near-constant within-arm dose). No naive
+  per-point CIs.
+- **Within-family AND pooled.** The within-family result (radial; tangential) is load-bearing; the
+  pooled fit carries family dummies.
+- **Report** inner β(r) and f_peri per family at t₀ (document the actual inner-anisotropy contrast),
+  plus the per-family dose×slope decomposition and the Stage-0 diagnostics.
 
 ## 6. Pass criteria (ALL)
 
-1. **Handle survives anisotropy:** Δf_peri remains the top predictor of ΔM (largest partial-corr, CI
-   excludes 0) **pooled and within each of the radial and tangential families** — not only isotropic.
-2. **Ordering & sham:** M before C₈ (CI-based); sham magnitude-relative null (|sham|/|intervention| <
-   0.1) on intensive channels.
-3. **Conservation:** KE injection ~0; integrator |ΔE|/E < 10⁻².
-4. **Equilibrium gate passed** for every reported family (§2).
+1. Δf_peri is the **top** predictor of ΔM (largest multivariate partial-corr, cluster-bootstrap CI
+   excludes 0) **within the radial family AND the tangential family** (not only isotropic), in both
+   profiles.
+2. Ordering M-before-C₈ (CI-based); sham magnitude-relative null (|sham|/|intervention|<0.1).
+3. KE injection ≈0; integrator |ΔE|/E < 10⁻².
+4. **Stage 0 passed** for every reported family.
 
-## 7. Kill tests (any TRUE ⇒ mechanism incomplete / claim retired)
+## 7. Kill tests (any TRUE ⇒ mechanism incomplete / scope retracted)
 
 | kill test | threshold | consequence |
 |---|---|---|
-| anisotropy summary beats f_peri | partial-corr(β-summary or radial-KE-fraction, ΔM \| f_peri + baseline) > partial-corr(Δf_peri, ΔM \| that + baseline) | **mechanism incomplete** — anisotropy carries the signal |
-| handle vanishes in anisotropic families | Δf_peri partial-corr CI includes 0 in the radial **or** tangential family | **no transfer**; scope stays isotropic |
-| sham explains response | |sham−orig| ≥ 0.5 × intervention, or KE/Q drift > 10⁻² | reject intervention |
-| outer-shell/random control reproduces inner response | ΔM(outer) > 0.6 × ΔM(full), or random-axis control matches | reject locality |
+| anisotropy summary beats f_peri | multivariate partial-corr(β or ξ or radial-KE, ΔM \| rest) > partial-corr(Δf_peri, ΔM \| rest) | **mechanism incomplete** — anisotropy is load-bearing under varied equilibria |
+| no transfer | Δf_peri partial-corr CI includes 0 in the radial **or** tangential family | scope stays isotropic |
+| confound unbroken | within a family, Δf_peri and Δβ/Δξ cannot be decorrelated across the mandated arm set (collinearity > 0.95) | test under-identified → report as inconclusive, not pass |
+| sham / outer reproduces | |sham−orig| ≥ 0.5×intervention; or ΔM(outer)>0.6×ΔM(full) | reject |
 
-## 8. Runtime estimate (measured per-pair from the low-pericenter battery)
+## 8. Runtime & compute (decision: paid 8-vCPU)
 
-Per-pair wall (2-vCPU free-tier, measured): N=2048 ≈ 60 s, N=4096 ≈ 223 s.
+Per-pair wall (measured): N=2048 ≈ 60 s, N=4096 ≈ 223 s (2-vCPU). Primary grid (12 cells, ~900 pairs)
+≈ **29 h on free-tier 2-vCPU** vs **≈ 5 h on a paid c7i.2xlarge (8 vCPU), ~$1–2 spot.** **Decision (per
+approval): paid 8-vCPU** — credits available; prioritize short wall-clock + clean monitoring. Stage 0
+itself is cheap (4 families × 1 cell + short equilibrium-hold runs, < 1 h). Reuses the hardened
+checkpointed runner (self-terminate + per-cell S3 sync + resume + 16h backstop).
 
-| grid | cells | pairs | free-tier 2-vCPU | paid 8-vCPU (spot) |
-|---|---|---|---|---|
-| primary (ε=0.05) | 12 | 600×N2048 + 300×N4096 | **≈ 29 h (~1.2 d)**, $0 (credits) | **≈ 5 h, ~$1–2** |
-| + optional ε-sweep | +12 | +1200×N2048 | +~20 h (free) | +~3 h, +~$1 |
+## 9. Output / S3
 
-Reuses the hardened, checkpointed runner — same self-terminate + per-cell S3 sync + resume. Free-tier
-is feasible but ~1.2 d; a paid 8-vCPU upgrade does the primary grid in ~5 h for ~$1–2 (well within the
-$200 credits / $10 budget). **Your call which.**
+`s3://nbody-battery-<acct>/outputs/nbody_aws_anisotropy/` (rebuild bucket+role as before).
+`stage0_validation.json` (8 gates per family), per-cell `rows.jsonl` (+ baseline β, ξ, radial-KE
+fraction, inner β/f_peri), `cell_summary.json` (multivariate partial-corr table, cluster-boot CIs,
+dose×slope), root `manifest.json` + `verdict.json`.
 
-## 9. Output / S3 structure (unchanged schema + anisotropy fields)
+## 10. Stop-rule (fail-fast)
 
-`s3://nbody-battery-<acct>/outputs/nbody_aws_anisotropy/` (rebuild bucket+role like before), one
-dir per cell `cell_<family>_N<N>_eps<eps>/` with `rows.jsonl` (+ per-row baseline β, radial-KE
-fraction), `cell_summary.json` (partial-corr table, dose-slope, equilibrium-gate), root
-`manifest.json` + `verdict.json` + `equilibrium_gate.json`.
+(a) **Stage 0 first** — if Hernquist-radial fails Stage 0, **stop**. (b) Then the **hardest science
+family first: hernquist3d radial** (N=2048→4096). If Δf_peri is not the top predictor there → **stop**,
+**but first a power pre-check**: confirm the achieved Δf_peri dose range and the f_peri↔β collinearity
+are sufficient to identify the effect (hernquist-radial has the *smallest* radialize dose — a null
+there must be a real null, not low power). If under-powered, run a tangential family before deciding.
 
-## 10. Stop-rule (fail-fast, after the first family)
-
-Run the **hardest family first: hernquist3d radial** (N=2048 then 4096). If its **equilibrium gate
-fails**, or **Δf_peri is not the top predictor** of ΔM (anisotropy summary wins, or its CI includes
-0), **STOP and report** — do not run the remaining families. Radial anisotropy is the maximal
-β/low-pericenter confound; if the handle wins there it wins everywhere.
-
-## 11. Exact command (gated on approval — NOT run now)
+## 11. Exact command (gated — NOT run now)
 
 ```
-# 0. (one-time) rebuild S3 bucket + IAM role (as before); implement anisotropic samplers + extended
-#    predictor analysis in a generalized runner (nbody_aws_anisotropy_battery.py).
-# 1. pre-flight equilibrium gate (cheap, local or 1 cloud cell):
-python nbody_aws_anisotropy_battery.py --equilibrium-gate-only
-# 2. stop-rule family first:
-python nbody_aws_anisotropy_battery.py --families hernquist_radial --pairs 100
-# 3. full primary grid on pass:
-python nbody_aws_anisotropy_battery.py --pairs 100 --resume
+# (one-time) rebuild S3 bucket+IAM; implement anisotropic samplers + Stage-0 gates + multivariate/
+#   cluster-bootstrap analysis in a generalized runner (nbody_aws_anisotropy_battery.py).
+python nbody_aws_anisotropy_battery.py --stage0-only                 # validate 4 families @ N2048/eps0.05
+python nbody_aws_anisotropy_battery.py --families hernquist_radial --pairs 100   # stop-rule family
+python nbody_aws_anisotropy_battery.py --pairs 100 --resume          # full primary grid on pass
 ```
 
-## 12. New code required (gated on approval)
+## 12. New code required (gated on approval; unit-validated before any science run)
 
-- **Anisotropic IC samplers:** Osipkov–Merritt (radial) + constant-β Cuddeford (tangential) for
-  Hernquist & Plummer, with the §2 equilibrium gate. *(The one genuinely new physics-adjacent code;
-  must be unit-validated against known β(r) profiles before any science run.)*
-- **Extended predictor analysis:** add radial-KE fraction, baseline-M / baseline-β controls, and the
-  multivariate partial-correlation table to `analyse_cell`.
-- No change to the verified intervention/integration/pericenter core.
+- **Anisotropic IC samplers:** OM radial (r_a=1.5a) + constant-β=−0.5 tangential, Hernquist & Plummer.
+  *Validate against the analytic β(r) and σ_r(r) (Baes & Dejonghe 2002 Eq. 61) before use.*
+- **Stage 0 gates**, incl. the inertia-tensor / m=2 shape gate.
+- **Analysis upgrade:** multivariate-residualization partial correlation + cluster bootstrap over
+  pairs + family dummies; ξ=2T_r/T_t and radial-KE-fraction computation; inner-β/f_peri reporting.
+- No change to the verified intervention / integration / pericenter core (re-audited to machine
+  precision).
 
-## 13. Alternative future batteries (described, NOT implemented)
+## 13. References (anisotropic-IC feasibility; verify exact vol/page on ADS)
 
-**A. Clumpy / triaxial / rotating transfer.** Plummer/Hernquist with bound subclumps; bound merging
-bimodal; rotating flattened; triaxial ellipsoid. Tests whether the handle survives realistic
-asymmetry. Messier than anisotropy (no clean spherical pericenter / single centre) — needs a
-per-structure centre and a revised pericenter definition. Do **after** anisotropy transfer.
+Hernquist (1990) ApJ — model + isotropic & OM DF. Baes & Dejonghe (2002) — OM Hernquist DF, σ_r, λ_max.
+Buyle et al. (2007) — Hernquist OM non-negativity/stability. **Meza & Zamorano (1997)** — Hernquist ROI
+threshold r_a,crit≈1.0a. Polyachenko & Shukhman (1981) — ROI criterion ξ=2T_r/T_t. Breen, Varri &
+Heggie (2017) — Plummer OM non-negativity (r_a>0.75a). An & Evans (2005, 2006) — constant-β existence /
+central cusp-anisotropy theorem β₀≤γ/2. Cuddeford (1991); Baes & van Hese — generalized anisotropic DFs.
 
-**B. Central-sink / loss-cone-inspired toy.** Add a central absorbing radius; measure how
-interventions change the **flux into the sink**. Connects to loss-cone language ("low-pericenter
-intervention controls sink-feeding rate") — but becomes a *different paper* requiring careful
-preregistration, proper relaxation/loss-cone-timescale framing, and the loss-cone literature. Scope
-honestly as **toy sink-feeding, not galactic-nucleus loss-cone theory.** Do **last**, only after
-anisotropy (and ideally clumpy) transfer.
+## 14. Alternative future batteries (described, NOT implemented)
+
+**A. Clumpy / triaxial / rotating transfer** — needs per-structure centre + revised pericenter
+definition; do after anisotropy. **B. Central-sink / loss-cone toy** — a *different paper* (relaxation/
+loss-cone timescales, sink boundary); scope as toy sink-feeding, not galactic-nucleus theory; do last.
 
 ---
-**Decision requested:** approve (a) the anisotropy-transfer prereg as written, (b) free-tier
-(~1.2 d, $0) vs paid 8-vCPU (~5 h, ~$1–2), or (c) revise families/criteria. No code is implemented
-and no resources are provisioned until then.
+**Decision requested:** approve v2, then (per prior approval) implement + Stage 0 on paid 8-vCPU. No
+code implemented and no resources provisioned until then.
