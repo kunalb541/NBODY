@@ -50,3 +50,30 @@ Options for the tangential families (user decision):
 
 ## Battery status: UNBLOCKED for the radial transfer test (the key max-confound case) + isotropic baseline.
 Tangential pending a small fidelity fix. Per protocol: requesting approval before the science battery.
+
+---
+
+## Stage 0C — tangential quick fix (100-step pre-relax): FAILED (tangential blocked)
+
+| family | beta-prof (300-step) | beta-prof (100-step) | M(<0.2) drift (100-step) |
+|---|---|---|---|
+| hernquist tangential | 0.165 | 0.362 | 0.154 |
+| plummer tangential   | 0.159 | 0.312 | 0.126 |
+
+Shorter pre-relaxation made tangential WORSE on both beta-profile and M-drift: at 100 steps the IC is
+mid-transient (not settled). The constant-beta=-0.5 IC is not a clean equilibrium of the SOFTENED
+potential -- the inner tangential bias relaxes toward ~-0.34 regardless of pre-relax length (longer
+would relax it further toward isotropy, not back to -0.5). So beta=-0.5 fidelity is not recoverable by
+tuning pre-relaxation. Per the preregistered decision rule (gate not weakened): **TANGENTIAL BLOCKED.**
+
+## Final Stage-0 scope decision
+
+- **CLEARED (4 families):** Hernquist isotropic, Hernquist radial, Plummer isotropic, Plummer radial
+  -- all pass M(<0.2) stationarity (drift ~0.01), breathing (~0.05), beta-fidelity, shape/ROI.
+- **BLOCKED (2 families):** Hernquist tangential, Plummer tangential -- stationary and clearly
+  tangential (sign preserved, bulk ~-0.5) but fail the strict constant-beta=-0.5 fidelity gate.
+  Deferred: would need a constant-beta DF built in the SOFTENED potential (future Stage 0).
+
+**Recommended science battery: RADIAL-anisotropy transfer + isotropic baseline (4 families).**
+This is the scientifically central test (radial = the maximal beta/low-pericenter confound). Still a
+strong, publishable transfer result; tangential is a flagged secondary for a later softened-beta-DF run.

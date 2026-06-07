@@ -7,6 +7,7 @@ so the aperture effect and the pre-relaxation effect are separately attributable
 """
 from __future__ import annotations
 import json
+import os
 import numpy as np
 import nbody_anisotropic_ic as ic
 from nbody_stress import StressConfig, get_simconfig, _integrate_leapfrog
@@ -14,7 +15,7 @@ from nbody_3d import _worker_init
 
 A, EPS, N, BOX = 0.20, 0.05, 2048, 2.0
 RA = 1.5 * A
-PRERELAX = 300                                     # steps under the softened potential before measuring
+PRERELAX = int(os.environ.get("STAGE0_PRERELAX", "300"))   # steps under softened potential before measuring
 TIMES = [0, 5, 10, 20, 50, 100, 300, 600, 1000]    # measurement snapshots (after pre-relax)
 SEEDS = list(range(5))
 SHELLS = np.array([0.20, 0.30, 0.45, 0.70, 1.0])   # resolved beta shells (r > 4eps)
@@ -100,8 +101,9 @@ def main():
     print(f"Stage 0B | N={N} eps={EPS} r_a={RA} aperture M(<0.2)=4eps | pre-relax={PRERELAX} steps | {len(SEEDS)} seeds\n")
     print(f"{'family':22s} {'M01drift_np':>11} {'M02drift_np':>11} {'M02drift_PR':>11} {'breath_PR':>9} "
           f"{'bdrift_PR':>9} {'bprof_PR':>8} {'shape_PR':>9}  PASS")
+    anisos = os.environ.get("STAGE0_ANISOS", "isotropic,radial,tangential").split(",")
     for profile in profs:
-        for aniso in ["isotropic", "radial", "tangential"]:
+        for aniso in anisos:
             pr = _measure(profile, aniso, True)
             npre = _measure(profile, aniso, False) if aniso == "isotropic" else {"M01_drift": float("nan"), "M02_drift": float("nan")}
             g_M = pr["M02_drift"] < 0.10; g_b = pr["beta_drift"] < 0.05
@@ -116,8 +118,8 @@ def main():
     json.dump(out, open("/tmp/stage0b_results.json", "w"), indent=2, default=float)
     aniso_only = {k: v for k, v in out.items() if "isotropic" not in k}
     npass = sum(v["PASS"] for v in aniso_only.values())
-    print(f"\nanisotropic families passing Stage 0B: {npass}/4   (hernquist_radial: "
-          f"{out['hernquist_radial']['PASS']})")
+    print(f"\nanisotropic families passing: {npass}/{len(aniso_only)}  "
+          f"({', '.join(k for k, v in out.items() if v['PASS'])})")
     print("[written] /tmp/stage0b_results.json")
 
 
