@@ -1,0 +1,80 @@
+{
+  "hernquist_isotropic": {
+    "M0": 0.10927734375,
+    "beta0": -0.008857157894979184,
+    "Mdrift": 0.3181411974977659,
+    "beta_drift": 0.11330544054099273,
+    "breathing": 0.3963800046473371,
+    "ca_min": 0.913756159556131,
+    "ba_min": 0.952479869994084,
+    "g4_Mstable": false,
+    "g5_betastable": false,
+    "g6_shape": false,
+    "PASS": false
+  },
+  "hernquist_radial": {
+    "M0": 0.10927734375,
+    "beta0": 0.5435807668682859,
+    "Mdrift": 0.3266309204647007,
+    "beta_drift": 0.06831252138574273,
+    "breathing": 0.42727908532417314,
+    "ca_min": 0.9083133638005535,
+    "ba_min": 0.9475681153612872,
+    "g4_Mstable": false,
+    "g5_betastable": false,
+    "g6_shape": false,
+    "PASS": false
+  },
+  "hernquist_tangential": {
+    "M0": 0.10927734375,
+    "beta0": -0.5135907886486886,
+    "Mdrift": 0.4128686327077748,
+    "beta_drift": 0.22673244069010673,
+    "breathing": 0.6011217735974089,
+    "ca_min": 0.9240365372347673,
+    "ba_min": 0.9483691096682726,
+    "g4_Mstable": false,
+    "g5_betastable": false,
+    "g6_shape": false,
+    "PASS": false
+  },
+  "plummer_isotropic": {
+    "M0": 0.090625,
+    "beta0": -0.005467251618950009,
+    "Mdrift": 0.3011853448275862,
+    "beta_drift": 0.10679321125004351,
+    "breathing": 0.2172156031104216,
+    "ca_min": 0.9314967381771879,
+    "ba_min": 0.9567735888034739,
+    "g4_Mstable": false,
+    "g5_betastable": false,
+    "g6_shape": false,
+    "PASS": false
+  },
+  "plummer_radial": {
+    "M0": 0.090625,
+    "beta0": 0.422636786700191,
+    "Mdrift": 0.28394396551724144,
+    "beta_drift": 0.05932670704391063,
+    "breathing": 0.20234231661875826,
+    "ca_min": 0.9279607647482664,
+    "ba_min": 0.9660267822067835,
+    "g4_Mstable": false,
+    "g5_betastable": false,
+    "g6_shape": false,
+    "PASS": false
+  },
+  "plummer_tangential": {
+    "M0": 0.090625,
+    "beta0": -0.552513435062638,
+    "Mdrift": 0.34428879310344823,
+    "beta_drift": 0.23943453052570496,
+    "breathing": 0.24324094739483063,
+    "ca_min": 0.9353342018297857,
+    "ba_min": 0.9656631909779121,
+    "g4_Mstable": false,
+    "g5_betastable": false,
+    "g6_shape": false,
+    "PASS": false
+  }
+}
