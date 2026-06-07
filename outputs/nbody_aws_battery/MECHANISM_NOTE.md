@@ -45,3 +45,27 @@ both terms. The mechanism sentence:
 Based on the committed AWS battery (2 profiles × N=512–4096 × ε grid, 100 pairs / 50 at N=4096).
 Holds across all N (N=4096 included). uniform/bimodal controls remain negative (mechanism absent).
 No new simulations, no AWS, paper text untouched.
+
+## Correction (2026-06-06) — slope is NOT a headroom effect
+
+A follow-up multi-radius analysis (`nbody_headroom_scale_analysis.py`, `HEADROOM_ANALYSIS.md`)
+shows the shorthand above — *"an unsaturated centre explains both dose and slope"* — was **too
+strong**. The corrected reading:
+
+- **Dose advantage = headroom/accessibility (holds).** Plummer has a lower baseline *deep*-pericenter
+  fraction at r<0.05 (**0.128 vs 0.186** in Hernquist) and a larger Δf_peri — the core genuinely has
+  more room to create deep-plunging orbits.
+- **Slope advantage is NOT explained by unsaturation.** At r=0.1 the two profiles have nearly equal
+  baseline enclosed mass (**Plummer 0.087 vs Hernquist 0.081**), yet Plummer's slope is still
+  **×1.36** higher. Equal saturation, unequal slope ⇒ the slope term is a **dynamical
+  potential-shape / orbit-deposition effect** (radial orbits deposit mass differently in a harmonic
+  core than in a 1/r cusp), not a headroom effect. (Across r_c, H even tracks baseline mass with
+  corr **+0.87** — the opposite of a "low mass → high slope" headroom law.)
+- **The mechanism is scale-specific, not scale-free.** The Plummer/Hernquist ΔM advantage is
+  **×1.60 (r=0.05), ×1.96 (r=0.10), ×1.22 (r=0.20)** — strongest near **r ≈ a/2**, not constant
+  across radii. There is **no compact scale-free law** ΔM(<r) ≈ Δf_peri(<r) × H(unsaturation).
+
+**Corrected mechanism sentence:** the Plummer advantage is a *two-factor* effect — the core has more
+deep-pericenter **dose** headroom, while its **potential shape** gives newly-radialized orbits a
+larger marginal contribution to M(<r) — and it is **radius-specific**, peaking where dose and
+response slope align (here r ≈ 0.1). See `HEADROOM_ANALYSIS.md` for the full table.
