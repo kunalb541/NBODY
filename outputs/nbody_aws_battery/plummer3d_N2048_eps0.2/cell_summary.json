@@ -1,0 +1,83 @@
+{
+  "profile": "plummer3d",
+  "N": 2048,
+  "eps": 0.2,
+  "n_pairs": 100,
+  "concentrated": true,
+  "bimodal_pericenter_caveat": false,
+  "crit1": {
+    "005": {
+      "tstar": 20,
+      "slope": 0.09885795261294056,
+      "slope_ci": [
+        0.09654875903800447,
+        0.10105206888163178
+      ],
+      "partial_r": 0.09647164789688273,
+      "armmean_corr": 0.8466060022285143,
+      "pass": true,
+      "strict_pass": false
+    },
+    "01": {
+      "tstar": 20,
+      "slope": 0.25541243100332295,
+      "slope_ci": [
+        0.2524678518226042,
+        0.25819527931270825
+      ],
+      "partial_r": 0.17136859275208519,
+      "armmean_corr": 0.93010955685855,
+      "pass": true,
+      "strict_pass": false
+    },
+    "02": {
+      "tstar": 50,
+      "slope": 0.4137419312159532,
+      "slope_ci": [
+        0.4090101943140112,
+        0.4185242842692644
+      ],
+      "partial_r": 0.06392042844967943,
+      "armmean_corr": 0.9893289944720486,
+      "pass": true,
+      "strict_pass": false
+    }
+  },
+  "crit1_pass": true,
+  "crit2": {
+    "tM": 5,
+    "tC": 10,
+    "pass": true
+  },
+  "crit3": {
+    "dM_in": 0.033291015625,
+    "dM_out": 0.0066455078125,
+    "dLg_in": -0.012966785587822983,
+    "dLg_out": -0.08167987071016128,
+    "pass": true
+  },
+  "crit5": {
+    "sham_vs_full": 0.0037033227034255736,
+    "pass": true,
+    "ci_only_pass": true
+  },
+  "crit6": {
+    "ke_drift": 0.00014358144881622485,
+    "E_drift": 0.00026169802954550687,
+    "pass": true
+  },
+  "predictor": {
+    "pc_f": 0.8831125228489076,
+    "pc_L": 0.6949451842600213,
+    "amf": 0.93010955685855,
+    "amL": -0.8176140743697325
+  },
+  "kill": {
+    "globalL_beats_fperi": false,
+    "outer_reproduces": false,
+    "sham_explains": false
+  },
+  "phi_agree": 0.006545952702578803,
+  "peak_dM10_full": 0.0474658203125,
+  "CELL_PASS": true
+}

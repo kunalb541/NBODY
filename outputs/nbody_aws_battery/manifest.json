@@ -1,0 +1,478 @@
+{
+  "hernquist3d_N1024_eps0.05": {
+    "status": "done",
+    "pairs_done": 100,
+    "pairs_target": 100,
+    "seed_start": 2000,
+    "seed_end": 2099,
+    "timestamp": "2026-06-05T03:09:10",
+    "git_commit": "944f190",
+    "config": {
+      "profile": "hernquist3d",
+      "N": 1024,
+      "eps": 0.05
+    }
+  },
+  "hernquist3d_N512_eps0.02": {
+    "status": "done",
+    "pairs_done": 100,
+    "pairs_target": 100,
+    "seed_start": 2000,
+    "seed_end": 2099,
+    "timestamp": "2026-06-05T03:17:32",
+    "git_commit": "944f190",
+    "config": {
+      "profile": "hernquist3d",
+      "N": 512,
+      "eps": 0.02
+    }
+  },
+  "hernquist3d_N512_eps0.05": {
+    "status": "done",
+    "pairs_done": 100,
+    "pairs_target": 100,
+    "seed_start": 2000,
+    "seed_end": 2099,
+    "timestamp": "2026-06-05T03:25:53",
+    "git_commit": "944f190",
+    "config": {
+      "profile": "hernquist3d",
+      "N": 512,
+      "eps": 0.05
+    }
+  },
+  "hernquist3d_N512_eps0.1": {
+    "status": "done",
+    "pairs_done": 100,
+    "pairs_target": 100,
+    "seed_start": 2000,
+    "seed_end": 2099,
+    "timestamp": "2026-06-05T03:33:05",
+    "git_commit": "944f190",
+    "config": {
+      "profile": "hernquist3d",
+      "N": 512,
+      "eps": 0.1
+    }
+  },
+  "hernquist3d_N512_eps0.2": {
+    "status": "done",
+    "pairs_done": 100,
+    "pairs_target": 100,
+    "seed_start": 2000,
+    "seed_end": 2099,
+    "timestamp": "2026-06-05T03:40:02",
+    "git_commit": "944f190",
+    "config": {
+      "profile": "hernquist3d",
+      "N": 512,
+      "eps": 0.2
+    }
+  },
+  "hernquist3d_N1024_eps0.02": {
+    "status": "done",
+    "pairs_done": 100,
+    "pairs_target": 100,
+    "seed_start": 2000,
+    "seed_end": 2099,
+    "timestamp": "2026-06-05T04:08:38",
+    "git_commit": "944f190",
+    "config": {
+      "profile": "hernquist3d",
+      "N": 1024,
+      "eps": 0.02
+    }
+  },
+  "hernquist3d_N1024_eps0.1": {
+    "status": "done",
+    "pairs_done": 100,
+    "pairs_target": 100,
+    "seed_start": 2000,
+    "seed_end": 2099,
+    "timestamp": "2026-06-05T04:36:39",
+    "git_commit": "944f190",
+    "config": {
+      "profile": "hernquist3d",
+      "N": 1024,
+      "eps": 0.1
+    }
+  },
+  "hernquist3d_N1024_eps0.2": {
+    "status": "done",
+    "pairs_done": 100,
+    "pairs_target": 100,
+    "seed_start": 2000,
+    "seed_end": 2099,
+    "timestamp": "2026-06-05T05:05:46",
+    "git_commit": "944f190",
+    "config": {
+      "profile": "hernquist3d",
+      "N": 1024,
+      "eps": 0.2
+    }
+  },
+  "hernquist3d_N2048_eps0.02": {
+    "status": "done",
+    "pairs_done": 100,
+    "pairs_target": 100,
+    "seed_start": 2000,
+    "seed_end": 2099,
+    "timestamp": "2026-06-05T06:59:57",
+    "git_commit": "944f190",
+    "config": {
+      "profile": "hernquist3d",
+      "N": 2048,
+      "eps": 0.02
+    }
+  },
+  "hernquist3d_N2048_eps0.05": {
+    "status": "done",
+    "pairs_done": 100,
+    "pairs_target": 100,
+    "seed_start": 2000,
+    "seed_end": 2099,
+    "timestamp": "2026-06-05T08:53:48",
+    "git_commit": "944f190",
+    "config": {
+      "profile": "hernquist3d",
+      "N": 2048,
+      "eps": 0.05
+    }
+  },
+  "hernquist3d_N2048_eps0.1": {
+    "status": "done",
+    "pairs_done": 100,
+    "pairs_target": 100,
+    "seed_start": 2000,
+    "seed_end": 2099,
+    "timestamp": "2026-06-05T10:48:18",
+    "git_commit": "944f190",
+    "config": {
+      "profile": "hernquist3d",
+      "N": 2048,
+      "eps": 0.1
+    }
+  },
+  "hernquist3d_N2048_eps0.2": {
+    "status": "done",
+    "pairs_done": 100,
+    "pairs_target": 100,
+    "seed_start": 2000,
+    "seed_end": 2099,
+    "timestamp": "2026-06-05T12:42:10",
+    "git_commit": "944f190",
+    "config": {
+      "profile": "hernquist3d",
+      "N": 2048,
+      "eps": 0.2
+    }
+  },
+  "hernquist3d_N4096_eps0.05": {
+    "status": "done",
+    "pairs_done": 50,
+    "pairs_target": 50,
+    "seed_start": 2000,
+    "seed_end": 2049,
+    "timestamp": "2026-06-05T16:29:21",
+    "git_commit": "944f190",
+    "config": {
+      "profile": "hernquist3d",
+      "N": 4096,
+      "eps": 0.05
+    }
+  },
+  "plummer3d_N512_eps0.02": {
+    "status": "done",
+    "pairs_done": 100,
+    "pairs_target": 100,
+    "seed_start": 2000,
+    "seed_end": 2099,
+    "timestamp": "2026-06-05T16:36:40",
+    "git_commit": "944f190",
+    "config": {
+      "profile": "plummer3d",
+      "N": 512,
+      "eps": 0.02
+    }
+  },
+  "plummer3d_N512_eps0.05": {
+    "status": "done",
+    "pairs_done": 100,
+    "pairs_target": 100,
+    "seed_start": 2000,
+    "seed_end": 2099,
+    "timestamp": "2026-06-05T16:44:06",
+    "git_commit": "944f190",
+    "config": {
+      "profile": "plummer3d",
+      "N": 512,
+      "eps": 0.05
+    }
+  },
+  "plummer3d_N512_eps0.1": {
+    "status": "done",
+    "pairs_done": 100,
+    "pairs_target": 100,
+    "seed_start": 2000,
+    "seed_end": 2099,
+    "timestamp": "2026-06-05T16:51:26",
+    "git_commit": "944f190",
+    "config": {
+      "profile": "plummer3d",
+      "N": 512,
+      "eps": 0.1
+    }
+  },
+  "plummer3d_N512_eps0.2": {
+    "status": "done",
+    "pairs_done": 100,
+    "pairs_target": 100,
+    "seed_start": 2000,
+    "seed_end": 2099,
+    "timestamp": "2026-06-05T16:58:47",
+    "git_commit": "944f190",
+    "config": {
+      "profile": "plummer3d",
+      "N": 512,
+      "eps": 0.2
+    }
+  },
+  "plummer3d_N1024_eps0.02": {
+    "status": "done",
+    "pairs_done": 100,
+    "pairs_target": 100,
+    "seed_start": 2000,
+    "seed_end": 2099,
+    "timestamp": "2026-06-05T17:28:14",
+    "git_commit": "944f190",
+    "config": {
+      "profile": "plummer3d",
+      "N": 1024,
+      "eps": 0.02
+    }
+  },
+  "plummer3d_N1024_eps0.05": {
+    "status": "done",
+    "pairs_done": 100,
+    "pairs_target": 100,
+    "seed_start": 2000,
+    "seed_end": 2099,
+    "timestamp": "2026-06-05T17:56:38",
+    "git_commit": "944f190",
+    "config": {
+      "profile": "plummer3d",
+      "N": 1024,
+      "eps": 0.05
+    }
+  },
+  "plummer3d_N1024_eps0.1": {
+    "status": "done",
+    "pairs_done": 100,
+    "pairs_target": 100,
+    "seed_start": 2000,
+    "seed_end": 2099,
+    "timestamp": "2026-06-05T18:25:08",
+    "git_commit": "944f190",
+    "config": {
+      "profile": "plummer3d",
+      "N": 1024,
+      "eps": 0.1
+    }
+  },
+  "plummer3d_N1024_eps0.2": {
+    "status": "done",
+    "pairs_done": 100,
+    "pairs_target": 100,
+    "seed_start": 2000,
+    "seed_end": 2099,
+    "timestamp": "2026-06-05T18:53:47",
+    "git_commit": "944f190",
+    "config": {
+      "profile": "plummer3d",
+      "N": 1024,
+      "eps": 0.2
+    }
+  },
+  "plummer3d_N2048_eps0.02": {
+    "status": "done",
+    "pairs_done": 100,
+    "pairs_target": 100,
+    "seed_start": 2000,
+    "seed_end": 2099,
+    "timestamp": "2026-06-05T20:46:53",
+    "git_commit": "944f190",
+    "config": {
+      "profile": "plummer3d",
+      "N": 2048,
+      "eps": 0.02
+    }
+  },
+  "plummer3d_N2048_eps0.05": {
+    "status": "done",
+    "pairs_done": 100,
+    "pairs_target": 100,
+    "seed_start": 2000,
+    "seed_end": 2099,
+    "timestamp": "2026-06-05T22:40:05",
+    "git_commit": "944f190",
+    "config": {
+      "profile": "plummer3d",
+      "N": 2048,
+      "eps": 0.05
+    }
+  },
+  "plummer3d_N2048_eps0.1": {
+    "status": "done",
+    "pairs_done": 100,
+    "pairs_target": 100,
+    "seed_start": 2000,
+    "seed_end": 2099,
+    "timestamp": "2026-06-06T00:32:06",
+    "git_commit": "944f190",
+    "config": {
+      "profile": "plummer3d",
+      "N": 2048,
+      "eps": 0.1
+    }
+  },
+  "plummer3d_N2048_eps0.2": {
+    "status": "done",
+    "pairs_done": 100,
+    "pairs_target": 100,
+    "seed_start": 2000,
+    "seed_end": 2099,
+    "timestamp": "2026-06-06T02:24:06",
+    "git_commit": "944f190",
+    "config": {
+      "profile": "plummer3d",
+      "N": 2048,
+      "eps": 0.2
+    }
+  },
+  "plummer3d_N4096_eps0.05": {
+    "status": "done",
+    "pairs_done": 50,
+    "pairs_target": 50,
+    "seed_start": 2000,
+    "seed_end": 2049,
+    "timestamp": "2026-06-06T06:02:32",
+    "git_commit": "944f190",
+    "config": {
+      "profile": "plummer3d",
+      "N": 4096,
+      "eps": 0.05
+    }
+  },
+  "uniform3d_N512_eps0.05": {
+    "status": "done",
+    "pairs_done": 100,
+    "pairs_target": 100,
+    "seed_start": 2000,
+    "seed_end": 2099,
+    "timestamp": "2026-06-06T06:09:54",
+    "git_commit": "944f190",
+    "config": {
+      "profile": "uniform3d",
+      "N": 512,
+      "eps": 0.05
+    }
+  },
+  "uniform3d_N1024_eps0.05": {
+    "status": "done",
+    "pairs_done": 100,
+    "pairs_target": 100,
+    "seed_start": 2000,
+    "seed_end": 2099,
+    "timestamp": "2026-06-06T06:38:11",
+    "git_commit": "944f190",
+    "config": {
+      "profile": "uniform3d",
+      "N": 1024,
+      "eps": 0.05
+    }
+  },
+  "uniform3d_N2048_eps0.05": {
+    "status": "done",
+    "pairs_done": 100,
+    "pairs_target": 100,
+    "seed_start": 2000,
+    "seed_end": 2099,
+    "timestamp": "2026-06-06T08:28:36",
+    "git_commit": "944f190",
+    "config": {
+      "profile": "uniform3d",
+      "N": 2048,
+      "eps": 0.05
+    }
+  },
+  "uniform3d_N4096_eps0.05": {
+    "status": "done",
+    "pairs_done": 50,
+    "pairs_target": 50,
+    "seed_start": 2000,
+    "seed_end": 2049,
+    "timestamp": "2026-06-06T12:09:19",
+    "git_commit": "944f190",
+    "config": {
+      "profile": "uniform3d",
+      "N": 4096,
+      "eps": 0.05
+    }
+  },
+  "bimodal3d_N512_eps0.05": {
+    "status": "done",
+    "pairs_done": 100,
+    "pairs_target": 100,
+    "seed_start": 2000,
+    "seed_end": 2099,
+    "timestamp": "2026-06-06T12:16:39",
+    "git_commit": "944f190",
+    "config": {
+      "profile": "bimodal3d",
+      "N": 512,
+      "eps": 0.05
+    }
+  },
+  "bimodal3d_N1024_eps0.05": {
+    "status": "done",
+    "pairs_done": 100,
+    "pairs_target": 100,
+    "seed_start": 2000,
+    "seed_end": 2099,
+    "timestamp": "2026-06-06T12:45:33",
+    "git_commit": "944f190",
+    "config": {
+      "profile": "bimodal3d",
+      "N": 1024,
+      "eps": 0.05
+    }
+  },
+  "bimodal3d_N2048_eps0.05": {
+    "status": "done",
+    "pairs_done": 100,
+    "pairs_target": 100,
+    "seed_start": 2000,
+    "seed_end": 2099,
+    "timestamp": "2026-06-06T14:40:17",
+    "git_commit": "944f190",
+    "config": {
+      "profile": "bimodal3d",
+      "N": 2048,
+      "eps": 0.05
+    }
+  },
+  "bimodal3d_N4096_eps0.05": {
+    "status": "done",
+    "pairs_done": 50,
+    "pairs_target": 50,
+    "seed_start": 2000,
+    "seed_end": 2049,
+    "timestamp": "2026-06-06T18:25:19",
+    "git_commit": "944f190",
+    "config": {
+      "profile": "bimodal3d",
+      "N": 4096,
+      "eps": 0.05
+    }
+  }
+}
