@@ -80,7 +80,7 @@ across four initial-condition families (plus three angular-shuffle null controls
 ├── outputs/
 │   ├── data/             # Generated macros, convergence data, run manifest
 │   ├── figures/          # 17 publication-ready PDF figures
-│   └── tables/           # 8 LaTeX table files
+│   └── tables/           # 7 LaTeX table files (+ verdict_sensitivity.csv)
 └── README.md
 ```
 
@@ -103,7 +103,7 @@ Python 3.10+ required. Numba is optional but provides ~10x speedup for direct-su
 python -m pytest test_regression.py -v
 ```
 
-All 34 tests should pass.
+All 36 tests should pass.
 
 ### Regenerate figures and tables (from existing data)
 
@@ -111,7 +111,7 @@ All 34 tests should pass.
 python nbody_paper.py --no-run --replicates 500
 ```
 
-This loads the pre-computed battery CSV and regenerates all 17 figures, 8 tables, and paper macros. Takes ~15–30 minutes (bootstrap analysis).
+This loads the pre-computed battery CSV and regenerates all 17 figures, 7 tables, and paper macros. Takes ~15–30 minutes (bootstrap analysis).
 
 ### Run the full battery from scratch
 
