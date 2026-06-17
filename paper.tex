@@ -55,6 +55,13 @@ $\heps = 0.02$; gap CIs exclude zero), though the effect is modest
 ($R^2 \approx 0.18$--$0.28$ at $N = 1024$).
 This advantage erodes with increasing $\heps$ and vanishes by
 $\heps = 0.10$.
+A held-out commonality re-analysis further shows that this kinematic
+advantage is predominantly a \emph{bulk velocity-scale} effect: a single
+global velocity-scale scalar recovers $81$--$90\%$ of the
+local-velocity-dispersion advantage, leaving only a small
+($\sim$$9$--$19\%$) genuinely local residual---so the advantage is better
+read as sensitivity to the overall virial temperature of a realisation
+than as access to local phase-space structure.
 The strongest negative result is that positional fine-scale
 observables rarely outperform the coarse predictor: the positional-class
 gap CI excludes zero in only 10 of 80 direct-isolated cells (Hernquist
@@ -307,7 +314,10 @@ Local velocity dispersion
 $\sigma_v^{\rm loc}(i) = \langle\|\mathbf{v}_j -
 \bar{\mathbf{v}}_{\mathcal{N}(i)}\|^2\rangle^{1/2}_{j\in\mathcal{N}_k(i)}$
 averaged over all in-box particles (VelDisp).
-This is the only observable accessing phase-space information.
+This is the only observable accessing velocity (phase-space) information;
+across realisations, however, it tracks predominantly the system's global
+velocity scale rather than local phase-space structure
+(Section~\ref{sec:results:temperature}).
 
 \textbf{Fine structural.}
 FoF group count at linking length $b = 0.20\,\bar{d}$ (recorded; included
@@ -641,6 +651,48 @@ smoothed out and the kinematic signal disappears.
 \label{fig:veldisp_mechanism}
 \end{figure*}
 
+\subsection{What the kinematic advantage is: velocity scale, not local structure}
+\label{sec:results:temperature}
+
+The kinematic advantage is the one regime in this battery where a fine
+observable beats the coarse predictor, and the observable's definition
+invites reading it as evidence that \emph{local} phase-space structure
+carries predictive information.  A preregistered re-analysis shows this
+reading is largely incorrect: the advantage is predominantly a
+\emph{bulk velocity-scale} (temperature) effect.
+
+Across the per-realisation initial states, VelDisp is $0.95$--$0.96$
+correlated with the total initial kinetic energy: as a single number per
+realisation, the local-dispersion average tracks the realisation's overall
+velocity scale far more than its spatial velocity texture.  To separate
+these, we score four nested models by held-out $R^2$ (RidgeCV, 200
+repeated train/test splits, predicting the absolute future $\sigrho(8)$
+so the shared-baseline term cannot inflate any increment, with the initial
+coarse field in every baseline): a coarse-positional baseline $X$;
+$X{+}\mathrm{VelDisp}$; $X{+}\mathrm{GlobalVscale}$, where GlobalVscale is
+VelDisp with locality removed (the whole-system velocity dispersion,
+$\sqrt{2K_0}$); and $X{+}\mathrm{VelDisp}{+}\mathrm{GlobalVscale}$.  The
+fraction of VelDisp's incremental advantage recovered by the single global
+scalar, and the fraction unique to VelDisp beyond it, follow directly from
+the $R^2$ increments with paired-bootstrap CIs.
+
+The result is uniform across families.  The global velocity scale recovers
+$90\%$ ($[0.70,1.03]$), $83\%$ ($[0.74,0.91]$), and $81\%$
+($[0.64,0.93]$) of VelDisp's held-out advantage for Hernquist
+($\heps=0.02$), Plummer ($\heps=0.02$), and bimodal respectively, while
+VelDisp's unique increment beyond the global scale is only $9\%$, $19\%$,
+and $19\%$ (CI excludes zero only for the core and merger cells).  A
+locality ladder (neighbourhood size $k = 16, 64, 256, N$) is not flat but
+peaks at large $k$ and falls toward the fully global limit, indicating a
+modest intermediate-scale component superposed on a velocity-scale-dominated
+signal.  The kinematic advantage is therefore $\sim$$85\%$ a temperature
+effect: realisations that are hotter overall evolve their grid-scale
+clustering differently, and local velocity dispersion is mostly an
+estimator of that global scale.  This does not overturn the
+observable-class verdict---VelDisp remains the fine observable that beats
+coarse---but it corrects \emph{why}: the channel is the system's velocity
+scale, with only a small genuinely local phase-space contribution.
+
 \subsection{The softening transition}
 \label{sec:results:eps_transition}
 
@@ -840,7 +892,13 @@ have more virial support and resist collapse, producing a negative
 correlation with future clustering growth.
 Positional fine observables cannot detect this because the equilibrium
 density profile is smooth above the softening scale; the fine advantage
-is observable-class-specific, requiring phase-space access.
+is observable-class-specific, requiring \emph{velocity} access.
+The commonality re-analysis of Section~\ref{sec:results:temperature}
+sharpens this interpretation: the velocity channel that carries the
+advantage is predominantly the \emph{global} velocity scale (overall
+virial temperature of the realisation), not local phase-space texture, so
+``support against near-term collapse'' is better read at the system scale
+than at the neighbourhood scale.
 It should be noted that even in the best-case cells (Hernquist,
 $\heps \le 0.05$), $|r_{\rm VD}| \approx 0.45$--$0.55$, implying
 $R^2 \approx 0.18$--$0.28$ at $N = 1024$: VelDisp is the \emph{best available}
@@ -909,6 +967,10 @@ baryonic processes, and hierarchical assembly.
     fine advantage wherever it appears.
   \item Fine kinematic (VelDisp) advantage for Hernquist at
     $\heps \le 0.05$ and Plummer at $\heps = 0.02$ (gap CIs exclude zero).
+  \item The kinematic advantage is predominantly a bulk velocity-scale
+    (temperature) effect: a single global velocity-scale scalar recovers
+    $81$--$90\%$ of it, with only a small local residual
+    (Section~\ref{sec:results:temperature}).
   \item $\heps$-dependent transition from fine to coarse dominance for
     concentrated profiles, governed in part by $\heps/a$.
   \item All load-bearing claims survive direct pairwise comparison

@@ -12,12 +12,18 @@ Code and analysis pipeline for the paper:
 > Kunal Bhatia (2026)
 > [ORCID: 0009-0007-4447-6325](https://orcid.org/0009-0007-4447-6325)
 >
-> Submitted to *New Astronomy* (Manuscript ID: NEWAST-D-26-00163)
+> Submitted to *Astronomy and Computing*
 > Zenodo: [10.5281/zenodo.19643717](https://doi.org/10.5281/zenodo.19643717)
+>
+> Previously submitted to *New Astronomy* (NEWAST-D-26-00163).
 
-### ⚠️ Errata for submitted manuscript
+### Revision notes (this version)
 
-The submitted manuscript states "no positional fine-scale observable outperforms the coarse predictor in any tested cell" in five places. This is overstated: the positional-class gap CI excludes zero in 10 of 80 direct-isolated cells (Hernquist at low ε and cold-clumpy at ε = 0.10). The corrected language ("rarely outperform; 10/80 cells") is in the current `paper.tex` on this repository and will be incorporated in the first revision.
+Two corrections relative to the original submission are **incorporated in the manuscript** here:
+
+1. **Positional-fine claim corrected.** The original manuscript stated "no positional fine-scale observable outperforms the coarse predictor in any tested cell" in five places. This was overstated: the positional-class gap CI excludes zero in 10 of 80 direct-isolated cells (Hernquist at low ε and cold-clumpy at ε = 0.10). The corrected language ("rarely outperform; 10/80 cells") is now in `paper.tex`.
+
+2. **The kinematic advantage is mostly velocity scale (new).** A preregistered held-out commonality re-analysis shows that the fine-kinematic advantage is predominantly a *bulk velocity-scale* (temperature) effect: a single global velocity-scale scalar recovers 81–90% of the local-velocity-dispersion advantage, leaving only a small (~9–19%) genuinely local residual. This sharpens — and partly corrects — the reading of velocity dispersion as a phase-space-structure probe; it is incorporated in the Results (§ "What the kinematic advantage is").
 
 ## Scientific Summary
 
@@ -27,7 +33,7 @@ The systems are intentionally simplified (isolated or periodic boundaries, ideal
 We test three observable classes:
 - **Coarse positional**: grid-scale density variance and radial concentration proxies
 - **Fine positional**: nearest-neighbour density, Fourier power, close-pair fraction, FoF group count
-- **Fine kinematic**: local velocity dispersion (the only observable accessing phase-space information)
+- **Fine kinematic**: local velocity dispersion (the only observable accessing velocity information; shown here to track mainly the global velocity scale — see Key Result 2)
 
 across four initial-condition families (plus three angular-shuffle null controls = 7 total):
 - **Bimodal** (two-cluster merger): stylised merger-like initial condition
@@ -39,7 +45,7 @@ across four initial-condition families (plus three angular-shuffle null controls
 
 1. **Bimodal (calibration anchor)**: Coarse density variance dominates in every tested cell (|r| = 0.984 at ε = 0.05, ranging from 0.961 to 0.994 across ε; winner-gap CIs entirely below zero at all N, ε, and both force models).
 
-2. **Concentrated cusps — restricted kinematic advantage**: Local velocity dispersion outperforms the coarse predictor for concentrated cusp profiles at low softening (Hernquist ε ≤ 0.05, Plummer ε = 0.02; gap CIs exclude zero). The effect is modest: VelDisp explains ~18–28% of variance (R² at N = 1024). The advantage erodes with increasing ε and vanishes by ε = 0.10; the transition lies between ε/a ≈ 0.35 and 0.50 for these idealised families.
+2. **Concentrated cusps — restricted kinematic advantage**: Local velocity dispersion outperforms the coarse predictor for concentrated cusp profiles at low softening (Hernquist ε ≤ 0.05, Plummer ε = 0.02; gap CIs exclude zero). The effect is modest: VelDisp explains ~18–28% of variance (R² at N = 1024). The advantage erodes with increasing ε and vanishes by ε = 0.10; the transition lies between ε/a ≈ 0.35 and 0.50 for these idealised families. A preregistered held-out commonality re-analysis shows this advantage is predominantly a **bulk velocity-scale (temperature)** effect — a single global velocity-scale scalar recovers 81–90% of it — rather than a local phase-space-structure effect.
 
 3. **Positional fine observables rarely win**: The positional-class gap CI excludes zero in only 10 of 80 direct-isolated cells (Hernquist at low ε and cold-clumpy at ε = 0.10). The dominant fine advantage is kinematic, not positional — additional spatial detail alone is insufficient unless it carries the dynamically relevant information channel (velocity dispersion).
 
@@ -156,7 +162,7 @@ If you use this code or data, please cite:
 ```
 Bhatia, K. (2026). Observable-Class Predictability in Stylised Three-Dimensional
 Self-Gravitating N-body Families: Coarse Dominance, Kinematic Advantage, and
-Softening Dependence. Submitted to New Astronomy (NEWAST-D-26-00163).
+Softening Dependence. Submitted to Astronomy and Computing.
 Zenodo: https://doi.org/10.5281/zenodo.19643717
 ```
 
